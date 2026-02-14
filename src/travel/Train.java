@@ -3,7 +3,6 @@ package travel;
 public class Train extends Transportation {
 
 	// Attributes
-
 	private String trainType; 
 	private String seatClass;
 
@@ -41,7 +40,7 @@ public class Train extends Transportation {
 
 	@Override
 	public double calculateCost(int numberOfDays) {
-	
+		//need to figure this out
 	}
 
 	@Override
