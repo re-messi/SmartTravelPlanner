@@ -1,9 +1,7 @@
 package travel;
 
-public abstract class Accommodation {
+public class SmartTravelDriver {
 
-	
-	
-	public abstract Accommodation copy();
-	
-}
+    //hello ddddddddd
+
+} 

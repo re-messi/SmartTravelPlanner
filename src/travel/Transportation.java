@@ -58,7 +58,7 @@ public abstract class Transportation {
 	
 	
 	// Abstract methods (implemented by subclasses)
-	public abstract double calculateCost(int numerOfDays);
+	public abstract double calculateCost(int numberOfDays);
 		
 	public abstract Transportation copy();
 	
