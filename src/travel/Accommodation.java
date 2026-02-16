@@ -3,20 +3,24 @@ package travel;
 public abstract class Accommodation {
 
 	
-	
-	public abstract Accommodation copy();
-	
 
 	// Attributes
+	private String accommID;
 	private String name;
 	private String location;
 	private double priceNight;
-	private static String nextAccommodationID = "A4001";  // not sure if should be int or string???
+	private static int nextAccommodationNum = 4001;  
+
+
+	// Method to generate an accommodation ID
+	private static String generateAccommID(){
+		return "A" + nextAccommodationNum++;
+	}
 
 
 	// Default constructor 
 	public Accommodation() {
-		this.nextAccommodationID = nextAccommodationID;
+		this.accommID = generateAccommID();
 		this.name = "";
 		this.location = "";
 		this.priceNight = 0.0;
@@ -24,8 +28,8 @@ public abstract class Accommodation {
 	
 
 	// Parameterized constructor
-	public Accommodation(String name, String location, double priceNight, String nextAccommodationID) {
-		this.nextAccommodationID = nextAccommodationID;
+	public Accommodation(String name, String location, double priceNight) {
+		this.accommID = generateAccommID();
 		this.name = name;
 		this.location =location;
 		this.priceNight = priceNight;
@@ -34,7 +38,7 @@ public abstract class Accommodation {
 
 	// Copy constructor 
 	public Accommodation(Accommodation other){
-		this.nextAccommodationID = nextAccommodationID;
+		this.accommID = generateAccommID();
 		this.name = other.name;
 		this.location = other.location;
 		this.priceNight = other.priceNight;
@@ -54,8 +58,8 @@ public abstract class Accommodation {
 		return priceNight;
 	}
 
-	public String getNextAccommodationID(){
-		return nextAccommodationID;
+	public String getNextAccommID(){
+		return accommID;
 	}
 
 
@@ -73,5 +77,40 @@ public abstract class Accommodation {
 	}
 
 
-	//
+	// Method will be used to calculate the total trip cost (overriden by subclasses)
+	public abstract double calculateCost(int numberOfDays);
+
+
+	public abstract Accommodation copy();
+
+
+	// Printing description of object
+	@Override
+	public String toString(){
+		return "Accommodation ID: " + accommID + 
+				"\nName: " + name + 
+				"\nLocation: " + location + 
+				"\nPrice per night: " + priceNight;
+	}
+
+
+	// Compare two objects 
+	@Override
+	public boolean equals(Object otherObject) {
+		if (otherObject == null)
+	        return false;
+
+	    if (getClass() != otherObject.getClass())
+	        return false;
+
+		Accommodation other = (Accommodation) otherObject;
+
+			return  this.name.equalsIgnoreCase(other.name) && 
+					this.location.equalsIgnoreCase(other.location) &&
+					this.priceNight == other.priceNight;
+	
+	}
+
+
+
 }
