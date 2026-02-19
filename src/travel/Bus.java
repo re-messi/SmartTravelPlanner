@@ -6,10 +6,6 @@ public class Bus extends Transportation {
 	private String busCompany;
 	private String numberofStops;
 
-	@Override
-	public Transportation copy() {
-		return new Bus(this);
-	}
 	
 	public Bus() {
 		this.busCompany = "";
@@ -38,9 +34,9 @@ public class Bus extends Transportation {
 
 	public void setNumberofStops(String numberofStops) { this.numberofStops = numberofStops; }
 
-	@Override
+	@Override //WILL NEED TO CHANGE THIS
 	public double calculateCost(int numberOfDays) {
-		//need to figure this out
+		return numberOfDays * 30; // Placeholder cost calculation, can be modified based on busCompany and numberofStops
 	}
 
 	@Override
@@ -52,7 +48,7 @@ public class Bus extends Transportation {
 	}
 
 	@Override
-	public boolean equals(Bus otherObject) {
+	public boolean equals(Object otherObject) {
 		if (otherObject == null)
 	        return false;
 
@@ -65,6 +61,6 @@ public class Bus extends Transportation {
 	    			this.busCompany.equals(other.busCompany) && 
 	    			this.numberofStops.equals(other.numberofStops);
 
+ }
+
 }
-
-

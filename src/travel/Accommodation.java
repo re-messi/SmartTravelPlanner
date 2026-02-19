@@ -5,43 +5,43 @@ public abstract class Accommodation {
 	
 
 	// Attributes
-	private String accommID;
+	private String accommodationID;
 	private String name;
 	private String location;
-	private double priceNight;
+	private double pricePerNight;
 	private static int nextAccommodationNum = 4001;  
 
 
 	// Method to generate an accommodation ID
-	private static String generateAccommID(){
+	private static String generateAccommodationID(){
 		return "A" + nextAccommodationNum++;
 	}
 
 
 	// Default constructor 
 	public Accommodation() {
-		this.accommID = generateAccommID();
+		this.accommodationID = generateAccommodationID();
 		this.name = "";
 		this.location = "";
-		this.priceNight = 0.0;
+		this.pricePerNight = 0.0;
 	}
 	
 
 	// Parameterized constructor
-	public Accommodation(String name, String location, double priceNight) {
-		this.accommID = generateAccommID();
+	public Accommodation(String name, String location, double pricePerNight) {
+		this.accommodationID = generateAccommodationID();
 		this.name = name;
 		this.location =location;
-		this.priceNight = priceNight;
+		this.pricePerNight = pricePerNight;
 	}
 
 
 	// Copy constructor 
 	public Accommodation(Accommodation other){
-		this.accommID = generateAccommID();
+		this.accommodationID = generateAccommodationID();
 		this.name = other.name;
 		this.location = other.location;
-		this.priceNight = other.priceNight;
+		this.pricePerNight = other.pricePerNight;
 	}
 
 
@@ -54,12 +54,12 @@ public abstract class Accommodation {
 		return location;
 	}
 
-	public double getPriceNight(){
-		return priceNight;
+	public double getPricePerNight(){
+		return pricePerNight;
 	}
 
-	public String getNextAccommID(){
-		return accommID;
+	public String getNextAccommodationID(){
+		return accommodationID;
 	}
 
 
@@ -72,8 +72,8 @@ public abstract class Accommodation {
 		this.location = location; 
 	}
 
-	public void setPriceNight(double priceNight){
-		this.priceNight = priceNight;
+	public void setPricePerNight(double pricePerNight){
+		this.pricePerNight = pricePerNight;
 	}
 
 
@@ -81,16 +81,13 @@ public abstract class Accommodation {
 	public abstract double calculateCost(int numberOfDays);
 
 
-	public abstract Accommodation copy();
-
-
 	// Printing description of object
 	@Override
 	public String toString(){
-		return "Accommodation ID: " + accommID + 
+		return "Accommodation ID: " + accommodationID + 
 				"\nName: " + name + 
 				"\nLocation: " + location + 
-				"\nPrice per night: " + priceNight;
+				"\nPrice per night: " + pricePerNight;
 	}
 
 
@@ -107,7 +104,7 @@ public abstract class Accommodation {
 
 			return  this.name.equalsIgnoreCase(other.name) && 
 					this.location.equalsIgnoreCase(other.location) &&
-					this.priceNight == other.priceNight;
+					this.pricePerNight == other.pricePerNight;
 	
 	}
 

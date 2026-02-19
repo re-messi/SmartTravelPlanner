@@ -6,10 +6,6 @@ public class Train extends Transportation {
 	private String trainType; 
 	private String seatClass;
 
-	@Override
-	public Transportation copy() {
-		return new Train(this);
-	}
 	
 	public Train() {
 		this.trainType = "";
@@ -38,11 +34,12 @@ public class Train extends Transportation {
 
 	public void setSeatClass(String seatClass) { this.seatClass = seatClass; }
 
-	@Override
+	@Override //WILL NEED TO CHANGE THIS
 	public double calculateCost(int numberOfDays) {
-		//need to figure this out
+		return numberOfDays * 50; // Placeholder cost calculation, can be modified based on trainType and seatClass
 	}
-
+		
+	
 	@Override
 	public String toString() {
 		return "Train: " + 
@@ -52,7 +49,7 @@ public class Train extends Transportation {
 	}
 
 	@Override
-	public boolean equals(Train otherObject) {
+	public boolean equals(Object otherObject) {
 		if (otherObject == null)
 	        return false;
 

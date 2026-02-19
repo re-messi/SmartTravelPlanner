@@ -60,7 +60,6 @@ public abstract class Transportation {
 	// Abstract methods (implemented by subclasses)
 	public abstract double calculateCost(int numberOfDays);
 		
-	public abstract Transportation copy();
 	
 	@Override
 	public String toString() {

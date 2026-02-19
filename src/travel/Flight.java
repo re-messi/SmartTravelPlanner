@@ -6,10 +6,7 @@ public class Flight extends Transportation {
 	private String airlineName;
 	private String luggageAllowanceKg;
 	
-	@Override
-	public Transportation copy() {
-		return new Flight(this);
-	}
+	
 	
 	public Flight() {
 		this.airlineName = "";
@@ -39,9 +36,9 @@ public class Flight extends Transportation {
 
 	public void setLuggageAllowanceKg(String luggageAllowanceKg) { this.luggageAllowanceKg = luggageAllowanceKg; }
 
-	@Override
+	@Override // WILL NEED TO CHANGE THIS
 	public double calculateCost(int numberOfDays) {
-		//need to figure this out
+		return numberOfDays * 100; // Placeholder cost calculation, can be modified based on airlineName and luggageAllowanceKg
 	}
 
 	@Override
@@ -53,7 +50,7 @@ public class Flight extends Transportation {
 	}
 
 	@Override
-	public boolean equals(Flight otherObject) {
+	public boolean equals(Object otherObject) {
 		if (otherObject == null)
 	        return false;
 
