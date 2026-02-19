@@ -55,8 +55,19 @@ public class Trip {
 		
 		 // Deep copy composed objects
 		this.client = (other.client == null) ? null : new Client(other.client);
-		this.transportation = (other.transportation == null) ? null : other.transportation.copy();
-		this.accommodation = (other.accommodation == null) ? null : other.accommodation.copy();	
+
+				//Tranaportation 
+				if (other.transportation == null) { this.transportation = null; } 
+				else if (other.transportation instanceof Train) {this.transportation = new Train((Train) other.transportation);} 
+				else if (other.transportation instanceof Flight) {this.transportation = new Flight((Flight) other.transportation);} 
+				else if (other.transportation instanceof Bus) {this.transportation = new Bus((Bus) other.transportation);} 
+				else {this.transportation = null; } // Fallback in case of unknown type
+    
+				//Accommodation
+				if (other.accommodation == null) { this.accommodation = null; } 
+				else if (other.accommodation instanceof Hotel) {this.accommodation = new Hotel((Hotel) other.accommodation);} 
+				else if (other.accommodation instanceof Hostel) {this.accommodation = new Hostel((Hostel) other.accommodation);} 
+				else {this.accommodation = null; } // Fallback in case of unknown type
 	}
 	
 	// Accessors
