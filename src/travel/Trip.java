@@ -118,8 +118,8 @@ public class Trip {
 		           "\nDuration (days): " + durationInDays +
 		           "\nBase Price: $" + basePrice +
 		           "\nClient: " + (client == null ? "None" : client.getFirstName() + " " + client.getLastName()) +
-		           "\nTransportation: " + (transportation == null ? "None" : transportation.getClass().getSimpleName()) +
-		           "\nAccommodation: " + (accommodation == null ? "None" : accommodation.getClass().getSimpleName()) +
+		           "\nTransportation: " + (transportation == null ? "None" : transportation.toString()) +
+		           "\nAccommodation: " + (accommodation == null ? "None" : accommodation.toString()) +
 		           "\nTotal Cost: $" + calculateTotalCost();
 	}
 	@Override
