@@ -77,17 +77,17 @@ public class Trip {
 	
 	// Mutators (update trip attributes, excluding tripId)
 
-	public void setDestination() { this.destination = destination; }
+	public void setDestination(String destination) { this.destination = destination; }
 	
-	public void setDurationInDays() { this.durationInDays = durationInDays; }	
+	public void setDurationInDays(int durationInDays) { this.durationInDays = durationInDays; }	
 	
-	public void setBasePrice() { this.basePrice = basePrice; }
+	public void setBasePrice(double basePrice) { this.basePrice = basePrice; }
 	
-	public void setClient() { this.client = client; }
+	public void setClient(Client client) { this.client = client; }
 	
-	public void setTransportation() { this.transportation = transportation; }
+	public void setTransportation(Transportation transportation) { this.transportation = transportation; }
 	
-	public void setAccommodation() { this.accommodation = accommodation; }
+	public void setAccommodation(Accommodation accommodation) { this.accommodation = accommodation; }
 	
 	// Calculate total trip cost using polymorphism
 	//base price + transportation cost + accommodation cost

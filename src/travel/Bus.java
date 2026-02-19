@@ -4,15 +4,15 @@ public class Bus extends Transportation {
 
 	// Attributes
 	private String busCompany;
-	private String numberofStops;
+	private int numberofStops;
 
 	
 	public Bus() {
 		this.busCompany = "";
-		this.numberofStops = "";
+		this.numberofStops = 0;
 	}
 
-	public Bus(String companyName, String departureCity, String arrivalCity, String busCompany, String numberofStops) {
+	public Bus(String companyName, String departureCity, String arrivalCity, String busCompany, int numberofStops) {
 		super(companyName, departureCity, arrivalCity);
 		this.busCompany = busCompany;
 		this.numberofStops = numberofStops;
@@ -27,12 +27,12 @@ public class Bus extends Transportation {
 	// Accessors 
 	public String getBusCompany() { return busCompany; }
 
-	public String getNumberofStops() { return numberofStops; }
+	public int getNumberofStops() { return numberofStops; }
 	
 	// Mutators
 	public void setBusCompany(String busCompany) { this.busCompany = busCompany; }
 
-	public void setNumberofStops(String numberofStops) { this.numberofStops = numberofStops; }
+	public void setNumberofStops(int numberofStops) { this.numberofStops = numberofStops; }
 
 	@Override //WILL NEED TO CHANGE THIS
 	public double calculateCost(int numberOfDays) {
@@ -59,8 +59,8 @@ public class Bus extends Transportation {
 
 	    	return super.equals(other) &&
 	    			this.busCompany.equals(other.busCompany) && 
-	    			this.numberofStops.equals(other.numberofStops);
+	    			this.numberofStops == other.numberofStops;
 
- }
+	 }
 
 }

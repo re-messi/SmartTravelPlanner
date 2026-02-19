@@ -1,4 +1,4 @@
-package travel;
+package driver;
 
 public class SmartTravelDriver {
 
