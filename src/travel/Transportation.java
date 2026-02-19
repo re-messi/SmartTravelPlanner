@@ -50,11 +50,11 @@ public abstract class Transportation {
 	
 	// Mutators
 	
-	public void setCompanyName() { this.companyName = companyName; }
+	public void setCompanyName(String companyName) { this.companyName = companyName; }
 	
-	public void setDepartureCity() { this.departureCity = departureCity; }
+	public void setDepartureCity(String departureCity) { this.departureCity = departureCity; }
 	
-	public void setArrivalCity() { this.arrivalCity = arrivalCity; }
+	public void setArrivalCity(String arrivalCity) { this.arrivalCity = arrivalCity; }
 	
 	
 	// Abstract methods (implemented by subclasses)

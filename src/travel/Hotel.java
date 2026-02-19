@@ -40,9 +40,7 @@ public class Hotel extends Accommodation {
 	@Override
 	public String toString() {
 		return "Hotel: " + 
-			"\n Name: " + getName() +
-			"\n Location: " + getLocation() +
-			"\n Price per Night: $" + getPricePerNight() +
+			"\n" + super.toString() +
 			"\n Star Rating: " + starRating;
 	}
 

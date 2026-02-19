@@ -42,9 +42,7 @@ public class Hostel extends Accommodation {
 	@Override
 	public String toString() {
 		return "Hostel: " + 
-			"\n Name: " + getName() +
-			"\n Location: " + getLocation() +
-			"\n Price per Night: $" + getPricePerNight() +
+			"\n" + super.toString() +
 			"\n Shared Beds per Room: " + sharedBedsPerRoom;
 	}
 

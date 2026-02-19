@@ -8,6 +8,7 @@ public class Bus extends Transportation {
 
 	
 	public Bus() {
+		super();
 		this.busCompany = "";
 		this.numberofStops = 0;
 	}

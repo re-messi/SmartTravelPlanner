@@ -4,16 +4,17 @@ public class Flight extends Transportation {
 
 	// Attributes
 	private String airlineName;
-	private String luggageAllowanceKg;
+	private double luggageAllowanceKg;
 	
 	
 	
 	public Flight() {
+		super();
 		this.airlineName = "";
-		this.luggageAllowanceKg = "";
+		this.luggageAllowanceKg = 0.0;
 	}
 
-	public Flight(String companyName, String departureCity, String arrivalCity, String airlineName, String luggageAllowanceKg) {
+	public Flight(String companyName, String departureCity, String arrivalCity, String airlineName, double luggageAllowanceKg) {
 		super(companyName, departureCity, arrivalCity);
 		this.airlineName = airlineName;
 		this.luggageAllowanceKg = luggageAllowanceKg;
@@ -28,13 +29,13 @@ public class Flight extends Transportation {
 	// Accessors
 	public String getAirlineName() { return airlineName; }
 
-	public String getLuggageAllowanceKg() { return luggageAllowanceKg; }
+	public double getLuggageAllowanceKg() { return luggageAllowanceKg; }
 
 	// Mutators
 
 	public void setAirlineName(String airlineName) { this.airlineName = airlineName; }
 
-	public void setLuggageAllowanceKg(String luggageAllowanceKg) { this.luggageAllowanceKg = luggageAllowanceKg; }
+	public void setLuggageAllowanceKg(double luggageAllowanceKg) { this.luggageAllowanceKg = luggageAllowanceKg; }
 
 	@Override // WILL NEED TO CHANGE THIS
 	public double calculateCost(int numberOfDays) {
@@ -60,7 +61,7 @@ public class Flight extends Transportation {
 		Flight other = (Flight) otherObject;
 
 	    return this.airlineName.equals(other.airlineName) && 
-	    	this.luggageAllowanceKg.equals(other.luggageAllowanceKg);
+	    	this.luggageAllowanceKg == other.luggageAllowanceKg;
 
 	}
 }
