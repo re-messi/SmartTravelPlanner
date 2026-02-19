@@ -45,7 +45,7 @@ public abstract class Accommodation {
 	}
 
 
-	// Getters (Accesors)
+	// Accessors
 	public String getName(){
 		return name;
 	}
@@ -63,7 +63,7 @@ public abstract class Accommodation {
 	}
 
 
-	// Setters (Mutators)
+	// Mutators
 	public void setName(String name){
 		this.name = name;
 	}
