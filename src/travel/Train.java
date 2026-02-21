@@ -1,3 +1,13 @@
+//-----------------------------------------------------
+// Assignment 1
+// COMP 249 – Object-Oriented Programming II
+// Written by: Rebecca Messier (40338041) and Taminda Ait Ouazzou (Student ID)
+//
+// This class represents a train transportation option
+// in the SmartTravel system. It extends Transportation
+// and includes specific details such as train type
+// and seat class.
+//-----------------------------------------------------
 package travel;
 
 public class Train extends Transportation {
@@ -44,8 +54,8 @@ public class Train extends Transportation {
 	public String toString() {
 		return "Train: " + 
 			"\n" + super.toString() + 
-			"\n Train Type: " + trainType +
-			"\n Seat Class: " + seatClass;
+			"\nTrain Type: " + trainType +
+			"\nSeat Class: " + seatClass;
 	}
 
 	@Override

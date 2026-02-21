@@ -1,3 +1,21 @@
+//-----------------------------------------------------
+// Assignment 1
+// COMP 249 – Object-Oriented Programming II
+// Written by: Rebecca Messier (40338041) and Taminda Ait Ouazzou (Student ID)
+//
+// This program implements the SmartTravel management
+// system. It provides a menu-driven interface that
+// allows the user to manage clients, trips,
+// transportation options, and accommodations.
+// Users can add, edit, remove, and display these
+// entities using arrays of objects. The program also includes a 
+// predefined testing scenario to demonstrate the functionality 
+// of the system, including object creation, equals()
+// testing, polymorphic cost calculations, and
+// deep copying of transportation and accommodation
+// arrays as required by the assignment.
+//-----------------------------------------------------
+
 package driver;
 
 import java.util.Scanner;
@@ -46,6 +64,7 @@ public class SmartTravelDriver {
                     break;
 
                 case 2: // main menu (user input)
+                    valid = true; // Set to true to exit loop and access menu
                     mainMenu:
                     while (true) { // Main menu display and input of user's choice of management
                         System.out.print("\nMain Menu: Select an option" +
@@ -807,7 +826,7 @@ public class SmartTravelDriver {
 
                                             Trip tripFound = null;
                                             for (int i = 0; i < tripCount; i++) {
-                                                if (trips[i].getTripId().equals(tripId)) {
+                                                if (trips[i].getTripId().equalsIgnoreCase(tripId)) {
                                                     tripFound = trips[i];
                                                     break;
                                                 }
@@ -821,21 +840,53 @@ public class SmartTravelDriver {
                                             break;
 
                                         case 3: // Deep copy transport
+                                             // Check if there are any transportation objects to copy
+                                             if (transportationCount == 0) {
+                                              System.out.println("No transportation to copy.");
+                                              break;}
+
+                                             // Call the deep copy method to create a new independent array
                                              Transportation[] transportCopy = copyTransportationArray(transportations);
-                                             System.out.println("Deep copy of transportation array created.");
-                                            break;
+
+                                             // Modify the copied object to demonstrate that the copy
+                                             // is independent from the original array
+                                              transportCopy[0].setCompanyName("ModifiedCompany");
+
+                                             // Display original object to show it was NOT changed
+                                             System.out.println("Original transportation[0]:");
+                                             System.out.println(transportations[0]);
+
+                                             // Display modified copy to show it changed
+                                             System.out.println("\nCopied transportation[0] (modified):");
+                                             System.out.println(transportCopy[0]);
+
+                                             break;
 
                                         case 4: // Deep copy accommodation
-                                            Accommodation[] accommodationCopy = copyAccommodationArray(accommodations);
-                                            System.out.println("Deep copy of accommodation array created.");
-                                            break;
+                                            // Check if there are any accommodation objects to copy
+                                             if (accommodationCount == 0) {
+                                                System.out.println("No accommodations to copy.");
+                                                break;
+                                             }
 
-                                        default:
-                                            System.out.println("You entered a number that is not an available option. Please try again.\n");
-                                    }
-                                }
-                                break;
+                                             // Call the deep copy method to create a new independent array
+                                             Accommodation[] accommodationCopy = copyAccommodationArray(accommodations);
 
+                                             // Modify the copied object to demonstrate deep copy behavior
+                                             accommodationCopy[0].setName("ModifiedAccommodation");
+
+                                             // Display original object to show it was NOT changed
+                                             System.out.println("Original accommodation[0]:");
+                                             System.out.println(accommodations[0]);
+
+                                             // Display modified copy to show the change
+                                             System.out.println("\nCopied accommodation[0] (modified):");
+                                             System.out.println(accommodationCopy[0]);
+
+                                             break; 
+                                          }
+                                          break;         
+                                       }
                             case 6: // Generate visualization (optional)
                                 vizMenu:
                                 while (true) { // Switch for each operation of visualization
@@ -888,7 +939,7 @@ public class SmartTravelDriver {
         sc.close();
     }
 
-
+   
 
 
 

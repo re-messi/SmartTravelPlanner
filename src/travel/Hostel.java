@@ -1,3 +1,12 @@
+//-----------------------------------------------------
+// Assignment 1
+// COMP 249 – Object-Oriented Programming II
+// Written by: Rebecca Messier (40338041) and Taminda Ait Ouazzou (Student ID)
+//
+// This class represents a hostel accommodation in the
+// SmartTravel system. It extends Accommodation and
+// includes the number of shared beds per room.
+//-----------------------------------------------------
 package travel;
 
 public class Hostel extends Accommodation {
@@ -43,7 +52,7 @@ public class Hostel extends Accommodation {
 	public String toString() {
 		return "Hostel: " + 
 			"\n" + super.toString() +
-			"\n Shared Beds per Room: " + sharedBedsPerRoom;
+			"\nShared Beds per Room: " + sharedBedsPerRoom;
 	}
 
 	@Override

@@ -1,3 +1,12 @@
+//-----------------------------------------------------
+// Assignment 1
+// COMP 249 – Object-Oriented Programming II
+// Written by: Rebecca Messier (40338041) and Taminda Ait Ouazzou (Student ID)	
+//
+// This class represents a client in the SmartTravel
+// system. It stores basic client information such as
+// first name, last name, and email address.
+//-----------------------------------------------------
 package client;
 
 public class Client {

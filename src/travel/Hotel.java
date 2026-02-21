@@ -1,3 +1,12 @@
+//-----------------------------------------------------
+// Assignment 1
+// COMP 249 – Object-Oriented Programming II
+// Written by: Rebecca Messier (40338041) and Taminda Ait Ouazzou (Student ID)
+//
+// This class represents a hotel accommodation in the
+// SmartTravel system. It extends Accommodation and
+// includes the hotel star rating.
+//-----------------------------------------------------
 package travel;
 
 public class Hotel extends Accommodation {
@@ -41,7 +50,7 @@ public class Hotel extends Accommodation {
 	public String toString() {
 		return "Hotel: " + 
 			"\n" + super.toString() +
-			"\n Star Rating: " + starRating;
+			"\nStar Rating: " + starRating;
 	}
 
 	@Override

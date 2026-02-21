@@ -1,3 +1,13 @@
+//-----------------------------------------------------
+// Assignment 1
+// COMP 249 – Object-Oriented Programming II
+// Written by: Rebecca Messier (40338041) and Taminda Ait Ouazzou (Student ID)
+//
+// This abstract class represents an accommodation
+// option in the SmartTravel system. It stores common
+// attributes such as name, location, and price per
+// night, and is extended by Hotel and Hostel.
+//-----------------------------------------------------
 package travel;
 
 public abstract class Accommodation {

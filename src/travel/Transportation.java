@@ -1,3 +1,14 @@
+//-----------------------------------------------------
+// Assignment 1
+// COMP 249 – Object-Oriented Programming II
+// Written by: Rebecca Messier (40338041) and Taminda Ait Ouazzou (Student ID)
+//
+// This abstract class represents a general transportation
+// option in the SmartTravel system. It stores common
+// information such as company name, departure city,
+// and arrival city, and is extended by Train, Flight,
+// and Bus classes.
+//-----------------------------------------------------
 package travel;
 
 public abstract class Transportation {
@@ -64,9 +75,9 @@ public abstract class Transportation {
 	@Override
 	public String toString() {
 		return "Transport ID: " + transportId +
-				"\n Company Name: " + companyName +
-				"\n Departure City: " + departureCity +
-				"\n Arrival City: " + arrivalCity;
+				"\nCompany Name: " + companyName +
+				"\nDeparture City: " + departureCity +
+				"\nArrival City: " + arrivalCity;
 	}
 	
 	@Override

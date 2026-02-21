@@ -1,3 +1,13 @@
+//-----------------------------------------------------
+// Assignment 1
+// COMP 249 – Object-Oriented Programming II
+// Written by: Rebecca Messier (40338041) and Taminda Ait Ouazzou (Student ID)
+//
+// This class represents a flight transportation option
+// in the SmartTravel system. It extends Transportation
+// and stores information such as airline name and
+// luggage allowance.
+//-----------------------------------------------------
 package travel;
 
 public class Flight extends Transportation {
@@ -46,8 +56,8 @@ public class Flight extends Transportation {
 	public String toString() {
 		return "Flight: " + 
 			"\n" + super.toString() + 
-			"\n Airline Name: " + airlineName +
-			"\n Luggage Allowance (kg): " + luggageAllowanceKg;
+			"\nAirline Name: " + airlineName +
+			"\nLuggage Allowance (kg): " + luggageAllowanceKg;
 	}
 
 	@Override

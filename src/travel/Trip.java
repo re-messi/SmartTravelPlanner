@@ -1,3 +1,14 @@
+//-----------------------------------------------------
+// Assignment 1
+// COMP 249 – Object-Oriented Programming II
+// Written by: Rebecca Messier (40338041) and Taminda Ait Ouazzou (Student ID)
+//
+// This class represents a trip in the SmartTravel
+// system. A trip is associated with one client and
+// may include one transportation option and one
+// accommodation. It also calculates the total cost
+// of the trip.
+//-----------------------------------------------------
 package travel;
 
 import client.Client;

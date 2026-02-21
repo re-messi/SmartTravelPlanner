@@ -1,3 +1,13 @@
+//-----------------------------------------------------
+// Assignment 1
+// COMP 249 – Object-Oriented Programming II
+// Written by: Rebecca Messier (40338041) and Taminda Ait Ouazzou (Student ID)
+//
+// This class represents a bus transportation option
+// in the SmartTravel system. It extends Transportation
+// and includes details such as bus company and
+// number of stops.
+//-----------------------------------------------------
 package travel;
 
 public class Bus extends Transportation {
@@ -44,8 +54,8 @@ public class Bus extends Transportation {
 	public String toString() {
 		return "Bus: " + 
 			"\n" + super.toString() + 
-			"\n Bus Company: " + busCompany +
-			"\n Number of Stops: " + numberofStops;
+			"\nBus Company: " + busCompany +
+			"\nNumber of Stops: " + numberofStops;
 	}
 
 	@Override
