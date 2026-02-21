@@ -3,6 +3,9 @@ package driver;
 import java.util.Scanner;
 import client.Client;
 import travel.Accommodation;
+import travel.Bus;
+import travel.Flight;
+import travel.Train;
 import travel.Transportation;
 import travel.Trip;
 
@@ -504,7 +507,74 @@ public class SmartTravelDriver {
                                             break transportMenu;
 
                                         case 1: // Add transportation
-                                            System.out.println("Add transport not yet implemented.");
+                                             if (transportationCount >= transportations.length) {
+                                             System.out.println("Transportation list is full.");
+                                             break;
+                                          }
+
+                                          System.out.print("Select type of transportation (1=Train, 2=Flight, 3=Bus): ");
+                                          int typeChoice = sc.nextInt();
+                                          sc.nextLine(); // clear buffer
+
+                                          Transportation newTransport = null;
+
+                                          switch (typeChoice) {
+                                             case 1: // Train
+                                                   System.out.print("Enter company name: ");
+                                                   String companyNameT = sc.nextLine();
+                                                   System.out.print("Departure city: ");
+                                                   String depCityT = sc.nextLine();
+                                                   System.out.print("Arrival city: ");
+                                                   String arrCityT = sc.nextLine();
+                                                   System.out.print("Train type: ");
+                                                   String trainType = sc.nextLine();
+                                                   System.out.print("Seat class: ");
+                                                   String seatClass = sc.nextLine();
+
+                                                   newTransport = new Train(companyNameT, depCityT, arrCityT, trainType, seatClass);
+                                                   break;
+
+                                             case 2: // Flight
+                                                   System.out.print("Enter company name: ");
+                                                   String companyNameF = sc.nextLine();
+                                                   System.out.print("Departure city: ");
+                                                   String depCityF = sc.nextLine();
+                                                   System.out.print("Arrival city: ");
+                                                   String arrCityF = sc.nextLine();
+                                                   System.out.print("Airline name: ");
+                                                   String airline = sc.nextLine();
+                                                   System.out.print("Luggage allowance (kg): ");
+                                                   double luggage = sc.nextDouble();
+                                                   sc.nextLine();
+
+                                                   newTransport = new Flight(companyNameF, depCityF, arrCityF, airline, luggage);
+                                                   break;
+
+                                             case 3: // Bus
+                                                   System.out.print("Enter company name: ");
+                                                   String companyNameB = sc.nextLine();
+                                                   System.out.print("Departure city: ");
+                                                   String depCityB = sc.nextLine();
+                                                   System.out.print("Arrival city: ");
+                                                   String arrCityB = sc.nextLine();
+                                                   System.out.print("Bus company: ");
+                                                   String busCompany = sc.nextLine();
+                                                   System.out.print("Number of stops: ");
+                                                   int stops = sc.nextInt();
+                                                   sc.nextLine();
+
+                                                   newTransport = new Bus(companyNameB, depCityB, arrCityB, busCompany, stops);
+                                                   break;
+
+                                             default:
+                                                   System.out.println("Invalid transport type.");
+                                          }
+
+                                          if (newTransport != null) {
+                                             transportations[transportationCount] = newTransport;
+                                             transportationCount++;
+                                             System.out.println("Transportation added successfully.");
+                }
                                             break;
 
                                         case 2: // Remove transportation
