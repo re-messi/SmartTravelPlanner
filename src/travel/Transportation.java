@@ -73,6 +73,7 @@ public abstract class Transportation {
 		
 	
 	@Override
+	// Returns a string representation of the Transportation
 	public String toString() {
 		return "Transport ID: " + transportId +
 				"\nCompany Name: " + companyName +
@@ -81,6 +82,7 @@ public abstract class Transportation {
 	}
 	
 	@Override
+	// Checks equality between Transportations
 	public boolean equals(Object otherObject) {
 		if (otherObject == null)
 	        return false;

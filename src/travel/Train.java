@@ -16,18 +16,18 @@ public class Train extends Transportation {
 	private String trainType; 
 	private String seatClass;
 
-	
+	// Default constructor
 	public Train() {
 		this.trainType = "";
 		this.seatClass = "";
 	}
-
+	// Parameterized constructor
 	public Train(String companyName, String departureCity, String arrivalCity, String trainType, String seatClass) {
 		super(companyName, departureCity, arrivalCity);
 		this.trainType = trainType;
 		this.seatClass = seatClass;
 	}
-
+	// Copy constructor
 	public Train(Train other) {
 		super(other);
 		this.trainType = other.trainType;
@@ -45,12 +45,14 @@ public class Train extends Transportation {
 	public void setSeatClass(String seatClass) { this.seatClass = seatClass; }
 
 	@Override //WILL NEED TO CHANGE THIS
+	// Cost calculation based on number of days
 	public double calculateCost(int numberOfDays) {
 		return numberOfDays * 50; // Placeholder cost calculation, can be modified based on trainType and seatClass
 	}
 		
 	
 	@Override
+	// Returns a string representation of the Train
 	public String toString() {
 		return "Train: " + 
 			"\n" + super.toString() + 
@@ -59,6 +61,7 @@ public class Train extends Transportation {
 	}
 
 	@Override
+	// Checks equality between Trains
 	public boolean equals(Object otherObject) {
 		if (otherObject == null)
 	        return false;

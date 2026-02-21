@@ -17,19 +17,19 @@ public class Flight extends Transportation {
 	private double luggageAllowanceKg;
 	
 	
-	
+	// Default constructor
 	public Flight() {
 		super();
 		this.airlineName = "";
 		this.luggageAllowanceKg = 0.0;
 	}
-
+	// Parameterized constructor
 	public Flight(String companyName, String departureCity, String arrivalCity, String airlineName, double luggageAllowanceKg) {
 		super(companyName, departureCity, arrivalCity);
 		this.airlineName = airlineName;
 		this.luggageAllowanceKg = luggageAllowanceKg;
 	}
-
+	// Copy constructor
 	public Flight(Flight other) {
 		super(other);
 		this.airlineName = other.airlineName;
@@ -53,6 +53,7 @@ public class Flight extends Transportation {
 	}
 
 	@Override
+	// Returns a string representation of the Flight
 	public String toString() {
 		return "Flight: " + 
 			"\n" + super.toString() + 
@@ -61,6 +62,7 @@ public class Flight extends Transportation {
 	}
 
 	@Override
+	// Checks equality between Flights
 	public boolean equals(Object otherObject) {
 		if (otherObject == null)
 	        return false;

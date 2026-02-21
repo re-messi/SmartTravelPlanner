@@ -42,11 +42,13 @@ public class Hotel extends Accommodation {
 	}
 
 	@Override
+	// Cost calculation based on price per night and number of days
 	public double calculateCost(int numberOfDays) {
 		return getPricePerNight() * numberOfDays; // Cost based on price per night and number of days
 	}
 
 	@Override
+	// Returns a string representation of the Hotel
 	public String toString() {
 		return "Hotel: " + 
 			"\n" + super.toString() +
@@ -54,6 +56,7 @@ public class Hotel extends Accommodation {
 	}
 
 	@Override
+	// Checks equality between Hotels
 	public boolean equals(Object otherObject) {
 		if (otherObject == null)
 	        return false;

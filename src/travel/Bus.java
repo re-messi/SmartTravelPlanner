@@ -16,19 +16,19 @@ public class Bus extends Transportation {
 	private String busCompany;
 	private int numberofStops;
 
-	
+	// Default constructor
 	public Bus() {
 		super();
 		this.busCompany = "";
 		this.numberofStops = 0;
 	}
-
+	// Parameterized constructor
 	public Bus(String companyName, String departureCity, String arrivalCity, String busCompany, int numberofStops) {
 		super(companyName, departureCity, arrivalCity);
 		this.busCompany = busCompany;
 		this.numberofStops = numberofStops;
 	}
-
+	// Copy constructor
 	public Bus(Bus other) {
 		super(other);
 		this.busCompany = other.busCompany;
@@ -51,6 +51,7 @@ public class Bus extends Transportation {
 	}
 
 	@Override
+	// Returns a string representation of the Bus
 	public String toString() {
 		return "Bus: " + 
 			"\n" + super.toString() + 
@@ -59,6 +60,7 @@ public class Bus extends Transportation {
 	}
 
 	@Override
+	// Checks equality between Buses
 	public boolean equals(Object otherObject) {
 		if (otherObject == null)
 	        return false;
