@@ -5,6 +5,8 @@ import client.Client;
 import travel.Accommodation;
 import travel.Bus;
 import travel.Flight;
+import travel.Hostel;
+import travel.Hotel;
 import travel.Train;
 import travel.Transportation;
 import travel.Trip;
@@ -39,7 +41,8 @@ public class SmartTravelDriver {
 
             switch (userChoice) {
                 case 1: // testing (hardcode)
-                    valid = true;
+                   runPredefinedScenario();
+                    valid = false; // Set to false to allow re-prompting 
                     break;
 
                 case 2: // main menu (user input)
@@ -507,82 +510,129 @@ public class SmartTravelDriver {
                                             break transportMenu;
 
                                         case 1: // Add transportation
-                                             if (transportationCount >= transportations.length) {
-                                             System.out.println("Transportation list is full.");
-                                             break;
-                                          }
+                                            if (transportationCount >= transportations.length) {
+                                                System.out.println("Transportation list is full.");
+                                                break;
+                                            }
 
-                                          System.out.print("Select type of transportation (1=Train, 2=Flight, 3=Bus): ");
-                                          int typeChoice = sc.nextInt();
-                                          sc.nextLine(); // clear buffer
+                                            System.out.print("Select type of transportation (1=Train, 2=Flight, 3=Bus): ");
+                                            int typeChoice = sc.nextInt();
+                                            sc.nextLine(); // clear buffer
 
-                                          Transportation newTransport = null;
+                                            Transportation newTransport = null;
 
-                                          switch (typeChoice) {
-                                             case 1: // Train
-                                                   System.out.print("Enter company name: ");
-                                                   String companyNameT = sc.nextLine();
-                                                   System.out.print("Departure city: ");
-                                                   String depCityT = sc.nextLine();
-                                                   System.out.print("Arrival city: ");
-                                                   String arrCityT = sc.nextLine();
-                                                   System.out.print("Train type: ");
-                                                   String trainType = sc.nextLine();
-                                                   System.out.print("Seat class: ");
-                                                   String seatClass = sc.nextLine();
+                                            switch (typeChoice) {
+                                                case 1: // Train
+                                                    System.out.print("Enter company name: ");
+                                                    String companyNameT = sc.nextLine();
+                                                    System.out.print("Departure city: ");
+                                                    String depCityT = sc.nextLine();
+                                                    System.out.print("Arrival city: ");
+                                                    String arrCityT = sc.nextLine();
+                                                    System.out.print("Train type: ");
+                                                    String trainType = sc.nextLine();
+                                                    System.out.print("Seat class: ");
+                                                    String seatClass = sc.nextLine();
 
-                                                   newTransport = new Train(companyNameT, depCityT, arrCityT, trainType, seatClass);
-                                                   break;
+                                                    newTransport = new Train(companyNameT, depCityT, arrCityT, trainType, seatClass);
+                                                    break;
 
-                                             case 2: // Flight
-                                                   System.out.print("Enter company name: ");
-                                                   String companyNameF = sc.nextLine();
-                                                   System.out.print("Departure city: ");
-                                                   String depCityF = sc.nextLine();
-                                                   System.out.print("Arrival city: ");
-                                                   String arrCityF = sc.nextLine();
-                                                   System.out.print("Airline name: ");
-                                                   String airline = sc.nextLine();
-                                                   System.out.print("Luggage allowance (kg): ");
-                                                   double luggage = sc.nextDouble();
-                                                   sc.nextLine();
+                                                case 2: // Flight
+                                                    System.out.print("Enter company name: ");
+                                                    String companyNameF = sc.nextLine();
+                                                    System.out.print("Departure city: ");
+                                                    String depCityF = sc.nextLine();
+                                                    System.out.print("Arrival city: ");
+                                                    String arrCityF = sc.nextLine();
+                                                    System.out.print("Airline name: ");
+                                                    String airline = sc.nextLine();
+                                                    System.out.print("Luggage allowance (kg): ");
+                                                    double luggage = sc.nextDouble();
+                                                    sc.nextLine();
 
-                                                   newTransport = new Flight(companyNameF, depCityF, arrCityF, airline, luggage);
-                                                   break;
+                                                    newTransport = new Flight(companyNameF, depCityF, arrCityF, airline, luggage);
+                                                    break;
 
-                                             case 3: // Bus
-                                                   System.out.print("Enter company name: ");
-                                                   String companyNameB = sc.nextLine();
-                                                   System.out.print("Departure city: ");
-                                                   String depCityB = sc.nextLine();
-                                                   System.out.print("Arrival city: ");
-                                                   String arrCityB = sc.nextLine();
-                                                   System.out.print("Bus company: ");
-                                                   String busCompany = sc.nextLine();
-                                                   System.out.print("Number of stops: ");
-                                                   int stops = sc.nextInt();
-                                                   sc.nextLine();
+                                                case 3: // Bus
+                                                    System.out.print("Enter company name: ");
+                                                    String companyNameB = sc.nextLine();
+                                                    System.out.print("Departure city: ");
+                                                    String depCityB = sc.nextLine();
+                                                    System.out.print("Arrival city: ");
+                                                    String arrCityB = sc.nextLine();
+                                                    System.out.print("Bus company: ");
+                                                    String busCompany = sc.nextLine();
+                                                    System.out.print("Number of stops: ");
+                                                    int stops = sc.nextInt();
+                                                    sc.nextLine();
 
-                                                   newTransport = new Bus(companyNameB, depCityB, arrCityB, busCompany, stops);
-                                                   break;
+                                                    newTransport = new Bus(companyNameB, depCityB, arrCityB, busCompany, stops);
+                                                    break;
 
-                                             default:
-                                                   System.out.println("Invalid transport type.");
-                                          }
+                                                default:
+                                                    System.out.println("Invalid transport type.");
+                                            }
 
-                                          if (newTransport != null) {
-                                             transportations[transportationCount] = newTransport;
-                                             transportationCount++;
-                                             System.out.println("Transportation added successfully.");
-                }
+                                            if (newTransport != null) {
+                                                transportations[transportationCount] = newTransport;
+                                                transportationCount++;
+                                                System.out.println("Transportation added successfully.");
+                                            }
                                             break;
 
                                         case 2: // Remove transportation
-                                            System.out.println("Remove transport not yet implemented.");
+                                            if (transportationCount == 0) {
+                                                System.out.println("No transportation options to remove.");
+                                                break;
+                                            }
+
+                                            System.out.print("Enter the Transport ID to remove: ");
+                                            String transIdRemove = sc.nextLine();
+                                            int indexToRemove = -1;
+                                            for (int i = 0; i < transportationCount; i++) {
+                                                if (transportations[i].getTransportId().equalsIgnoreCase(transIdRemove)) {
+                                                    indexToRemove = i;
+                                                    break;
+                                                }
+                                            }
+
+                                            if (indexToRemove == -1) {
+                                                System.out.println("Transport not found.");
+                                                break;
+                                            }
+
+                                            // Shift array left
+                                            for (int i = indexToRemove; i < transportationCount - 1; i++) {
+                                                transportations[i] = transportations[i + 1];
+                                            }
+                                            transportations[transportationCount - 1] = null;
+                                            transportationCount--;
+                                            System.out.println("Transportation removed successfully.");
                                             break;
 
                                         case 3: // List by type
-                                            System.out.println("List transport by type not yet implemented.");
+                                            if (transportationCount == 0) {
+                                                System.out.println("No transportation options available.");
+                                                break;
+                                            }
+
+                                            System.out.print("Enter type to list (Train / Flight / Bus): ");
+                                            String typeFilter = sc.nextLine();
+
+                                            boolean found = false;
+                                            for (int i = 0; i < transportationCount; i++) {
+                                                if ((typeFilter.equalsIgnoreCase("Train") && transportations[i] instanceof Train) ||
+                                                    (typeFilter.equalsIgnoreCase("Flight") && transportations[i] instanceof Flight) ||
+                                                    (typeFilter.equalsIgnoreCase("Bus") && transportations[i] instanceof Bus)) {
+                                                    System.out.println(transportations[i]);
+                                                    System.out.println("-------------------");
+                                                    found = true;
+                                                }
+                                            }
+
+                                            if (!found) {
+                                                System.out.println("No transportation options of this type found.");
+                                            }
                                             break;
 
                                         default:
@@ -608,15 +658,109 @@ public class SmartTravelDriver {
                                             break accomMenu;
 
                                         case 1: // Add accommodation
-                                            System.out.println("Add accommodation not yet implemented.");
+                                            if (accommodationCount >= accommodations.length) {
+                                                System.out.println("Accommodation list is full.");
+                                                break;
+                                            }
+
+                                            System.out.print("Select type of accommodation (1=Hotel, 2=Hostel): ");
+                                            int typeChoice = sc.nextInt();
+                                            sc.nextLine(); // clear buffer
+
+                                            Accommodation newAccommodation = null;
+
+                                            switch (typeChoice) {
+                                                case 1: // Hotel
+                                                    System.out.print("Enter name: ");
+                                                    String hotelName = sc.nextLine();
+                                                    System.out.print("Enter location: ");
+                                                    String hotelLocation = sc.nextLine();
+                                                    System.out.print("Enter price per night: ");
+                                                    double hotelPrice = sc.nextDouble();
+                                                    System.out.print("Enter star rating: ");
+                                                    int starRating = sc.nextInt();
+                                                    sc.nextLine();
+
+                                                    newAccommodation = new Hotel(hotelName, hotelLocation, hotelPrice, starRating);
+                                                    break;
+
+                                                case 2: // Hostel
+                                                    System.out.print("Enter name: ");
+                                                    String hostelName = sc.nextLine();
+                                                    System.out.print("Enter location: ");
+                                                    String hostelLocation = sc.nextLine();
+                                                    System.out.print("Enter price per night: ");
+                                                    double hostelPrice = sc.nextDouble();
+                                                    System.out.print("Enter number of shared beds per room: ");
+                                                    int sharedBeds = sc.nextInt();
+                                                    sc.nextLine();
+
+                                                    newAccommodation = new Hostel(hostelName, hostelLocation, hostelPrice, sharedBeds);
+                                                    break;
+
+                                                default:
+                                                    System.out.println("Invalid accommodation type.");
+                                            }
+
+                                            if (newAccommodation != null) {
+                                                accommodations[accommodationCount] = newAccommodation;
+                                                accommodationCount++;
+                                                System.out.println("Accommodation added successfully.");
+                                            }
                                             break;
 
                                         case 2: // Remove accommodation
-                                            System.out.println("Remove accommodation not yet implemented.");
+                                            if (accommodationCount == 0) {
+                                                System.out.println("No accommodations to remove.");
+                                                break;
+                                            }
+
+                                            System.out.print("Enter the Accommodation ID to remove: ");
+                                            String accIdRemove = sc.nextLine();
+                                            int indexToRemove = -1;
+                                            for (int i = 0; i < accommodationCount; i++) {
+                                                if (accommodations[i].getNextAccommodationID().equalsIgnoreCase(accIdRemove)) {
+                                                    indexToRemove = i;
+                                                    break;
+                                                }
+                                            }
+
+                                            if (indexToRemove == -1) {
+                                                System.out.println("Accommodation not found.");
+                                                break;
+                                            }
+
+                                            // Shift array left
+                                            for (int i = indexToRemove; i < accommodationCount - 1; i++) {
+                                                accommodations[i] = accommodations[i + 1];
+                                            }
+                                            accommodations[accommodationCount - 1] = null;
+                                            accommodationCount--;
+                                            System.out.println("Accommodation removed successfully.");
                                             break;
 
                                         case 3: // List by type
-                                            System.out.println("List accommodations by type not yet implemented.");
+                                            if (accommodationCount == 0) {
+                                                System.out.println("No accommodations available.");
+                                                break;
+                                            }
+
+                                            System.out.print("Enter type to list (Hotel / Hostel): ");
+                                            String typeFilter = sc.nextLine();
+
+                                            boolean found = false;
+                                            for (int i = 0; i < accommodationCount; i++) {
+                                                if ((typeFilter.equalsIgnoreCase("Hotel") && accommodations[i] instanceof Hotel) ||
+                                                    (typeFilter.equalsIgnoreCase("Hostel") && accommodations[i] instanceof Hostel)) {
+                                                    System.out.println(accommodations[i]);
+                                                    System.out.println("-------------------");
+                                                    found = true;
+                                                }
+                                            }
+
+                                            if (!found) {
+                                                System.out.println("No accommodations of this type found.");
+                                            }
                                             break;
 
                                         default:
@@ -643,19 +787,47 @@ public class SmartTravelDriver {
                                             break addMenu;
 
                                         case 1: // Most expensive
-                                            System.out.println("Most expensive trip not yet implemented.");
+                                            if (tripCount == 0) {
+                                                System.out.println("No trips available.");
+                                            } else {
+                                                Trip expensiveTrip = trips[0];
+                                                for (int i = 1; i < tripCount; i++) {
+                                                    if (trips[i].calculateTotalCost() > expensiveTrip.calculateTotalCost()) {
+                                                        expensiveTrip = trips[i];
+                                                    }
+                                                }
+                                                System.out.println("Most expensive trip:");
+                                                System.out.println(expensiveTrip);
+                                            }
                                             break;
 
                                         case 2: // Calculate cost
-                                            System.out.println("Calculate total cost not yet implemented.");
+                                            System.out.print("Enter Trip ID to calculate total cost: ");
+                                            String tripId = sc.nextLine();
+
+                                            Trip tripFound = null;
+                                            for (int i = 0; i < tripCount; i++) {
+                                                if (trips[i].getTripId().equals(tripId)) {
+                                                    tripFound = trips[i];
+                                                    break;
+                                                }
+                                            }
+
+                                            if (tripFound != null) {
+                                                System.out.println("Total cost of the trip: $" + tripFound.calculateTotalCost());
+                                            } else {
+                                                System.out.println("Trip not found.");
+                                            }
                                             break;
 
                                         case 3: // Deep copy transport
-                                            System.out.println("Deep copy transport not yet implemented.");
+                                             Transportation[] transportCopy = copyTransportationArray(transportations);
+                                             System.out.println("Deep copy of transportation array created.");
                                             break;
 
                                         case 4: // Deep copy accommodation
-                                            System.out.println("Deep copy accommodation not yet implemented.");
+                                            Accommodation[] accommodationCopy = copyAccommodationArray(accommodations);
+                                            System.out.println("Deep copy of accommodation array created.");
                                             break;
 
                                         default:
@@ -664,7 +836,7 @@ public class SmartTravelDriver {
                                 }
                                 break;
 
-                            case 6: // Generate visualization
+                            case 6: // Generate visualization (optional)
                                 vizMenu:
                                 while (true) { // Switch for each operation of visualization
                                     System.out.print("\nWhich operation would you like to perform?" +
@@ -714,5 +886,150 @@ public class SmartTravelDriver {
         } while (!valid);
 
         sc.close();
+    }
+
+
+
+
+
+    // Predefined scenarios for testing 
+    public static void runPredefinedScenario() {
+    System.out.println("=== Running Predefined Scenario ===");
+
+    // --- Clients ---
+    Client c1 = new Client("Alice", "Smith", "alice@example.com");
+    Client c2 = new Client("Bob", "Jones", "bob@example.com");
+    Client c3 = new Client("Carol", "Brown", "carol@example.com");
+
+    Client[] clients = {c1, c2, c3};
+
+    // Display clients
+    System.out.println("\n--- Clients ---");
+    for (Client c : clients) {
+        System.out.println(c);
+        System.out.println();
+    }
+
+    // --- Transportation ---
+    Transportation t1 = new Flight("AirlineX", "NYC", "Paris", "AirlineX", 20.0);
+    Transportation t2 = new Flight("AirlineY", "LA", "Tokyo", "AirlineY", 25.0);
+    Transportation t3 = new Train("TrainCo", "Paris", "Berlin", "HighSpeed", "First");
+    Transportation t4 = new Train("TrainCo2", "Berlin", "Rome", "Express", "Second");
+    Transportation t5 = new Bus("BusLine", "Rome", "Naples", "BusLine", 3);
+    Transportation t6 = new Bus("BusLine2", "Naples", "Florence", "BusLine2", 5);
+
+    Transportation[] transports = {t1, t2, t3, t4, t5, t6};
+
+    System.out.println("\n--- Transportation ---");
+    for (Transportation t : transports) {
+        System.out.println(t);
+        System.out.println();
+    }
+
+    // --- Accommodations ---
+    Accommodation a1 = new Hotel("GrandHotel", "Paris", 200, 5);
+    Accommodation a2 = new Hotel("CityHotel", "Berlin", 150, 4);
+    Accommodation a3 = new Hostel("Backpackers", "Rome", 50, 4);
+    Accommodation a4 = new Hostel("YouthStay", "Naples", 45, 6);
+
+    Accommodation[] accommodations = {a1, a2, a3, a4};
+
+    System.out.println("\n--- Accommodations ---");
+    for (Accommodation a : accommodations) {
+        System.out.println(a);
+        System.out.println();
+    }
+
+    // --- Trips ---
+    Trip trip1 = new Trip("Paris", 5, 1000, c1, t1, a1);
+    Trip trip2 = new Trip("Berlin", 4, 800, c2, t3, a2);
+    Trip trip3 = new Trip("Rome", 6, 900, c3, t5, a3);
+
+    Trip[] trips = {trip1, trip2, trip3};
+
+    System.out.println("\n--- Trips ---");
+    for (Trip tr : trips) {
+        System.out.println(tr);
+        System.out.println();
+    }
+
+    // --- Demonstrate equals() ---
+    System.out.println("\n--- Testing equals() ---");
+    System.out.println("c1.equals(c2)? " + c1.equals(c2)); // false
+    System.out.println("t1.equals(t2)? " + t1.equals(t2)); // false
+    System.out.println("a3.equals(a4)? " + a3.equals(a4)); // false
+    System.out.println("trip1.equals(trip1)? " + trip1.equals(trip1)); // true
+
+    // --- Demonstrate polymorphism: calculate total cost ---
+    System.out.println("\n--- Total Costs (Polymorphism) ---");
+    for (Trip tr : trips) {
+        System.out.println("Trip to " + tr.getDestination() + " total cost: $" + tr.calculateTotalCost());
+    }
+
+    // --- Most expensive trip ---
+    Trip mostExpensive = trips[0];
+    for (Trip tr : trips) {
+        if (tr.calculateTotalCost() > mostExpensive.calculateTotalCost()) {
+            mostExpensive = tr;
+        }
+    }
+    System.out.println("\nMost expensive trip:");
+    System.out.println(mostExpensive);
+
+    // --- Deep copy of transportation array ---
+    Transportation[] copiedTransports = copyTransportationArray(transports);
+    copiedTransports[0].setCompanyName("ModifiedCompany"); // modify copy
+
+    System.out.println("\nOriginal transportation[0]:");
+    System.out.println(transports[0]);
+    System.out.println("\nCopied transportation[0] (modified):");
+    System.out.println(copiedTransports[0]);
+
+    System.out.println("\n=== Predefined Scenario Completed ===\n");
+}
+
+
+
+
+    // Copy of transportation array (deep copy)
+    public static Transportation[] copyTransportationArray(Transportation[] original) {
+        if (original == null) return null;
+
+        Transportation[] copy = new Transportation[original.length];
+
+        for (int i = 0; i < original.length; i++) {
+            if (original[i] != null) {
+                if (original[i] instanceof Train) {
+                    copy[i] = new Train((Train) original[i]);
+                } else if (original[i] instanceof Flight) {
+                    copy[i] = new Flight((Flight) original[i]);
+                } else if (original[i] instanceof Bus) {
+                    copy[i] = new Bus((Bus) original[i]);
+                } else {
+                    copy[i] = null; // fallback if type unknown
+                }
+            }
+        }
+        return copy;
+    }
+
+    // Copy of accommodation array (deep copy)
+    public static Accommodation[] copyAccommodationArray(Accommodation[] original) {
+        if (original == null) return null;
+
+        Accommodation[] copy = new Accommodation[original.length];
+
+        for (int i = 0; i < original.length; i++) {
+            if (original[i] != null) {
+                if (original[i] instanceof Hotel) {
+                    copy[i] = new Hotel((Hotel) original[i]);
+                } else if (original[i] instanceof Hostel) {
+                    copy[i] = new Hostel((Hostel) original[i]);
+                } else {
+                    copy[i] = null; // fallback if type unknown
+                }
+            }
+        }
+        return copy;
     }
 } 
