@@ -1,7 +1,7 @@
 //-----------------------------------------------------
 // Assignment 1
 // COMP 249 – Object-Oriented Programming II
-// Written by: Rebecca Messier (40338041) and Taminda Ait Ouazzou (Student ID)
+// Written by: Rebecca Messier (40338041) and Taminda Ait Ouazzou (40344517)
 //
 // This program implements the SmartTravel management
 // system. It provides a menu-driven interface that
@@ -18,6 +18,7 @@
 
 package driver;
 
+import java.io.IOException;
 import java.util.Scanner;
 import client.Client;
 import travel.Accommodation;
@@ -28,9 +29,10 @@ import travel.Hotel;
 import travel.Train;
 import travel.Transportation;
 import travel.Trip;
+import visualization.TripChartGenerator;
 
 public class SmartTravelDriver {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         System.out.println("Welcome to the SmartTravel Mannaging Program");
 
         Scanner sc = new Scanner(System.in);
@@ -49,17 +51,23 @@ public class SmartTravelDriver {
         Accommodation[] accommodations = new Accommodation[50];
         int accommodationCount = 0;
 
-        // First option of choosing testing scenario or the menu operations
+        // First option of choosing testing scenario, menu operations, or exit
         do {
             System.out.print("What would you like to do? Please enter the number of the option you desire" +
                 "\n 1. See a predefined testing scenario" +
                 "\n 2. Access the Menu Operations" +
+                "\n 0. Exit the program" +
                 "\n Option: ");
             userChoice = sc.nextInt();
 
             switch (userChoice) {
+                case 0: // Exit program
+                    System.out.println("Thank you for using SmartTravel. Goodbye!");
+                    sc.close();
+                    return;
+
                 case 1: // testing (hardcode)
-                   runPredefinedScenario();
+                    runPredefinedScenario();
                     valid = false; // Set to false to allow re-prompting 
                     break;
 
@@ -115,6 +123,7 @@ public class SmartTravelDriver {
                                                 clients[clientCount] = newClient; // store object in array
                                                 clientCount++;
 
+                                                System.out.println("\n" + newClient + "\n");
                                                 System.out.println("New client added.");
                                             } else {
                                                 System.out.println("Client list is full.");
@@ -134,7 +143,7 @@ public class SmartTravelDriver {
 
                                             // search for client
                                             for (int i = 0; i < clientCount; i++) {
-                                                if (clients[i].getClientId().equals(idToEdit)) {
+                                                if (clients[i].getClientId().equalsIgnoreCase(idToEdit)) { 
                                                     clientToEdit = clients[i];
                                                     break;
                                                 }
@@ -193,7 +202,7 @@ public class SmartTravelDriver {
 
                                             // Find client index
                                             for (int i = 0; i < clientCount; i++) {
-                                                if (clients[i].getClientId().equals(idToDelete)) {
+                                                if (clients[i].getClientId().equalsIgnoreCase(idToDelete)) {
                                                     indexToDelete = i;
                                                     break;
                                                 }
@@ -534,7 +543,7 @@ public class SmartTravelDriver {
                                                 break;
                                             }
 
-                                            System.out.print("Select type of transportation (1=Train, 2=Flight, 3=Bus): ");
+                                            System.out.print("Select type of transportation (1-Train, 2-Flight, 3-Bus): ");
                                             int typeChoice = sc.nextInt();
                                             sc.nextLine(); // clear buffer
 
@@ -889,6 +898,7 @@ public class SmartTravelDriver {
                                        }
                             case 6: // Generate visualization (optional)
                                 vizMenu:
+                                
                                 while (true) { // Switch for each operation of visualization
                                     System.out.print("\nWhich operation would you like to perform?" +
                                         "\n 1. Bar chart (Trip Cost)" +
@@ -904,15 +914,15 @@ public class SmartTravelDriver {
                                             break vizMenu;
 
                                         case 1: // Bar chart
-                                            System.out.println("Bar chart not yet implemented.");
+                                            TripChartGenerator.generateCostBarChart(trips, tripCount);
                                             break;
 
                                         case 2: // Pie chart
-                                            System.out.println("Pie chart not yet implemented.");
+                                            TripChartGenerator.generateDestinationPieChart(trips, tripCount);
                                             break;
 
                                         case 3: // Line chart
-                                            System.out.println("Line chart not yet implemented.");
+                                            TripChartGenerator.generateDurationLineChart(trips, tripCount);
                                             break;
 
                                         default:
@@ -945,89 +955,92 @@ public class SmartTravelDriver {
 
     // Predefined scenarios for testing 
     public static void runPredefinedScenario() {
-    System.out.println("=== Running Predefined Scenario ===");
+    System.out.println("    Running Predefined Scenario    ");
 
-    // --- Clients ---
-    Client c1 = new Client("Alice", "Smith", "alice@example.com");
-    Client c2 = new Client("Bob", "Jones", "bob@example.com");
-    Client c3 = new Client("Carol", "Brown", "carol@example.com");
+    //  Clients 
+    Client c1 = new Client("Alice", "Wonder", "alice@example.com");
+    Client c2 = new Client("Indiana", "Jones", "indiana@example.com");
+    Client c3 = new Client("Bobby", "Brown", "bobby@example.com");
 
     Client[] clients = {c1, c2, c3};
 
     // Display clients
-    System.out.println("\n--- Clients ---");
-    for (Client c : clients) {
-        System.out.println(c);
+    System.out.println("\nClients ");
+        for (int i = 0; i < clients.length; i++) {
+        System.out.println(clients[i]);
         System.out.println();
     }
 
-    // --- Transportation ---
+    // Transportation 
     Transportation t1 = new Flight("AirlineX", "NYC", "Paris", "AirlineX", 20.0);
     Transportation t2 = new Flight("AirlineY", "LA", "Tokyo", "AirlineY", 25.0);
     Transportation t3 = new Train("TrainCo", "Paris", "Berlin", "HighSpeed", "First");
     Transportation t4 = new Train("TrainCo2", "Berlin", "Rome", "Express", "Second");
-    Transportation t5 = new Bus("BusLine", "Rome", "Naples", "BusLine", 3);
-    Transportation t6 = new Bus("BusLine2", "Naples", "Florence", "BusLine2", 5);
+    Transportation t5 = new Bus("EXO", "Laval", "Longueuil", "Line", 3);
+    Transportation t6 = new Bus("STM", "Montreal", "Boisbriand", "Line2", 5);
 
     Transportation[] transports = {t1, t2, t3, t4, t5, t6};
 
-    System.out.println("\n--- Transportation ---");
-    for (Transportation t : transports) {
-        System.out.println(t);
+    System.out.println("\nTransportation ");
+        for (int i = 0; i < transports.length; i++) {   
+        System.out.println(transports[i]);
         System.out.println();
-    }
+        }
 
-    // --- Accommodations ---
+    // Accommodations 
     Accommodation a1 = new Hotel("GrandHotel", "Paris", 200, 5);
     Accommodation a2 = new Hotel("CityHotel", "Berlin", 150, 4);
     Accommodation a3 = new Hostel("Backpackers", "Rome", 50, 4);
-    Accommodation a4 = new Hostel("YouthStay", "Naples", 45, 6);
+    Accommodation a4 = new Hostel("Sheraton", "Montreal", 45, 6);
 
     Accommodation[] accommodations = {a1, a2, a3, a4};
 
-    System.out.println("\n--- Accommodations ---");
-    for (Accommodation a : accommodations) {
-        System.out.println(a);
+    System.out.println("\nAccommodations ");
+        for (int i = 0; i < accommodations.length; i++) {
+        System.out.println(accommodations[i]);
         System.out.println();
-    }
+        }
 
-    // --- Trips ---
+    // Trips 
     Trip trip1 = new Trip("Paris", 5, 1000, c1, t1, a1);
     Trip trip2 = new Trip("Berlin", 4, 800, c2, t3, a2);
-    Trip trip3 = new Trip("Rome", 6, 900, c3, t5, a3);
+    Trip trip3 = new Trip("Rome", 6, 900, c3, t4, a3);
 
     Trip[] trips = {trip1, trip2, trip3};
 
-    System.out.println("\n--- Trips ---");
-    for (Trip tr : trips) {
-        System.out.println(tr);
+    System.out.println("\nTrips");
+        for (int i = 0; i < trips.length; i++) {
+        System.out.println(trips[i]);
         System.out.println();
-    }
+        }
 
-    // --- Demonstrate equals() ---
-    System.out.println("\n--- Testing equals() ---");
+    // Demonstrate equals() 
+    System.out.println("\nTesting equals() ");
     System.out.println("c1.equals(c2)? " + c1.equals(c2)); // false
     System.out.println("t1.equals(t2)? " + t1.equals(t2)); // false
     System.out.println("a3.equals(a4)? " + a3.equals(a4)); // false
     System.out.println("trip1.equals(trip1)? " + trip1.equals(trip1)); // true
 
-    // --- Demonstrate polymorphism: calculate total cost ---
-    System.out.println("\n--- Total Costs (Polymorphism) ---");
-    for (Trip tr : trips) {
-        System.out.println("Trip to " + tr.getDestination() + " total cost: $" + tr.calculateTotalCost());
+    // Demonstrate polymorphism: calculate total cost 
+    System.out.println("\nTotal Costs (Polymorphism)");
+    for (int i = 0; i < trips.length; i++) {
+    System.out.println(
+        "Trip to " + trips[i].getDestination() +
+        " total cost: $" + trips[i].calculateTotalCost()
+        );
     }
 
-    // --- Most expensive trip ---
+    // Most expensive trip 
     Trip mostExpensive = trips[0];
-    for (Trip tr : trips) {
-        if (tr.calculateTotalCost() > mostExpensive.calculateTotalCost()) {
-            mostExpensive = tr;
+    for (int i = 0; i < trips.length; i++) {
+    if (trips[i].calculateTotalCost() > mostExpensive.calculateTotalCost()) {
+        mostExpensive = trips[i];
         }
     }
     System.out.println("\nMost expensive trip:");
     System.out.println(mostExpensive);
 
-    // --- Deep copy of transportation array ---
+    // Deep copy of transportation array 
     Transportation[] copiedTransports = copyTransportationArray(transports);
     copiedTransports[0].setCompanyName("ModifiedCompany"); // modify copy
 
@@ -1036,7 +1049,7 @@ public class SmartTravelDriver {
     System.out.println("\nCopied transportation[0] (modified):");
     System.out.println(copiedTransports[0]);
 
-    System.out.println("\n=== Predefined Scenario Completed ===\n");
+    System.out.println("\n    Predefined Scenario Completed    \n");
 }
 
 
