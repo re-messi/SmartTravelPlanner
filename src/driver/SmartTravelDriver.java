@@ -691,7 +691,7 @@ public class SmartTravelDriver {
                                                 break;
                                             }
 
-                                            System.out.print("Select type of accommodation (1=Hotel, 2=Hostel): ");
+                                            System.out.print("Select type of accommodation (1-Hotel, 2-Hostel): ");
                                             int typeChoice = sc.nextInt();
                                             sc.nextLine(); // clear buffer
 
@@ -849,56 +849,56 @@ public class SmartTravelDriver {
                                             break;
 
                                         case 3: // Deep copy transport
-                                             // Check if there are any transportation objects to copy
-                                             if (transportationCount == 0) {
-                                              System.out.println("No transportation to copy.");
-                                              break;}
+                                            // Check if there are any transportation objects to copy
+                                            if (transportationCount == 0) {
+                                                System.out.println("No transportation to copy.");
+                                                break;
+                                            }
 
-                                             // Call the deep copy method to create a new independent array
-                                             Transportation[] transportCopy = copyTransportationArray(transportations);
+                                            // Call the deep copy method to create a new independent array
+                                            Transportation[] transportCopy = copyTransportationArray(transportations);
 
-                                             // Modify the copied object to demonstrate that the copy
-                                             // is independent from the original array
-                                              transportCopy[0].setCompanyName("ModifiedCompany");
+                                            // Modify the copied object to demonstrate that the copy
+                                            // is independent from the original array
+                                            transportCopy[0].setCompanyName("ModifiedCompany");
 
-                                             // Display original object to show it was NOT changed
-                                             System.out.println("Original transportation[0]:");
-                                             System.out.println(transportations[0]);
+                                            // Display original object to show it was NOT changed
+                                            System.out.println("Original transportation[0]:");
+                                            System.out.println(transportations[0]);
 
-                                             // Display modified copy to show it changed
-                                             System.out.println("\nCopied transportation[0] (modified):");
-                                             System.out.println(transportCopy[0]);
+                                            // Display modified copy to show it changed
+                                            System.out.println("\nCopied transportation[0] (modified):");
+                                            System.out.println(transportCopy[0]);
 
-                                             break;
+                                            break;
 
                                         case 4: // Deep copy accommodation
                                             // Check if there are any accommodation objects to copy
-                                             if (accommodationCount == 0) {
+                                            if (accommodationCount == 0) {
                                                 System.out.println("No accommodations to copy.");
                                                 break;
-                                             }
+                                            }
 
-                                             // Call the deep copy method to create a new independent array
-                                             Accommodation[] accommodationCopy = copyAccommodationArray(accommodations);
+                                            // Call the deep copy method to create a new independent array
+                                            Accommodation[] accommodationCopy = copyAccommodationArray(accommodations);
 
-                                             // Modify the copied object to demonstrate deep copy behavior
-                                             accommodationCopy[0].setName("ModifiedAccommodation");
+                                            // Modify the copied object to demonstrate deep copy behavior
+                                            accommodationCopy[0].setName("ModifiedAccommodation");
 
-                                             // Display original object to show it was NOT changed
-                                             System.out.println("Original accommodation[0]:");
-                                             System.out.println(accommodations[0]);
+                                            // Display original object to show it was NOT changed
+                                            System.out.println("Original accommodation[0]:");
+                                            System.out.println(accommodations[0]);
 
-                                             // Display modified copy to show the change
-                                             System.out.println("\nCopied accommodation[0] (modified):");
-                                             System.out.println(accommodationCopy[0]);
+                                            // Display modified copy to show the change
+                                            System.out.println("\nCopied accommodation[0] (modified):");
+                                            System.out.println(accommodationCopy[0]);
 
-                                             break; 
-                                          }
-                                          break;         
-                                       }
+                                            break;
+                                        }
+                                        break;
+                                    }
                             case 6: // Generate visualization (optional)
                                 vizMenu:
-                                
                                 while (true) { // Switch for each operation of visualization
                                     System.out.print("\nWhich operation would you like to perform?" +
                                         "\n 1. Bar chart (Trip Cost)" +
