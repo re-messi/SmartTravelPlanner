@@ -1,7 +1,6 @@
 //-----------------------------------------------------
 // Assignment 1
-// COMP 249 – Object-Oriented Programming II
-// Written by: Rebecca Messier (40338041) and Taminda Ait Ouazzou (Student ID)
+// Written by: Rebecca Messier (40338041) and Taminda Ait Ouazzou (40344517)
 //
 // This abstract class represents an accommodation
 // option in the SmartTravel system. It stores common
