@@ -47,9 +47,10 @@ public class Flight extends Transportation {
 
 	public void setLuggageAllowanceKg(double luggageAllowanceKg) { this.luggageAllowanceKg = luggageAllowanceKg; }
 
-	@Override // WILL NEED TO CHANGE THIS
+	@Override
 	public double calculateCost(int numberOfDays) {
-		return numberOfDays * 100; // Placeholder cost calculation, can be modified based on airlineName and luggageAllowanceKg
+		// Base flight cost + luggage factor + per-day factor
+		return 100.0 + (luggageAllowanceKg * 2.0) + (numberOfDays * 20.0);
 	}
 
 	@Override

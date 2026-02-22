@@ -44,10 +44,18 @@ public class Train extends Transportation {
 
 	public void setSeatClass(String seatClass) { this.seatClass = seatClass; }
 
-	@Override //WILL NEED TO CHANGE THIS
-	// Cost calculation based on number of days
+	@Override
 	public double calculateCost(int numberOfDays) {
-		return numberOfDays * 50; // Placeholder cost calculation, can be modified based on trainType and seatClass
+		double base = 50.0;
+		// Adjust cost based on seat class
+		if (seatClass != null) {
+			if (seatClass.equalsIgnoreCase("First")) {
+				base += 20.0; } 
+			else if (seatClass.equalsIgnoreCase("Business")) {
+				base += 15.0;} 
+			else if (seatClass.equalsIgnoreCase("Second")) {
+				base += 10.0; }
+		} return base + (numberOfDays * 10.0);
 	}
 		
 	

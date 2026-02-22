@@ -45,10 +45,12 @@ public class Bus extends Transportation {
 
 	public void setNumberofStops(int numberofStops) { this.numberofStops = numberofStops; }
 
-	@Override //WILL NEED TO CHANGE THIS
+	@Override
+	//Returns the cost of the bus transportation 
 	public double calculateCost(int numberOfDays) {
-		return numberOfDays * 30; // Placeholder cost calculation, can be modified based on busCompany and numberofStops
-	}
+     // Base bus cost + small increase per stop + per-day factor
+    	return 30.0 + (numberofStops * 5.0) + (numberOfDays * 5.0);
+}
 
 	@Override
 	// Returns a string representation of the Bus
