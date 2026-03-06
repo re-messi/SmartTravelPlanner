@@ -1,5 +1,5 @@
 //-----------------------------------------------------
-// Assignment 1
+// Assignment 2
 // Written by: Rebecca Messier (40338041) and Taminda Ait Ouazzou (40344517)
 //
 // This class represents a hotel accommodation in the

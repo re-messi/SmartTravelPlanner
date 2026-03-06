@@ -1,5 +1,5 @@
 //-----------------------------------------------------
-// Assignment 1
+// Assignment 2
 // Written by: Rebecca Messier (40338041) and Taminda Ait Ouazzou (40344517)	
 //
 // This class represents a client in the SmartTravel
@@ -7,6 +7,8 @@
 // first name, last name, and email address.
 //-----------------------------------------------------
 package client;
+
+import exceptions.InvalidClientDataException;
 
 public class Client {
 

@@ -1,5 +1,5 @@
 //-----------------------------------------------------
-// Assignment 1 - COMP 249
+// Assignment 2 - COMP 249
 // Written by: Rebecca Messier (40338041) and Taminda Ait Ouazzou (40344517)
 //
 // This program implements the SmartTravel management
