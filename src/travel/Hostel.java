@@ -49,6 +49,11 @@ public class Hostel extends Accommodation {
 	}
 
 	@Override
+	public Accommodation copy() {
+    return new Hostel(this);
+}
+
+	@Override
 	// Returns a string representation of the Hostel
 	public String toString() {
 		return "Hostel: " + 
@@ -65,9 +70,12 @@ public class Hostel extends Accommodation {
 	    if (getClass() != otherObject.getClass())
 				return false;
 
+		if (!super.equals(otherObject)) // compare parent attributes first
+    		return false;
+
 		Hostel other = (Hostel) otherObject;
 
-	    	return super.equals(other) && this.sharedBedsPerRoom == other.sharedBedsPerRoom;
+	    	return this.sharedBedsPerRoom == other.sharedBedsPerRoom;
 
 	}
 

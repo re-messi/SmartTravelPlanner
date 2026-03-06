@@ -57,6 +57,10 @@ public class Train extends Transportation {
 		} return base + (numberOfDays * 10.0);
 	}
 		
+	@Override
+	public Transportation copy() {
+    return new Train(this);
+}
 	
 	@Override
 	// Returns a string representation of the Train
@@ -75,11 +79,13 @@ public class Train extends Transportation {
 
 	    if (getClass() != otherObject.getClass())
 	        return false;
+
+		if (!super.equals(otherObject)) // compare parent attributes first
+    		return false;
 	    
 	    Train other = (Train) otherObject;
 		
-	    	return super.equals(other) && 
-	    			this.trainType.equals(other.trainType) &&
+	    	return  this.trainType.equals(other.trainType) &&
 	    			this.seatClass.equals(other.seatClass);
 	}
 

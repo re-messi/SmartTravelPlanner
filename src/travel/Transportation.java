@@ -69,6 +69,9 @@ public abstract class Transportation {
 	
 	// Abstract methods (implemented by subclasses)
 	public abstract double calculateCost(int numberOfDays);
+
+	// Returns a deep copy of the object using copy constructors
+	public abstract Transportation copy();
 		
 	
 	@Override

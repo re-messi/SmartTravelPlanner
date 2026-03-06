@@ -89,6 +89,8 @@ public abstract class Accommodation {
 	// Method will be used to calculate the total trip cost (overriden by subclasses)
 	public abstract double calculateCost(int numberOfDays);
 
+	// Returns a deep copy of the object using copy constructors
+	public abstract Accommodation copy();
 
 	// Printing description of object
 	@Override

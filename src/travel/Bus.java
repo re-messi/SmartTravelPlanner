@@ -50,6 +50,10 @@ public class Bus extends Transportation {
      // Base bus cost + small increase per stop + per-day factor
     	return 30.0 + (numberofStops * 5.0) + (numberOfDays * 5.0);
 }
+	@Override
+	public Transportation copy() {
+    return new Bus(this);
+}
 
 	@Override
 	// Returns a string representation of the Bus
@@ -68,11 +72,13 @@ public class Bus extends Transportation {
 
 	    if (getClass() != otherObject.getClass())
 	        return false;
+
+		if (!super.equals(otherObject)) // compare parent attributes first
+    		return false;
 		
 		Bus other = (Bus) otherObject;
 
-	    	return super.equals(other) &&
-	    			this.busCompany.equals(other.busCompany) && 
+	    	return  this.busCompany.equals(other.busCompany) && 
 	    			this.numberofStops == other.numberofStops;
 
 	 }

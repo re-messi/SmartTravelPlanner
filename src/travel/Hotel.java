@@ -47,6 +47,11 @@ public class Hotel extends Accommodation {
 	}
 
 	@Override
+	public Accommodation copy() {
+    return new Hotel(this);
+}
+
+	@Override
 	// Returns a string representation of the Hotel
 	public String toString() {
 		return "Hotel: " + 
@@ -63,9 +68,12 @@ public class Hotel extends Accommodation {
 	    if (getClass() != otherObject.getClass())
 	        return false;
 
+		if (!super.equals(otherObject)) // compare parent attributes first
+    		return false;
+
 		Hotel other = (Hotel) otherObject;
 
-	    	return super.equals(other) && this.starRating == other.starRating;
-	
-	}	
+	    	return this.starRating == other.starRating;
+			
+	}	//call the super first, then cast
 }

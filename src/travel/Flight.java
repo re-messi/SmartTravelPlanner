@@ -53,6 +53,11 @@ public class Flight extends Transportation {
 	}
 
 	@Override
+	public Transportation copy() {
+    return new Flight(this);
+}
+
+	@Override
 	// Returns a string representation of the Flight
 	public String toString() {
 		return "Flight: " + 
@@ -70,10 +75,13 @@ public class Flight extends Transportation {
 	    if (getClass() != otherObject.getClass())
 			return false;
 
+		if (!super.equals(otherObject)) // compare parent attributes first
+    		return false;
+
 		Flight other = (Flight) otherObject;
 
 	    return this.airlineName.equals(other.airlineName) && 
-	    	this.luggageAllowanceKg == other.luggageAllowanceKg;
+	    	   this.luggageAllowanceKg == other.luggageAllowanceKg;
 
 	}
 }
