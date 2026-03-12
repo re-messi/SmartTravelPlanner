@@ -11,6 +11,7 @@
 package travel;
 
 import client.Client;
+import exceptions.InvalidTripDataException;
 
 public class Trip {
 

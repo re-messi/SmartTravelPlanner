@@ -25,27 +25,29 @@ public class Client {
 	}
 	
 	//default constructor
-	public Client() {
-		clientID = generateClientID();
-		firstName = "";
-		lastName = "";
-		email = "";	
+	public Client() throws InvalidClientDataException {
+		this.clientID = generateClientID();
+		setFirstName("Unknown");	
+		setLastName("Unknown");
+		setEmail("unknown@unknown.com");
 	}
 	
 	//parameterized constructor
-	public Client(String firstName, String lastName, String email) {
+	public Client(String firstName, String lastName, String email) throws InvalidClientDataException {
+
 		this.clientID = generateClientID();
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
+
+		setFirstName(firstName);
+		setLastName(lastName);
+		setEmail(email);
 	}
 	
 	//copy constructor
-	public Client(Client other) {
+	public Client(Client other) throws InvalidClientDataException {
 		this.clientID = generateClientID();
-		this.firstName = other.firstName;
-		this.lastName = other.lastName;
-		this.email = other.email;
+		setFirstName(other.firstName);
+		setLastName(other.lastName);
+		setEmail(other.email);
 	}
 	
 	//Accessors
@@ -58,12 +60,32 @@ public class Client {
 	public String getEmail() {return email;}
 	
 	//Mutators
-	public void setFirstName(String firstName) {this.firstName = firstName;}
+	public void setFirstName(String firstName) throws InvalidClientDataException {
+    if (firstName == null || firstName.trim().isEmpty())
+        throw new InvalidClientDataException("First name cannot be empty.");
+    if (firstName.length() > 50)
+        throw new InvalidClientDataException("First name exceeds 50 characters.");
+    this.firstName = firstName;
+	}
+
+	public void setLastName(String lastName) throws InvalidClientDataException {
+    if (lastName == null || lastName.trim().isEmpty())
+        throw new InvalidClientDataException("Last name cannot be empty.");
+    if (lastName.length() > 50)
+        throw new InvalidClientDataException("Last name exceeds 50 characters.");
+    this.lastName = lastName;
+	}
 	
-	public void setLastName(String lastName) {this.lastName = lastName;}
-	
-	public void setEmail(String email) {this.email = email;}
-	
+	public void setEmail(String email) throws InvalidClientDataException {
+    if (email == null)
+    	throw new InvalidClientDataException("Email cannot be null.");
+	if (email.length() > 100)
+    	throw new InvalidClientDataException("Email exceeds 100 characters.");
+	if (!email.contains("@") || !email.contains(".") || email.contains(" "))
+    	throw new InvalidClientDataException("Invalid email format.");
+    this.email = email;
+	}
+
 	//toString method
 	@Override
 	public String toString() {
@@ -87,6 +109,5 @@ public class Client {
 				&& email.equals(other.email);	
 	}
 
-	
 	
 }
