@@ -9,25 +9,22 @@
 //-----------------------------------------------------
 package travel;
 
+import exceptions.InvalidTransportDataException;
+
 public class Flight extends Transportation {
 
 	// Attributes
 	private String airlineName;
 	private double luggageAllowanceKg;
 	
-	
-	// Default constructor
-	public Flight() {
-		super();
-		this.airlineName = "";
-		this.luggageAllowanceKg = 0.0;
-	}
+
 	// Parameterized constructor
-	public Flight(String companyName, String departureCity, String arrivalCity, String airlineName, double luggageAllowanceKg) {
+	public Flight(String companyName, String departureCity, String arrivalCity, String airlineName, double luggageAllowanceKg) throws InvalidTransportDataException {
 		super(companyName, departureCity, arrivalCity);
 		this.airlineName = airlineName;
-		this.luggageAllowanceKg = luggageAllowanceKg;
+		setLuggageAllowanceKg(luggageAllowanceKg);
 	}
+
 	// Copy constructor
 	public Flight(Flight other) {
 		super(other);
@@ -44,7 +41,11 @@ public class Flight extends Transportation {
 
 	public void setAirlineName(String airlineName) { this.airlineName = airlineName; }
 
-	public void setLuggageAllowanceKg(double luggageAllowanceKg) { this.luggageAllowanceKg = luggageAllowanceKg; }
+	public void setLuggageAllowanceKg(double luggageAllowanceKg) throws InvalidTransportDataException {
+		if (luggageAllowanceKg < 0) 
+			throw new InvalidTransportDataException("Luggage allowance cannot be negative.");
+		this.luggageAllowanceKg = luggageAllowanceKg;
+	}
 
 	@Override
 	public double calculateCost(int numberOfDays) {

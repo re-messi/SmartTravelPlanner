@@ -31,27 +31,15 @@ public class Trip {
 		
 	  }
 	
-	//Default constructor
-	public Trip() {
-		this.tripId = generateTripId();
-		this.destination = "";
-		this.durationInDays = 0;
-		this.basePrice = 0.00;
-		this.client = null;
-		this.transportation = null;
-		this.accommodation = null;
-		
-	}
-	
 	//Parameterized constructor
-	public Trip(String destination, int durationInDays, double basePrice, Client client, Transportation transportation, Accommodation accommodation) {
+	public Trip(String destination, int durationInDays, double basePrice, Client client, Transportation transportation, Accommodation accommodation) throws InvalidTripDataException {
 		this.tripId = generateTripId();
-		this.destination = destination;
-		this.durationInDays = durationInDays;
-		this.basePrice = basePrice;
-		this.client = client;
-		this.transportation = transportation;
-		this.accommodation = accommodation;	
+		setDestination(destination);
+		setDurationInDays(durationInDays);
+		setBasePrice(basePrice);
+		setClient(client);
+		setTransportation(transportation);
+		setAccommodation(accommodation);	
 				
 	}
 	
@@ -90,13 +78,29 @@ public class Trip {
 	
 	// Mutators (update trip attributes, excluding tripId)
 
-	public void setDestination(String destination) { this.destination = destination; }
+	public void setDestination(String destination) throws InvalidTripDataException {
+		if (destination == null || destination.trim().isEmpty())
+			throw new InvalidTripDataException("Destination cannot be empty.");
+		this.destination = destination;
+	}
 	
-	public void setDurationInDays(int durationInDays) { this.durationInDays = durationInDays; }	
+	public void setDurationInDays(int durationInDays) throws InvalidTripDataException {
+		if (durationInDays < 1 || durationInDays > 20)
+			throw new InvalidTripDataException("Duration must be between 1 and 20 days.");
+		this.durationInDays = durationInDays;
+	}
 	
-	public void setBasePrice(double basePrice) { this.basePrice = basePrice; }
+	public void setBasePrice(double basePrice) throws InvalidTripDataException {
+		if (basePrice < 100.0)
+			throw new InvalidTripDataException("Base price must be at least $100.00.");
+		this.basePrice = basePrice;
+	}
 	
-	public void setClient(Client client) { this.client = client; }
+	public void setClient(Client client) throws InvalidTripDataException {
+		if (client == null)
+			throw new InvalidTripDataException("Trip must have a client.");
+		this.client = client;
+	}
 	
 	public void setTransportation(Transportation transportation) { this.transportation = transportation; }
 	

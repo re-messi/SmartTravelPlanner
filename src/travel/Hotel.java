@@ -8,20 +8,16 @@
 //-----------------------------------------------------
 package travel;
 
+import exceptions.InvalidAccommodationDataException;
+
 public class Hotel extends Accommodation {
 
 	private int starRating;
 
-	// Default constructor
-	public Hotel() {
-		super();
-		this.starRating = 0;
-	}
-
 	// Parameterized constructor
-	public Hotel(String name, String location, double pricePerNight, int starRating) {
-		super(name, location, pricePerNight);
-		this.starRating = starRating;
+	public Hotel(String name, String location, double pricePerNight, int starRating) throws InvalidAccommodationDataException {
+		super(name, location, pricePerNight) ;
+		setStarRating(starRating);
 	}
 
 	// Copy constructor
@@ -36,7 +32,9 @@ public class Hotel extends Accommodation {
 	}
 
 	// Mutator
-	public void setStarRating(int starRating) {
+	public void setStarRating(int starRating) throws InvalidAccommodationDataException {
+		if (starRating < 1 || starRating > 5) 
+			throw new InvalidAccommodationDataException("Star rating must be 1-5.");
 		this.starRating = starRating;
 	}
 

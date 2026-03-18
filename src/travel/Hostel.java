@@ -8,22 +8,20 @@
 //-----------------------------------------------------
 package travel;
 
+import exceptions.InvalidAccommodationDataException;
+
 public class Hostel extends Accommodation {
 
 
 	// Attributes
 	private int sharedBedsPerRoom;
 
-	// Default constructor
-	public Hostel() {
-		super();
-		this.sharedBedsPerRoom = 0;
-	}
 
 	// Parameterized constructor
-	public Hostel(String name, String location, double pricePerNight, int sharedBedsPerRoom) {
+	public Hostel(String name, String location, double pricePerNight, int sharedBedsPerRoom) throws InvalidAccommodationDataException {
 		super(name, location, pricePerNight);
 		this.sharedBedsPerRoom = sharedBedsPerRoom;
+		setPricePerNight(pricePerNight); 
 	}
 
 	// Copy constructor
@@ -41,6 +39,16 @@ public class Hostel extends Accommodation {
 	public void setSharedBedsPerRoom(int sharedBedsPerRoom) {
 		this.sharedBedsPerRoom = sharedBedsPerRoom;
 	}
+
+	@Override
+	public void setPricePerNight(double pricePerNight)
+        throws InvalidAccommodationDataException {
+    if (pricePerNight <= 0)
+        throw new InvalidAccommodationDataException("Price per night must be > 0.");
+    if (pricePerNight > 150)
+        throw new InvalidAccommodationDataException("Hostel price cannot exceed 150.");
+    super.setPricePerNight(pricePerNight);
+}
 
 	@Override
 	// Cost calculation based on price per night and number of days

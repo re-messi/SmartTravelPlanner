@@ -10,6 +10,7 @@
 //-----------------------------------------------------
 package travel;
 
+
 public abstract class Transportation {
 
 	// Attributes

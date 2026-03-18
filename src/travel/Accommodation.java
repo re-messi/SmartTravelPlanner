@@ -9,6 +9,8 @@
 //-----------------------------------------------------
 package travel;
 
+import exceptions.InvalidAccommodationDataException;
+
 public abstract class Accommodation {
 
 	
@@ -27,21 +29,15 @@ public abstract class Accommodation {
 	}
 
 
-	// Default constructor 
-	public Accommodation() {
-		this.accommodationID = generateAccommodationID();
-		this.name = "";
-		this.location = "";
-		this.pricePerNight = 0.0;
-	}
+	// Default constructor : creates invalid objects
 	
 
 	// Parameterized constructor
-	public Accommodation(String name, String location, double pricePerNight) {
+	public Accommodation(String name, String location, double pricePerNight) throws InvalidAccommodationDataException {
 		this.accommodationID = generateAccommodationID();
 		this.name = name;
 		this.location =location;
-		this.pricePerNight = pricePerNight;
+		setPricePerNight(pricePerNight);
 	}
 
 
@@ -67,7 +63,7 @@ public abstract class Accommodation {
 		return pricePerNight;
 	}
 
-	public String getNextAccommodationID(){
+	public String getAccommodationID(){
 		return accommodationID;
 	}
 
@@ -81,7 +77,9 @@ public abstract class Accommodation {
 		this.location = location; 
 	}
 
-	public void setPricePerNight(double pricePerNight){
+	public void setPricePerNight(double pricePerNight) throws InvalidAccommodationDataException {
+		if (pricePerNight <= 0) 
+			throw new InvalidAccommodationDataException("Price per night must be a positive value.");
 		this.pricePerNight = pricePerNight;
 	}
 

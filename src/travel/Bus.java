@@ -9,23 +9,20 @@
 //-----------------------------------------------------
 package travel;
 
+import exceptions.InvalidTransportDataException;
+
 public class Bus extends Transportation {
 
 	// Attributes
 	private String busCompany;
 	private int numberofStops;
 
-	// Default constructor
-	public Bus() {
-		super();
-		this.busCompany = "";
-		this.numberofStops = 0;
-	}
+	
 	// Parameterized constructor
-	public Bus(String companyName, String departureCity, String arrivalCity, String busCompany, int numberofStops) {
+	public Bus(String companyName, String departureCity, String arrivalCity, String busCompany, int numberofStops) throws InvalidTransportDataException {
 		super(companyName, departureCity, arrivalCity);
 		this.busCompany = busCompany;
-		this.numberofStops = numberofStops;
+		setNumberofStops(numberofStops);
 	}
 	// Copy constructor
 	public Bus(Bus other) {
@@ -42,7 +39,11 @@ public class Bus extends Transportation {
 	// Mutators
 	public void setBusCompany(String busCompany) { this.busCompany = busCompany; }
 
-	public void setNumberofStops(int numberofStops) { this.numberofStops = numberofStops; }
+	public void setNumberofStops(int numberofStops) throws InvalidTransportDataException {
+		if (numberofStops < 1) 
+			throw new InvalidTransportDataException("A bus must have at least 1 stop.");
+		this.numberofStops = numberofStops;
+	}
 
 	@Override
 	//Returns the cost of the bus transportation 

@@ -24,30 +24,23 @@ public class Client {
 		return "C" + (nextClientNum++);
 	}
 	
-	//default constructor
-	public Client() throws InvalidClientDataException {
-		this.clientID = generateClientID();
-		setFirstName("Unknown");	
-		setLastName("Unknown");
-		setEmail("unknown@unknown.com");
-	}
+	//default constructor : no use, only placeholder data which would use up a clientID
+	
 	
 	//parameterized constructor
 	public Client(String firstName, String lastName, String email) throws InvalidClientDataException {
-
 		this.clientID = generateClientID();
-
 		setFirstName(firstName);
 		setLastName(lastName);
 		setEmail(email);
 	}
 	
 	//copy constructor
-	public Client(Client other) throws InvalidClientDataException {
-		this.clientID = generateClientID();
-		setFirstName(other.firstName);
-		setLastName(other.lastName);
-		setEmail(other.email);
+	public Client(Client other) {
+		this.clientID = generateClientID();  
+    	this.firstName = other.firstName;
+   	 	this.lastName = other.lastName;
+    	this.email = other.email;
 	}
 	
 	//Accessors
