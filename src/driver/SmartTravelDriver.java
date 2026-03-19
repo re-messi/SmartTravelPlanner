@@ -30,6 +30,10 @@ import travel.Transportation;
 import travel.Trip;
 import visualization.TripChartGenerator;
 
+import exceptions.DuplicateEmailException;
+import exceptions.InvalidClientDataException;
+
+
 public class SmartTravelDriver {
     public static void main(String[] args) throws IOException {
         System.out.println("Welcome to the SmartTravel Mannaging Program");
@@ -105,27 +109,38 @@ public class SmartTravelDriver {
                                             break clientMenu;
 
                                         case 1: // Add client
-                                            if (clientCount < clients.length) {
-                                                Client newClient = new Client();
+                                            if (clientCount >= clients.length) {
+                                                System.out.println("Client list is full.");
+                                                break;
+                                            }
+
+                                             try {
                                                 System.out.print("Enter the first name: ");
                                                 String firstName = sc.nextLine();
-                                                newClient.setFirstName(firstName);
 
                                                 System.out.print("Enter the last name: ");
                                                 String lastName = sc.nextLine();
-                                                newClient.setLastName(lastName);
-
+                                                
                                                 System.out.print("Enter the email: ");
                                                 String email = sc.nextLine();
-                                                newClient.setEmail(email);
+                                               
+                                                //check duplicate email
+                                                for (int i = 0; i < clientCount; i++) {
+                                                    if (clients[i].getEmail().equalsIgnoreCase(email)) {
+                                                        throw new DuplicateEmailException("Email already exists");
+                                                    }
+                                                }
 
-                                                clients[clientCount] = newClient; // store object in array
+                                                Client newClient = new Client(firstName, lastName, email);
+                                                clients[clientCount] = newClient;
                                                 clientCount++;
 
                                                 System.out.println("\n" + newClient + "\n");
                                                 System.out.println("New client added.");
-                                            } else {
-                                                System.out.println("Client list is full.");
+                                             } 
+
+                                            catch (InvalidClientDataException | DuplicateEmailException e) {
+                                                System.out.println("Error adding client: " + e.getMessage());
                                             }
                                             break;
 
@@ -746,7 +761,7 @@ public class SmartTravelDriver {
                                             String accIdRemove = sc.nextLine();
                                             int indexToRemove = -1;
                                             for (int i = 0; i < accommodationCount; i++) {
-                                                if (accommodations[i].getNextAccommodationID().equalsIgnoreCase(accIdRemove)) {
+                                                if (accommodations[i].getAccommodationID().equalsIgnoreCase(accIdRemove)) {
                                                     indexToRemove = i;
                                                     break;
                                                 }

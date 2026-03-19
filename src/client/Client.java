@@ -18,6 +18,7 @@ public class Client {
 	private String lastName;
 	private String email;
 	private static int nextClientNum = 1001; 
+	 int clientCount;
 	
 	//helper method to generate IDs
 	private static String generateClientID() {
@@ -26,7 +27,7 @@ public class Client {
 	
 	//default constructor : no use, only placeholder data which would use up a clientID
 	
-	
+
 	//parameterized constructor
 	public Client(String firstName, String lastName, String email) throws InvalidClientDataException {
 		this.clientID = generateClientID();
