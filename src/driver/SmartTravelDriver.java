@@ -31,7 +31,10 @@ import travel.Trip;
 import visualization.TripChartGenerator;
 
 import exceptions.DuplicateEmailException;
+import exceptions.InvalidAccommodationDataException;
 import exceptions.InvalidClientDataException;
+import exceptions.InvalidTransportDataException;
+import exceptions.InvalidTripDataException;
 
 
 public class SmartTravelDriver {
@@ -144,64 +147,81 @@ public class SmartTravelDriver {
                                             }
                                             break;
 
-                                        case 2: // Edit client
-                                            if (clientCount == 0) {
-                                                System.out.println("No clients to edit.");
-                                                break;
-                                            }
+                                    case 2: // Edit client
+                                        if (clientCount == 0) {
+                                        System.out.println("No clients to edit.");
+                                         break;
+                                        }
 
-                                            System.out.print("Enter the Client ID to edit (ex: C1001): ");
+                                         System.out.print("Enter the Client ID to edit (ex: C1001): ");
                                             String idToEdit = sc.nextLine();
 
-                                            Client clientToEdit = null;
+                                             Client clientToEdit = null;
 
-                                            // search for client
                                             for (int i = 0; i < clientCount; i++) {
-                                                if (clients[i].getClientId().equalsIgnoreCase(idToEdit)) { 
-                                                    clientToEdit = clients[i];
-                                                    break;
-                                                }
-                                            }
+                                             if (clients[i].getClientId().equalsIgnoreCase(idToEdit)) {
+                                                clientToEdit = clients[i];
+                                              break;
+                                             }
+                                          }
 
                                             if (clientToEdit == null) {
-                                                System.out.println("Client not found.");
-                                                break;
-                                            }
+                                            System.out.println("Client not found.");
+                                            break;
+                                        }
 
-                                            // Edit menu
                                             System.out.println("Editing client:");
                                             System.out.println(clientToEdit);
 
-                                            System.out.print("\nWhat would you like to edit?" +
-                                                "\n 1. First name" +
-                                                "\n 2. Last name" +
-                                                "\n 3. Email" +
-                                                "\n Choice: ");
+                                         System.out.print("\nWhat would you like to edit?" +
+                                             "\n 1. First name" +
+                                             "\n 2. Last name" +
+                                             "\n 3. Email" +
+                                             "\n Choice: ");
+
                                             int editChoice = sc.nextInt();
-                                            sc.nextLine();
+                                             sc.nextLine();
 
-                                            switch (editChoice) {
-                                                case 1:
-                                                    System.out.print("Enter new first name: ");
-                                                    clientToEdit.setFirstName(sc.nextLine());
-                                                    break;
+                                         try {
+                                          switch (editChoice) {
+                                         case 1:
+                                          System.out.print("Enter new first name: ");
+                                            clientToEdit.setFirstName(sc.nextLine());
+                                        break;
 
-                                                case 2:
-                                                    System.out.print("Enter new last name: ");
-                                                    clientToEdit.setLastName(sc.nextLine());
-                                                    break;
+                                        case 2:
+                                         System.out.print("Enter new last name: ");
+                                         clientToEdit.setLastName(sc.nextLine());
+                                         break;
 
-                                                case 3:
-                                                    System.out.print("Enter new email: ");
-                                                    clientToEdit.setEmail(sc.nextLine());
-                                                    break;
+                                         case 3:
+                                            System.out.print("Enter new email: ");
+                                            String newEmail = sc.nextLine();
 
-                                                default:
-                                                    System.out.println("Invalid edit option.");
+                                         for (int i = 0; i < clientCount; i++) {
+                                             if (clients[i] != clientToEdit &&
+                                             clients[i].getEmail().equalsIgnoreCase(newEmail)) {
+                                            throw new DuplicateEmailException("Email already exists.");
+                                             }
+                                         }
+
+                                           clientToEdit.setEmail(newEmail);
+                                          break;
+
+                                         default:
+                                          System.out.println("Invalid edit option.");
+                                         break;
+                                    }
+
+                                          if (editChoice >= 1 && editChoice <= 3) {
+                                             System.out.println("Client updated successfully!");
+                                          }
+                                         }
+                                            catch (InvalidClientDataException | DuplicateEmailException e) {
+                                            System.out.println("Error updating client: " + e.getMessage());
                                             }
 
-                                            System.out.println("Client updated successfully!");
-                                            break;
+                                         break;
 
                                         case 3: // Delete client
                                             if (clientCount == 0) {
@@ -278,102 +298,119 @@ public class SmartTravelDriver {
                                             break tripMenu;
 
                                         case 1: // Create trip
-                                            if (tripCount >= trips.length) {
-                                                System.out.println("Trip list is full. Cannot add more trips.");
-                                                break;
-                                            }
+                                        if (tripCount >= trips.length) {
+                                         System.out.println("Trip list is full. Cannot add more trips.");
+                                          break;
+                                        }
 
-                                            System.out.print("Enter destination: ");
-                                            String destination = sc.nextLine();
+                                         if (clientCount == 0) {
+                                         System.out.println("No clients available. Add a client first.");
+                                          break;
+                                        }
 
-                                            System.out.print("Enter duration in days: ");
-                                            int durationInDays = sc.nextInt();
+                                         try {
+                                         System.out.print("Enter destination: ");
+                                         String destination = sc.nextLine();
 
-                                            System.out.print("Enter base price: ");
-                                            double basePrice = sc.nextDouble();
-                                            sc.nextLine();
+                                         System.out.print("Enter duration in days: ");
+                                         int durationInDays = sc.nextInt();
 
-                                            // Select Client
-                                            if (clientCount == 0) {
-                                                System.out.println("No clients available. Add a client first.");
-                                                break;
-                                            }
+                                         System.out.print("Enter base price: ");
+                                          double basePrice = sc.nextDouble();
+                                         sc.nextLine();
 
-                                            System.out.println("Available clients:");
-                                            for (int i = 0; i < clientCount; i++) {
-                                                System.out.println(clients[i].getClientId() + ": " + clients[i].getFirstName() + " " + clients[i].getLastName());
-                                            }
+                                        // Select Client
+                                        System.out.println("Available clients:");
+                                         for (int i = 0; i < clientCount; i++) {
+                                         System.out.println(clients[i].getClientId() + ": " +
+                                         clients[i].getFirstName() + " " + clients[i].getLastName());
+                                    }
 
-                                            System.out.print("Enter Client ID for this trip: ");
-                                            String clientID = sc.nextLine();
+                                         System.out.print("Enter Client ID for this trip: ");
+                                         String clientID = sc.nextLine();
 
-                                            Client selectedClient = null;
-                                            for (int i = 0; i < clientCount; i++) {
-                                                if (clients[i].getClientId().equalsIgnoreCase(clientID)) {
-                                                    selectedClient = clients[i];
-                                                    break;
-                                                }
-                                            }
+                                        Client selectedClient = null;
+                                        for (int i = 0; i < clientCount; i++) {
+                                         if (clients[i].getClientId().equalsIgnoreCase(clientID)) {
+                                         selectedClient = clients[i];
+                                          break;
+                                        }
+                                    }
 
-                                            if (selectedClient == null) {
-                                                System.out.println("Client not found. Trip creation cancelled.");
-                                                break;
-                                            }
+                                         if (selectedClient == null) {
+                                          throw new InvalidTripDataException("Client ID does not exist.");
+            
+                                        }
 
-                                            // Select Transportation
-                                            if (transportationCount == 0) {
-                                                System.out.println("No transportation options available. Add transportation first.");
-                                                break;
-                                            }
+                                       // Transportation is optional
+                                       Transportation selectedTransportation = null;
+                                       if (transportationCount > 0) {
+                                       System.out.print("Would you like to add transportation? (yes/no): ");
+                                       String addTransport = sc.nextLine();
 
-                                            System.out.println("Available transportation options:");
-                                            for (int i = 0; i < transportationCount; i++) {
-                                                System.out.println(i + 1 + ". " + transportations[i].toString());
-                                                System.out.println("----------------------");
-                                            }
+                                         if (addTransport.equalsIgnoreCase("yes")) {
+                                          System.out.println("Available transportation options:");
+                                          for (int i = 0; i < transportationCount; i++) {
+                                          System.out.println((i + 1) + ". " + transportations[i]);
+                                             System.out.println("----------------------");
+                                        }
 
-                                            System.out.print("Select transportation number: ");
+                                         System.out.print("Select transportation number: ");
                                             int transportChoice = sc.nextInt();
                                             sc.nextLine();
 
-                                            if (transportChoice < 1 || transportChoice > transportationCount) {
-                                                System.out.println("Invalid selection. Trip creation cancelled.");
-                                                break;
-                                            }
-
-                                            Transportation selectedTransportation = transportations[transportChoice - 1];
-
-                                            // Select Accommodation
-                                            if (accommodationCount == 0) {
-                                                System.out.println("No accommodations available. Add accommodation first.");
-                                                break;
-                                            }
-
-                                            System.out.println("Available accommodations:");
-                                            for (int i = 0; i < accommodationCount; i++) {
-                                                System.out.println(i + 1 + ". " + accommodations[i].toString());
-                                                System.out.println("----------------------");
-                                            }
-
-                                            System.out.print("Select accommodation number: ");
-                                            int accommodationChoice = sc.nextInt();
-                                            sc.nextLine();
-
-                                            if (accommodationChoice < 1 || accommodationChoice > accommodationCount) {
-                                                System.out.println("Invalid selection. Trip creation cancelled.");
-                                                break;
-                                            }
-
-                                            Accommodation selectedAccommodation = accommodations[accommodationChoice - 1];
-
-                                            // Create Trip object
-                                            Trip newTrip = new Trip(destination, durationInDays, basePrice, selectedClient, selectedTransportation, selectedAccommodation);
-                                            trips[tripCount] = newTrip;
-                                            tripCount++;
-
-                                            System.out.println("\nTrip created successfully!");
-                                            System.out.println(newTrip);
+                                        if (transportChoice < 1 || transportChoice > transportationCount) {
+                                            System.out.println("Invalid transportation selection.");
                                             break;
+                                        }
+
+                                        selectedTransportation = transportations[transportChoice - 1];
+                                        }
+                                    }
+
+                                        // Accommodation is optional
+                                         Accommodation selectedAccommodation = null;
+                                        if (accommodationCount > 0) {
+                                        System.out.print("Would you like to add accommodation? (yes/no): ");
+                                        String addAccommodation = sc.nextLine();
+
+                                    if (addAccommodation.equalsIgnoreCase("yes")) {
+                                        System.out.println("Available accommodations:");
+                                        for (int i = 0; i < accommodationCount; i++) {
+                                        System.out.println((i + 1) + ". " + accommodations[i]);
+                                        System.out.println("----------------------");
+                                    }
+
+                                        System.out.print("Select accommodation number: ");
+                                        int accommodationChoice = sc.nextInt();
+                                        sc.nextLine();
+
+                                        if (accommodationChoice < 1 || accommodationChoice > accommodationCount) {
+                                        System.out.println("Invalid accommodation selection.");
+                                        break;
+                                        }
+
+                                        selectedAccommodation = accommodations[accommodationChoice - 1];
+                                        }
+                                    }
+
+                                        // At least one required
+                                        if (selectedTransportation == null && selectedAccommodation == null) {
+                                        throw new InvalidTripDataException("A trip must include at least transportation or accommodation.");
+                                        }
+
+                                        Trip newTrip = new Trip(destination, durationInDays, basePrice, selectedClient, selectedTransportation, selectedAccommodation);
+                                        trips[tripCount] = newTrip;
+                                        tripCount++;
+
+                                        System.out.println("\nTrip created successfully!");
+                                        System.out.println(newTrip);
+                                        }
+                                        catch (InvalidTripDataException e) {
+                                        System.out.println("Error creating trip: " + e.getMessage());
+                                        }
+
+                                        break;   
 
                                         case 2: // Edit trip information
                                             if (tripCount == 0) {
@@ -410,6 +447,9 @@ public class SmartTravelDriver {
                                             int editTripChoice = sc.nextInt();
                                             sc.nextLine();
 
+
+                                            
+                                        try {
                                             switch (editTripChoice) {
                                                 case 1:
                                                     System.out.print("Enter new destination: ");
@@ -460,8 +500,17 @@ public class SmartTravelDriver {
 
                                                 default:
                                                     System.out.println("Invalid edit option.");
+                                                    break;
                                             }
-                                            System.out.println("Trip updated successfully!");
+
+                                            if(editTripChoice >= 1 && editTripChoice <= 5) 
+                                                System.out.println("Trip updated successfully!");
+                                            
+                                            }
+                                            catch(InvalidTripDataException e) {
+                                                System.out.println("Error updating trip: " + e.getMessage());
+                                            }
+
                                             break;
 
                                         case 3: // Cancel a trip
@@ -563,6 +612,7 @@ public class SmartTravelDriver {
 
                                             Transportation newTransport = null;
 
+                                            try {
                                             switch (typeChoice) {
                                                 case 1: // Train
                                                     System.out.print("Enter company name: ");
@@ -620,6 +670,12 @@ public class SmartTravelDriver {
                                                 transportationCount++;
                                                 System.out.println("Transportation added successfully.");
                                             }
+                                        }
+
+                                        catch (InvalidTransportDataException e) {
+                                            System.out.println("Error adding transportation: " + e.getMessage());
+                                        }
+
                                             break;
 
                                         case 2: // Remove transportation
@@ -711,6 +767,7 @@ public class SmartTravelDriver {
 
                                             Accommodation newAccommodation = null;
 
+                                           try { 
                                             switch (typeChoice) {
                                                 case 1: // Hotel
                                                     System.out.print("Enter name: ");
@@ -749,6 +806,11 @@ public class SmartTravelDriver {
                                                 accommodationCount++;
                                                 System.out.println("Accommodation added successfully.");
                                             }
+                                           }
+                                            catch(InvalidAccommodationDataException e) {
+                                                System.out.println("Error adding accommodation: " + e.getMessage());
+                                            }
+
                                             break;
 
                                         case 2: // Remove accommodation
@@ -970,7 +1032,7 @@ public class SmartTravelDriver {
     // Predefined scenarios for testing 
     public static void runPredefinedScenario() {
     System.out.println("    Running Predefined Scenario    ");
-
+        try {
     //  Clients 
     Client c1 = new Client("Alice", "Wonder", "alice@example.com");
     Client c2 = new Client("Indiana", "Jones", "indiana@example.com");
@@ -1064,6 +1126,14 @@ public class SmartTravelDriver {
     System.out.println(copiedTransports[0]);
 
     System.out.println("\n    Predefined Scenario Completed    \n");
+
+    }
+    catch (InvalidClientDataException | InvalidTransportDataException |
+           InvalidAccommodationDataException |InvalidTripDataException e) {
+        System.out.println("Error in predefined scenario: " + e.getMessage());
+    }
+
+
 }
 
 
