@@ -1059,6 +1059,10 @@ public class SmartTravelDriver {
                                 break;
 
                             case 7: //List all data summary
+                                 for (int i = 0; i < service.getTripCount(); i++) {
+                                 System.out.println(service.getTrip(i));
+                                 System.out.println("----------------------");
+                                }
                             break;
 
                             case 8: // Load all data
@@ -1068,14 +1072,9 @@ public class SmartTravelDriver {
                             case 9: // save all data
                                 service.saveAllData("output/data/");
                             break;
-
-                            case 10: // Run predefined scenario
-                                runPredefinedScenario();
-                                break;
                             
-                            case 11: // generate dashboard
+                            case 10: // generate dashboard
                                 try {
-                                SmartTravelService service = new SmartTravelService (clients, clientCount, trips, tripCount, transportations, transportationCount, accommodations, accommodationCount);
                                 DashboardGenerator.generateDashboard(service);
                                 }
                                 catch (IOException e) {
