@@ -26,10 +26,9 @@ public class Bus extends Transportation {
 	}
 
 	// parameterized constructor with transportId for loading from file
-	public Bus(String transportId, String companyName, String departureCity, String arrivalCity,String busCompany, int numberofStops){
-		super(transportId, companyName, departureCity, arrivalCity);
-		this.busCompany = busCompany;
-		//setNumberofStops(numberofStops); // NEED TO REVIEW THIS
+	public Bus(String transportId, String companyName, String departureCity, String arrivalCity, double price, int numberofStops) throws InvalidTransportDataException{
+		super(transportId, companyName, departureCity, arrivalCity, price);
+		setNumberofStops(numberofStops); 
 	}
 
 	// Copy constructor

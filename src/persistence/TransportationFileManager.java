@@ -26,7 +26,7 @@ public class TransportationFileManager {
                     b.getCompanyName() + ";" + 
                     b.getDepartureCity() + ";" + 
                     b.getArrivalCity() + ";" + 
-                    b.getBusCompany() + ";" + 
+                    b.getPrice() + ";" + 
                     b.getNumberofStops() ;
         } else if (t instanceof Flight){
             Flight f = (Flight) t;
@@ -34,7 +34,7 @@ public class TransportationFileManager {
                     f.getCompanyName() + ";" + 
                     f.getDepartureCity() + ";" + 
                     f.getArrivalCity() + ";" + 
-                    f.getAirlineName() + ";" + 
+                    f.getPrice() + ";" + 
                     f.getLuggageAllowanceKg();
         } else if (t instanceof Train){
             Train tr = (Train) t;
@@ -42,8 +42,8 @@ public class TransportationFileManager {
                     tr.getCompanyName() + ";" + 
                     tr.getDepartureCity() + ";" + 
                     tr.getArrivalCity() + ";" + 
-                    tr.getTrainType() + ";" + 
-                    tr.getSeatClass();
+                    tr.getPrice()+ ";" + 
+                    tr.getTrainType();
         }
          writer.println(line);
         }
@@ -51,8 +51,31 @@ public class TransportationFileManager {
     }
 
     public static int loadTransportation(Transportation[] transportations, String filePath) throws IOException {
-        // Code to load transportation data from a file and return the count
-        return 0; // Placeholder return value
+         Scanner scanner = new Scanner(new File(filePath));
+        int count = 0;
+        while(scanner.hasNextLine()){
+            String line = scanner.nextLine();
+            try {
+               String[] portion = line.split(";");
+               Transportation t = null;
+
+               if (portion[0].equals("BUS")){
+                t = new Bus(
+                     portion[1],                   
+                     portion[2],                   
+                     portion[3],
+                     Double.parseDouble(portion[4]),
+                     Integer.parseInt(portion[5]) 
+                );
+               }
     }
+     } catch (Exception e) {
+                // Log invalid line and skip
+                ErrorLogger.log("Invalid transportation data in file: " + line);
+            }
+        }
+
+        scanner.close();
+        return count;
     
 }

@@ -19,6 +19,11 @@ public abstract class Transportation {
 	private String departureCity;
 	private String arrivalCity;
 	private static int nextTransportNum = 3001;
+	private double price;
+
+	public double getPrice() {
+    return price;
+	}
 	
 	//Helper method to generate IDs
 		private static String generateTransportId() {
@@ -34,14 +39,15 @@ public abstract class Transportation {
 	}
 
 	// parameterized constructor with transportationID for loeading from file
-	protected Transportation(String transportId, String companyName, String departureCity, String arrivalCity){
+	protected Transportation(String transportId, String companyName, String departureCity, String arrivalCity, double price){
 		this.transportId = transportId;
-		this.companyName = "";
-		this.departureCity = "";
-		this.arrivalCity = "";
+		this.companyName = companyName;
+		this.departureCity = departureCity;
+		this.arrivalCity = arrivalCity;
+		this.price = price;
 
 	// Make sure nextAccommodationNum stays ahead
-    int numericPart = Integer.parseInt(transportId.substring(1)); // remove ''
+    int numericPart = Integer.parseInt(transportId.substring(2)); // remove ''
     if (numericPart >= nextTransportNum) {
         nextTransportNum = numericPart + 1;
     }

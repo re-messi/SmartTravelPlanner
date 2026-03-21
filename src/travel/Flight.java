@@ -26,9 +26,8 @@ public class Flight extends Transportation {
 	}
 
 	// parameterized constructor with transportationID for loeading from file
-	public Flight (String transportId, String companyName, String departureCity, String arrivalCity, String airlineName, double luggageAllowanceKg) throws InvalidTransportDataException{
-		super(transportId,companyName, departureCity, arrivalCity);
-		this.airlineName = airlineName;
+	public Flight (String transportId, String companyName, String departureCity, String arrivalCity, double price, double luggageAllowanceKg) throws InvalidTransportDataException{
+		super(transportId,companyName, departureCity, arrivalCity, price);
 		setLuggageAllowanceKg(luggageAllowanceKg);
 	}
 
