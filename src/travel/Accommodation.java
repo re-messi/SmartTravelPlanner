@@ -30,6 +30,21 @@ public abstract class Accommodation {
 
 
 	// Default constructor : creates invalid objects
+
+
+	// parameterized constructor with accommodationID for loading from file 
+	protected Accommodation(String accommodationID, String name, String location, double pricePerNight) throws InvalidAccommodationDataException {
+    this.accommodationID = accommodationID; // use CSV ID directly
+    this.name = name;
+    this.location = location;
+    setPricePerNight(pricePerNight);
+
+    // Make sure nextAccommodationNum stays ahead
+    int numericPart = Integer.parseInt(accommodationID.substring(1)); // remove 'A'
+    if (numericPart >= nextAccommodationNum) {
+        nextAccommodationNum = numericPart + 1;
+    }
+}
 	
 
 	// Parameterized constructor

@@ -20,6 +20,12 @@ public class Hotel extends Accommodation {
 		setStarRating(starRating);
 	}
 
+	// parameterized constructor with accommodationID for loading from file
+	public Hotel(String accommodationID, String name, String location, double pricePerNight, int starRating) throws InvalidAccommodationDataException {
+    super(accommodationID, name, location, pricePerNight);
+    setStarRating(starRating);
+}
+
 	// Copy constructor
 	public Hotel(Hotel other) {
 		super(other);

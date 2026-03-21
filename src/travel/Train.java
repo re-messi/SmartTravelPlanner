@@ -26,6 +26,14 @@ public class Train extends Transportation {
 		this.trainType = trainType;
 		this.seatClass = seatClass;
 	}
+
+	// parameterized constructor with transportId for loeading from file
+	public Train(String transportId, String companyName, String departureCity, String arrivalCity,String trainType, String seatClass){
+		super(transportId, companyName, departureCity, arrivalCity);
+		this.trainType = trainType;
+		this.seatClass = seatClass;
+	}
+
 	// Copy constructor
 	public Train(Train other) {
 		super(other);

@@ -24,6 +24,13 @@ public class Hostel extends Accommodation {
 		setPricePerNight(pricePerNight); 
 	}
 
+
+	// parameterized constructor with accommodationID for loading from file 
+	public Hostel(String accommodationID, String name, String location, double pricePerNight, int sharedBeds) throws InvalidAccommodationDataException {
+    	super(accommodationID, name, location, pricePerNight);
+   		this.sharedBedsPerRoom = sharedBeds;
+	}
+
 	// Copy constructor
 	public Hostel(Hostel other) {
 		super(other);

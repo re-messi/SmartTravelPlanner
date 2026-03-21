@@ -24,6 +24,14 @@ public class Bus extends Transportation {
 		this.busCompany = busCompany;
 		setNumberofStops(numberofStops);
 	}
+
+	// parameterized constructor with transportId for loading from file
+	public Bus(String transportId, String companyName, String departureCity, String arrivalCity,String busCompany, int numberofStops){
+		super(transportId, companyName, departureCity, arrivalCity);
+		this.busCompany = busCompany;
+		//setNumberofStops(numberofStops); // NEED TO REVIEW THIS
+	}
+
 	// Copy constructor
 	public Bus(Bus other) {
 		super(other);

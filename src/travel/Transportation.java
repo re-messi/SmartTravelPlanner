@@ -32,6 +32,20 @@ public abstract class Transportation {
 		this.departureCity = "";
 		this.arrivalCity = "";
 	}
+
+	// parameterized constructor with transportationID for loeading from file
+	protected Transportation(String transportId, String companyName, String departureCity, String arrivalCity){
+		this.transportId = transportId;
+		this.companyName = "";
+		this.departureCity = "";
+		this.arrivalCity = "";
+
+	// Make sure nextAccommodationNum stays ahead
+    int numericPart = Integer.parseInt(transportId.substring(1)); // remove ''
+    if (numericPart >= nextTransportNum) {
+        nextTransportNum = numericPart + 1;
+    }
+	}
 	
 	// Parameterized constructor 
 	public Transportation(String companyName, String departureCity, String arrivalCity) {

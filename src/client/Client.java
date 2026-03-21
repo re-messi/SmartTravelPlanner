@@ -26,6 +26,21 @@ public class Client {
 	}
 	
 	//default constructor : no use, only placeholder data which would use up a clientID
+
+
+	//parameterized constructor with clientID for loading from file 
+	public Client(String clientID, String firstName, String lastName, String email)throws InvalidClientDataException{
+		this.clientID = clientID;
+		setFirstName(firstName);
+		setLastName(lastName);
+		setEmail(email);
+
+	// make sure nextClientNum stays aupdated
+    int numericPart = Integer.parseInt(clientID.substring(1)); // remove 'C'
+    if (numericPart >= nextClientNum) {
+        nextClientNum = numericPart + 1;	
+	}
+ }
 	
 
 	//parameterized constructor
