@@ -31,6 +31,7 @@ import travel.Trip;
 import visualization.TripChartGenerator;
 
 import exceptions.DuplicateEmailException;
+import exceptions.EntityNotFoundException;
 import exceptions.InvalidAccommodationDataException;
 import exceptions.InvalidClientDataException;
 import exceptions.InvalidTransportDataException;
@@ -161,6 +162,8 @@ public class SmartTravelDriver {
 
                                             Client clientToEdit = null;
 
+
+                                            try {
                                             for (int i = 0; i < clientCount; i++) {
                                                 if (clients[i].getClientId().equalsIgnoreCase(idToEdit)) { 
                                                     clientToEdit = clients[i];
@@ -169,8 +172,7 @@ public class SmartTravelDriver {
                                             }
 
                                             if (clientToEdit == null) {
-                                                System.out.println("Client not found.");
-                                                break;
+                                                throw new EntityNotFoundException("Client not found.");
                                             }
 
                                             System.out.println("Editing client:");
@@ -185,7 +187,7 @@ public class SmartTravelDriver {
                                             int editChoice = sc.nextInt();
                                             sc.nextLine();
 
-                                         try {
+                                         
                                             switch (editChoice) {
                                                 case 1:
                                                     System.out.print("Enter new first name: ");
@@ -199,28 +201,27 @@ public class SmartTravelDriver {
 
                                                 case 3:
                                                     System.out.print("Enter new email: ");
-                                            String newEmail = sc.nextLine();
+                                                    String newEmail = sc.nextLine();
 
-                                         for (int i = 0; i < clientCount; i++) {
-                                             if (clients[i] != clientToEdit &&
-                                             clients[i].getEmail().equalsIgnoreCase(newEmail)) {
-                                            throw new DuplicateEmailException("Email already exists.");
-                                             }
-                                         }
+                                                    for (int i = 0; i < clientCount; i++) {
+                                                        if (clients[i] != clientToEdit && clients[i].getEmail().equalsIgnoreCase(newEmail)) {
+                                                        throw new DuplicateEmailException("Email already exists.");
+                                                    }
+                                                }
 
-                                           clientToEdit.setEmail(newEmail);
+                                                    clientToEdit.setEmail(newEmail);
                                                     break;
 
                                                 default:
                                                     System.out.println("Invalid edit option.");
-                                         break;
+                                                    break;
                                             }
 
                                           if (editChoice >= 1 && editChoice <= 3) {
                                             System.out.println("Client updated successfully!");
                                           }
                                          }
-                                            catch (InvalidClientDataException | DuplicateEmailException e) {
+                                            catch (EntityNotFoundException | InvalidClientDataException | DuplicateEmailException e) {
                                             System.out.println("Error updating client: " + e.getMessage());
                                             }
 
@@ -237,6 +238,8 @@ public class SmartTravelDriver {
 
                                             int indexToDelete = -1;
 
+
+                                            try {
                                             // Find client index
                                             for (int i = 0; i < clientCount; i++) {
                                                 if (clients[i].getClientId().equalsIgnoreCase(idToDelete)) {
@@ -246,8 +249,8 @@ public class SmartTravelDriver {
                                             }
 
                                             if (indexToDelete == -1) {
-                                                System.out.println("Client not found.");
-                                                break;
+                                                throw new EntityNotFoundException("Client not found.");
+                                                
                                             }
 
                                             // Shift left
@@ -260,6 +263,12 @@ public class SmartTravelDriver {
                                             clientCount--;
 
                                             System.out.println("Client deleted successfully.");
+
+                                            }
+                                            catch (EntityNotFoundException e) {
+                                                System.out.println("Error deleting client: " + e.getMessage());
+                                            }   
+
                                             break;
 
                                         case 4: // List all clients
@@ -341,7 +350,7 @@ public class SmartTravelDriver {
                                             }
 
                                             if (selectedClient == null) {
-                                          throw new InvalidTripDataException("Client ID does not exist.");
+                                          throw new EntityNotFoundException("Client ID does not exist.");
             
                                         }
 
@@ -409,7 +418,7 @@ public class SmartTravelDriver {
                                             System.out.println("\nTrip created successfully!");
                                             System.out.println(newTrip);
                                         }
-                                        catch (InvalidTripDataException e) {
+                                        catch (EntityNotFoundException |InvalidTripDataException e) {
                                         System.out.println("Error creating trip: " + e.getMessage());
                                         }
 
@@ -425,6 +434,8 @@ public class SmartTravelDriver {
                                             String tripIdEdit = sc.nextLine();
 
                                             Trip tripToEdit = null;
+
+                                            try {
                                             for (int i = 0; i < tripCount; i++) {
                                                 if (trips[i].getTripId().equalsIgnoreCase(tripIdEdit)) {
                                                     tripToEdit = trips[i];
@@ -433,8 +444,7 @@ public class SmartTravelDriver {
                                             }
 
                                             if (tripToEdit == null) {
-                                                System.out.println("Trip not found.");
-                                                break;
+                                                throw new EntityNotFoundException("Trip not found.");
                                             }
 
                                             System.out.println("Editing Trip:");
@@ -450,9 +460,6 @@ public class SmartTravelDriver {
                                             int editTripChoice = sc.nextInt();
                                             sc.nextLine();
 
-
-                                            
-                                        try {
                                             switch (editTripChoice) {
                                                 case 1:
                                                     System.out.print("Enter new destination: ");
@@ -510,7 +517,7 @@ public class SmartTravelDriver {
                                             System.out.println("Trip updated successfully!");
                                             
                                             }
-                                            catch(InvalidTripDataException e) {
+                                            catch(EntityNotFoundException | InvalidTripDataException e) {
                                                 System.out.println("Error updating trip: " + e.getMessage());
                                             }
 
@@ -526,6 +533,8 @@ public class SmartTravelDriver {
                                             String tripIdCancel = sc.nextLine();
 
                                             int indexToDelete = -1;
+
+                                            try {
                                             for (int i = 0; i < tripCount; i++) {
                                                 if (trips[i].getTripId().equalsIgnoreCase(tripIdCancel)) {
                                                     indexToDelete = i;
@@ -534,8 +543,7 @@ public class SmartTravelDriver {
                                             }
 
                                             if (indexToDelete == -1) {
-                                                System.out.println("Trip not found.");
-                                                break;
+                                                throw new EntityNotFoundException("Trip not found.");
                                             }
 
                                             // Shift elements left
@@ -545,6 +553,10 @@ public class SmartTravelDriver {
                                             trips[tripCount - 1] = null;
                                             tripCount--;
                                             System.out.println("Trip cancelled successfully.");
+                                        }
+                                        catch (EntityNotFoundException e) {
+                                            System.out.println("Error cancelling trip: " + e.getMessage());
+                                        }
                                             break;
 
                                         case 4: // List all trips
@@ -568,6 +580,7 @@ public class SmartTravelDriver {
                                             String clientTripsID = sc.nextLine();
 
                                             boolean found = false;
+                                            
                                             for (int i = 0; i < tripCount; i++) {
                                                 if (trips[i].getClient().getClientId().equalsIgnoreCase(clientTripsID)) {
                                                     System.out.println(trips[i]);
@@ -575,10 +588,15 @@ public class SmartTravelDriver {
                                                     found = true;
                                                 }
                                             }
-
+                                            try {
                                             if (!found) {
-                                                System.out.println("No trips found for this client.");
+                                                throw new EntityNotFoundException("No trips found for this client.");
                                             }
+                                        }
+                                            catch (EntityNotFoundException e) {
+                                                System.out.println(e.getMessage());
+                                            }
+
                                             break;
 
                                         default:
@@ -690,6 +708,8 @@ public class SmartTravelDriver {
                                             System.out.print("Enter the Transport ID to remove: ");
                                             String transIdRemove = sc.nextLine();
                                             int indexToRemove = -1;
+
+                                            try {
                                             for (int i = 0; i < transportationCount; i++) {
                                                 if (transportations[i].getTransportId().equalsIgnoreCase(transIdRemove)) {
                                                     indexToRemove = i;
@@ -698,8 +718,7 @@ public class SmartTravelDriver {
                                             }
 
                                             if (indexToRemove == -1) {
-                                                System.out.println("Transport not found.");
-                                                break;
+                                                throw new EntityNotFoundException("Transport not found.");
                                             }
 
                                             // Shift array left
@@ -709,6 +728,11 @@ public class SmartTravelDriver {
                                             transportations[transportationCount - 1] = null;
                                             transportationCount--;
                                             System.out.println("Transportation removed successfully.");
+                                        }
+                                        catch (EntityNotFoundException e) {
+                                            System.out.println("Error removing transportation: " + e.getMessage());
+                                        }
+
                                             break;
 
                                         case 3: // List by type  
@@ -808,8 +832,8 @@ public class SmartTravelDriver {
                                                 accommodations[accommodationCount] = newAccommodation;
                                                 accommodationCount++;
                                                 System.out.println("Accommodation added successfully.");
+                                               }
                                             }
-                                           }
                                             catch(InvalidAccommodationDataException e) {
                                                 System.out.println("Error adding accommodation: " + e.getMessage());
                                             }
@@ -825,6 +849,8 @@ public class SmartTravelDriver {
                                             System.out.print("Enter the Accommodation ID to remove: ");
                                             String accIdRemove = sc.nextLine();
                                             int indexToRemove = -1;
+
+                                            try {
                                             for (int i = 0; i < accommodationCount; i++) {
                                                 if (accommodations[i].getAccommodationID().equalsIgnoreCase(accIdRemove)) {
                                                     indexToRemove = i;
@@ -833,8 +859,7 @@ public class SmartTravelDriver {
                                             }
 
                                             if (indexToRemove == -1) {
-                                                System.out.println("Accommodation not found.");
-                                                break;
+                                                throw new EntityNotFoundException("Accommodation not found.");
                                             }
 
                                             // Shift array left
@@ -844,6 +869,10 @@ public class SmartTravelDriver {
                                             accommodations[accommodationCount - 1] = null;
                                             accommodationCount--;
                                             System.out.println("Accommodation removed successfully.");
+                                            }
+                                            catch (EntityNotFoundException e) {
+                                                System.out.println("Error removing accommodation: " + e.getMessage());
+                                            }
                                             break;
 
                                         case 3: // List by type
@@ -913,6 +942,8 @@ public class SmartTravelDriver {
                                             String tripId = sc.nextLine();
 
                                             Trip tripFound = null;
+
+                                            try {
                                             for (int i = 0; i < tripCount; i++) {
                                                 if (trips[i].getTripId().equalsIgnoreCase(tripId)) {
                                                     tripFound = trips[i];
@@ -920,11 +951,18 @@ public class SmartTravelDriver {
                                                 }
                                             }
 
-                                            if (tripFound != null) {
-                                                System.out.println("Total cost of the trip: $" + tripFound.calculateTotalCost());
-                                            } else {
-                                                System.out.println("Trip not found.");
+                                            if (tripFound == null) {
+                                                throw new EntityNotFoundException("Trip not found.");
                                             }
+
+                                           
+                                                System.out.println("Total cost of the trip: $" + tripFound.calculateTotalCost());
+                                            } 
+                                            catch (EntityNotFoundException e) {
+                                                System.out.println("Error calculating trip cost: " + e.getMessage());
+                                            }
+
+                                            
                                             break;
 
                                         case 3: // Deep copy transport
