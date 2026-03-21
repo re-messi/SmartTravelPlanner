@@ -339,6 +339,8 @@ public class DashboardGenerator {
     return count;
 }
     // Calculates total spent by a client across all their trips
+    // added temporarily 
+    // will need to add amountSpent attriute to Client to track the total amount each client has spent
     private static double calculateClientTotalSpent(SmartTravelService service, Client client) {
         double totalSpent = 0.0;
 
