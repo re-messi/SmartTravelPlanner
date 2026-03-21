@@ -46,10 +46,10 @@ public class SmartTravelDriver {
         int userChoice;
         boolean valid = false;
 
-        Client[] clients = new Client[50];
+        Client[] clients = new Client[100];
         int clientCount = 0;
 
-        Trip[] trips = new Trip[50];
+        Trip[] trips = new Trip[200];
         int tripCount = 0;
 
         Transportation[] transportations = new Transportation[50];
@@ -92,6 +92,8 @@ public class SmartTravelDriver {
                             "\n 7. List All Data Summary" +
                             "\n 8. Load All Data" +
                             "\n 9. Save All Data" +
+                            "\n 10. Run Predefined Scenario" +
+                            "\n 11. Generate Dashboard" +
                             "\n 0. Return to previous menu" +
                             "\n Option: ");
                         userChoice = sc.nextInt();
@@ -580,7 +582,7 @@ public class SmartTravelDriver {
                                             String clientTripsID = sc.nextLine();
 
                                             boolean found = false;
-                                            
+
                                             for (int i = 0; i < tripCount; i++) {
                                                 if (trips[i].getClient().getClientId().equalsIgnoreCase(clientTripsID)) {
                                                     System.out.println(trips[i]);
@@ -1048,6 +1050,24 @@ public class SmartTravelDriver {
                                 }
                                 break;
 
+                            case 7: //List all data summary
+                            break;
+
+                            case 8: // Load all data
+                            break;
+
+                            case 9: // save all data
+                            break;
+
+                            case 10: // Run predefined scenario
+                                runPredefinedScenario();
+                                break;
+                            
+                            case 11: // generate dashboard
+                                break;
+
+
+
                             case 0: // Return to initial menu
                                 break mainMenu;
 
@@ -1067,118 +1087,192 @@ public class SmartTravelDriver {
     }
 
    
-
-
-
     // Predefined scenarios for testing 
     public static void runPredefinedScenario() {
     System.out.println("    Running Predefined Scenario    ");
-        try {
-    //  Clients 
-    Client c1 = new Client("Alice", "Wonder", "alice@example.com");
-    Client c2 = new Client("Indiana", "Jones", "indiana@example.com");
-    Client c3 = new Client("Bobby", "Brown", "bobby@example.com");
 
-    Client[] clients = {c1, c2, c3};
+    Client c1 = null, c2 = null, c3 = null;
+    Transportation t1 = null, t2 = null, t3 = null, t4 = null, t5 = null, t6 = null;
+    Accommodation a1 = null, a2 = null, a3 = null, a4 = null;
+    Trip trip1 = null, trip2 = null, trip3 = null;
 
-    // Display clients
-    System.out.println("\nClients ");
+    // Valid object creation + normal demonstrations
+    try {
+        // Clients
+        c1 = new Client("Alice", "Wonder", "alice@example.com");
+        c2 = new Client("Indiana", "Jones", "indiana@example.com");
+        c3 = new Client("Bobby", "Brown", "bobby@example.com");
+
+        Client[] clients = {c1, c2, c3};
+
+        System.out.println("\nClients");
         for (int i = 0; i < clients.length; i++) {
-        System.out.println(clients[i]);
-        System.out.println();
-    }
-
-    // Transportation 
-    Transportation t1 = new Flight("AirlineX", "NYC", "Paris", "AirlineX", 20.0);
-    Transportation t2 = new Flight("AirlineY", "LA", "Tokyo", "AirlineY", 25.0);
-    Transportation t3 = new Train("TrainCo", "Paris", "Berlin", "HighSpeed", "First");
-    Transportation t4 = new Train("TrainCo2", "Berlin", "Rome", "Express", "Second");
-    Transportation t5 = new Bus("EXO", "Laval", "Longueuil", "Line", 3);
-    Transportation t6 = new Bus("STM", "Montreal", "Boisbriand", "Line2", 5);
-
-    Transportation[] transports = {t1, t2, t3, t4, t5, t6};
-
-    System.out.println("\nTransportation ");
-        for (int i = 0; i < transports.length; i++) {   
-        System.out.println(transports[i]);
-        System.out.println();
+            System.out.println(clients[i]);
+            System.out.println();
         }
 
-    // Accommodations 
-    Accommodation a1 = new Hotel("GrandHotel", "Paris", 200, 5);
-    Accommodation a2 = new Hotel("CityHotel", "Berlin", 150, 4);
-    Accommodation a3 = new Hostel("Backpackers", "Rome", 50, 4);
-    Accommodation a4 = new Hostel("Sheraton", "Montreal", 45, 6);
+        // Transportation
+        t1 = new Flight("AirlineX", "NYC", "Paris", "AirlineX", 20.0);
+        t2 = new Flight("AirlineY", "LA", "Tokyo", "AirlineY", 25.0);
+        t3 = new Train("TrainCo", "Paris", "Berlin", "HighSpeed", "First");
+        t4 = new Train("TrainCo2", "Berlin", "Rome", "Express", "Second");
+        t5 = new Bus("EXO", "Laval", "Longueuil", "Line", 3);
+        t6 = new Bus("STM", "Montreal", "Boisbriand", "Line2", 5);
 
-    Accommodation[] accommodations = {a1, a2, a3, a4};
+        Transportation[] transports = {t1, t2, t3, t4, t5, t6};
 
-    System.out.println("\nAccommodations ");
+        System.out.println("\nTransportation");
+        for (int i = 0; i < transports.length; i++) {
+            System.out.println(transports[i]);
+            System.out.println();
+        }
+
+        // Accommodations
+        a1 = new Hotel("GrandHotel", "Paris", 200, 5);
+        a2 = new Hotel("CityHotel", "Berlin", 150, 4);
+        a3 = new Hostel("Backpackers", "Rome", 50, 4);
+        a4 = new Hostel("Sheraton", "Montreal", 45, 6);
+
+        Accommodation[] accommodations = {a1, a2, a3, a4};
+
+        System.out.println("\nAccommodations");
         for (int i = 0; i < accommodations.length; i++) {
-        System.out.println(accommodations[i]);
-        System.out.println();
+            System.out.println(accommodations[i]);
+            System.out.println();
         }
 
-    // Trips 
-    Trip trip1 = new Trip("Paris", 5, 1000, c1, t1, a1);
-    Trip trip2 = new Trip("Berlin", 4, 800, c2, t3, a2);
-    Trip trip3 = new Trip("Rome", 6, 900, c3, t4, a3);
+        // Trips
+        trip1 = new Trip("Paris", 5, 1000, c1, t1, a1);
+        trip2 = new Trip("Berlin", 4, 800, c2, t3, a2);
+        trip3 = new Trip("Rome", 6, 900, c3, t4, a3);
 
-    Trip[] trips = {trip1, trip2, trip3};
+        Trip[] trips = {trip1, trip2, trip3};
 
-    System.out.println("\nTrips");
+        System.out.println("\nTrips");
         for (int i = 0; i < trips.length; i++) {
-        System.out.println(trips[i]);
-        System.out.println();
+            System.out.println(trips[i]);
+            System.out.println();
         }
 
-    // Demonstrate equals() 
-    System.out.println("\nTesting equals() ");
-    System.out.println("c1.equals(c2)? " + c1.equals(c2)); // false
-    System.out.println("t1.equals(t2)? " + t1.equals(t2)); // false
-    System.out.println("a3.equals(a4)? " + a3.equals(a4)); // false
-    System.out.println("trip1.equals(trip1)? " + trip1.equals(trip1)); // true
+        // Demonstrate equals()
+        System.out.println("\nTesting equals()");
+        System.out.println("c1.equals(c2)? " + c1.equals(c2));
+        System.out.println("t1.equals(t2)? " + t1.equals(t2));
+        System.out.println("a3.equals(a4)? " + a3.equals(a4));
+        System.out.println("trip1.equals(trip1)? " + trip1.equals(trip1));
 
-    // Demonstrate polymorphism: calculate total cost 
-    System.out.println("\nTotal Costs (Polymorphism)");
-    for (int i = 0; i < trips.length; i++) {
-    System.out.println(
-        "Trip to " + trips[i].getDestination() +
-        " total cost: $" + trips[i].calculateTotalCost()
-        );
+        // Demonstrate polymorphism: calculate total cost
+        System.out.println("\nTotal Costs (Polymorphism)");
+        for (int i = 0; i < trips.length; i++) {
+            System.out.println(
+                "Trip to " + trips[i].getDestination() +
+                " total cost: $" + trips[i].calculateTotalCost()
+            );
+        }
+
+        // Most expensive trip
+        Trip mostExpensive = trips[0];
+        for (int i = 1; i < trips.length; i++) {
+            if (trips[i].calculateTotalCost() > mostExpensive.calculateTotalCost()) {
+                mostExpensive = trips[i];
+            }
+        }
+
+        System.out.println("\nMost expensive trip:");
+        System.out.println(mostExpensive);
+
+        // Deep copy of transportation array
+        Transportation[] copiedTransports = copyTransportationArray(transports);
+        copiedTransports[0].setCompanyName("ModifiedCompany");
+
+        System.out.println("\nOriginal transportation[0]:");
+        System.out.println(transports[0]);
+
+        System.out.println("\nCopied transportation[0] (modified):");
+        System.out.println(copiedTransports[0]);
+
+        // Deep copy of accommodation array
+        Accommodation[] copiedAccommodations = copyAccommodationArray(accommodations);
+        copiedAccommodations[0].setName("ModifiedAccommodation");
+
+        System.out.println("\nOriginal accommodation[0]:");
+        System.out.println(accommodations[0]);
+
+        System.out.println("\nCopied accommodation[0] (modified):");
+        System.out.println(copiedAccommodations[0]);
+    }
+    catch (InvalidClientDataException | InvalidTransportDataException |
+           InvalidAccommodationDataException | InvalidTripDataException e) {
+        System.out.println("Unexpected error in scenario setup: " + e.getMessage());
     }
 
-    // Most expensive trip 
-    Trip mostExpensive = trips[0];
-    for (int i = 0; i < trips.length; i++) {
-    if (trips[i].calculateTotalCost() > mostExpensive.calculateTotalCost()) {
-        mostExpensive = trips[i];
+    // Exception demonstrations
+    System.out.println("\nException Demonstrations");
+
+    try {
+        new Client("", "Test", "bad@example.com");
+    }
+    catch (InvalidClientDataException e) {
+        System.out.println("Caught InvalidClientDataException: " + e.getMessage());
+    }
+
+    try {
+        Client[] clients = {c1, c2, c3};
+        for (int i = 0; i < clients.length; i++) {
+            if (clients[i] != null &&
+                clients[i].getEmail().equalsIgnoreCase("alice@example.com")) {
+                throw new DuplicateEmailException("Email already exists.");
+            }
         }
     }
-    System.out.println("\nMost expensive trip:");
-    System.out.println(mostExpensive);
+    catch (DuplicateEmailException e) {
+        System.out.println("Caught DuplicateEmailException: " + e.getMessage());
+    }
 
-    // Deep copy of transportation array 
-    Transportation[] copiedTransports = copyTransportationArray(transports);
-    copiedTransports[0].setCompanyName("ModifiedCompany"); // modify copy
+    try {
+        new Bus("BadBus", "Montreal", "Quebec", "LineX", 0);
+    }
+    catch (InvalidTransportDataException e) {
+        System.out.println("Caught InvalidTransportDataException: " + e.getMessage());
+    }
 
-    System.out.println("\nOriginal transportation[0]:");
-    System.out.println(transports[0]);
-    System.out.println("\nCopied transportation[0] (modified):");
-    System.out.println(copiedTransports[0]);
+    try {
+        new Hostel("Luxury Hostel", "Toronto", 200, 4);
+    }
+    catch (InvalidAccommodationDataException e) {
+        System.out.println("Caught InvalidAccommodationDataException: " + e.getMessage());
+    }
+
+    try {
+        new Trip("Rome", 0, 100, c1, t1, a1);
+    }
+    catch (InvalidTripDataException e) {
+        System.out.println("Caught InvalidTripDataException: " + e.getMessage());
+    }
+
+    try {
+        String searchId = "C9999";
+        boolean found = false;
+        Client[] clients = {c1, c2, c3};
+
+        for (int i = 0; i < clients.length; i++) {
+            if (clients[i] != null &&
+                clients[i].getClientId().equalsIgnoreCase(searchId)) {
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            throw new EntityNotFoundException("Client ID " + searchId + " not found.");
+        }
+    }
+    catch (EntityNotFoundException e) {
+        System.out.println("Caught EntityNotFoundException: " + e.getMessage());
+    }
 
     System.out.println("\n    Predefined Scenario Completed    \n");
 
-    }
-    catch (InvalidClientDataException | InvalidTransportDataException |
-           InvalidAccommodationDataException |InvalidTripDataException e) {
-        System.out.println("Error in predefined scenario: " + e.getMessage());
-    }
-
-
 }
-
-
-
 
     // Copy of transportation array (deep copy)
     public static Transportation[] copyTransportationArray(Transportation[] original) {
