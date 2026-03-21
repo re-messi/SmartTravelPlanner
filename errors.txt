@@ -1,0 +1,16 @@
+Invalid client data in file: C1008;Bob Brown;bob.brown@australia.com
+Invalid accommodation data in file: HOME;A4010;Tokyo Hilton;Tokyo;380.00;4
+Invalid transportation data in file: CRUISE;TR3010;VIA;Toronto;Montreal;60.00;2
+Error linking trip: T2010
+Error linking trip: T2007
+Error linking trip: T2008
+Error linking trip: X6008
+Error linking trip: T2011
+Invalid client data in file: C1008;Bob Brown;bob.brown@australia.com
+Invalid accommodation data in file: HOME;A4010;Tokyo Hilton;Tokyo;380.00;4
+Invalid transportation data in file: CRUISE;TR3010;VIA;Toronto;Montreal;60.00;2
+Error linking trip: T2010
+Error linking trip: T2007
+Error linking trip: T2008
+Error linking trip: X6008
+Error linking trip: T2011

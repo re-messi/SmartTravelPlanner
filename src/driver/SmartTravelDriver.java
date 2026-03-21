@@ -149,8 +149,9 @@ public class SmartTravelDriver {
                                                 }
 
                                                 Client newClient = new Client(firstName, lastName, email);
-                                                clients[clientCount] = newClient;
-                                                clientCount++;
+                                                clients[clientCount++] = new Client(firstName, lastName, email);
+
+                                                service.setClientCount(clientCount);
 
                                                 System.out.println("\n" + newClient + "\n");
                                                 System.out.println("New client added.");
@@ -271,6 +272,8 @@ public class SmartTravelDriver {
                                             // Clear last slot
                                             clients[clientCount - 1] = null;
                                             clientCount--;
+
+                                            service.setClientCount(clientCount);
 
                                             System.out.println("Client deleted successfully.");
 
@@ -425,6 +428,8 @@ public class SmartTravelDriver {
                                             trips[tripCount] = newTrip;
                                             tripCount++;
 
+                                            service.setTripCount(tripCount);
+
                                             System.out.println("\nTrip created successfully!");
                                             System.out.println(newTrip);
                                         }
@@ -562,6 +567,9 @@ public class SmartTravelDriver {
                                             }
                                             trips[tripCount - 1] = null;
                                             tripCount--;
+
+                                            service.setTripCount(tripCount);
+
                                             System.out.println("Trip cancelled successfully.");
                                         }
                                         catch (EntityNotFoundException e) {
@@ -699,6 +707,9 @@ public class SmartTravelDriver {
                                             if (newTransport != null) {
                                                 transportations[transportationCount] = newTransport;
                                                 transportationCount++;
+
+                                                service.setTransportationCount(transportationCount);
+
                                                 System.out.println("Transportation added successfully.");
                                             }
                                         }
@@ -737,6 +748,9 @@ public class SmartTravelDriver {
                                             }
                                             transportations[transportationCount - 1] = null;
                                             transportationCount--;
+
+                                            service.setTransportationCount(transportationCount);
+
                                             System.out.println("Transportation removed successfully.");
                                         }
                                         catch (EntityNotFoundException e) {
@@ -841,6 +855,9 @@ public class SmartTravelDriver {
                                             if (newAccommodation != null) {
                                                 accommodations[accommodationCount] = newAccommodation;
                                                 accommodationCount++;
+
+                                                service.setAccommodationCount(accommodationCount);
+
                                                 System.out.println("Accommodation added successfully.");
                                                }
                                             }
@@ -878,6 +895,9 @@ public class SmartTravelDriver {
                                             }
                                             accommodations[accommodationCount - 1] = null;
                                             accommodationCount--;
+
+                                            service.setAccommodationCount(accommodationCount);
+
                                             System.out.println("Accommodation removed successfully.");
                                             }
                                             catch (EntityNotFoundException e) {

@@ -172,6 +172,44 @@ public class SmartTravelService {
         return accommodations;
     }
 
+    /**
+     * Sets the client count.
+     *
+     * @param clientCount the new client count
+     */
+    public void setClientCount(int clientCount) {
+        this.clientCount = clientCount;
+    }
+
+    /**
+     * Sets the trip count.
+     *
+     * @param tripCount the new trip count
+     */
+    public void setTripCount(int tripCount) {
+        this.tripCount = tripCount;
+    }
+
+    /**
+     * Sets the transportation count.
+     *
+     * @param transportationCount the new transportation count
+     */
+    public void setTransportationCount(int transportationCount) {
+        this.transportationCount = transportationCount;
+    }
+
+    /**
+     * Sets the accommodation count.
+     *
+     * @param accommodationCount the new accommodation count
+     */
+    public void setAccommodationCount(int accommodationCount) {
+        this.accommodationCount = accommodationCount;
+    }
+
+
+
 
     public Client findClientById(String id) throws Exception {
     for (int i = 0; i < clientCount; i++) {
