@@ -28,6 +28,7 @@ import travel.Hotel;
 import travel.Train;
 import travel.Transportation;
 import travel.Trip;
+import visualization.DashboardGenerator;
 import visualization.TripChartGenerator;
 
 import exceptions.DuplicateEmailException;
@@ -36,6 +37,7 @@ import exceptions.InvalidAccommodationDataException;
 import exceptions.InvalidClientDataException;
 import exceptions.InvalidTransportDataException;
 import exceptions.InvalidTripDataException;
+import service.SmartTravelService;
 
 
 public class SmartTravelDriver {
@@ -1064,7 +1066,14 @@ public class SmartTravelDriver {
                                 break;
                             
                             case 11: // generate dashboard
-                                break;
+                                try {
+                                SmartTravelService service = new SmartTravelService (clients, clientCount, trips, tripCount, transportations, transportationCount, accommodations, accommodationCount);
+                                DashboardGenerator.generateDashboard(service);
+                                }
+                                catch (IOException e) {
+                                System.out.println("Error generating dashboard: " + e.getMessage());
+                                }
+                                 break;
 
 
 

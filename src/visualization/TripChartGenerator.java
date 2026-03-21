@@ -164,4 +164,6 @@ public class TripChartGenerator {
         
         ChartUtils.saveChartAsPNG(new File("output/trip_duration_line_chart.png"), chart, 800, 600);
     }
+
+    
 }
