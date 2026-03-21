@@ -60,6 +60,13 @@ public class SmartTravelDriver {
         Accommodation[] accommodations = new Accommodation[50];
         int accommodationCount = 0;
 
+        SmartTravelService service = new SmartTravelService(
+        clients, clientCount,
+        trips, tripCount,
+        transportations, transportationCount,
+        accommodations, accommodationCount
+    );
+
         // First option of choosing testing scenario, menu operations, or exit
         do {
             System.out.print("What would you like to do? Please enter the number of the option you desire" +
@@ -94,8 +101,7 @@ public class SmartTravelDriver {
                             "\n 7. List All Data Summary" +
                             "\n 8. Load All Data" +
                             "\n 9. Save All Data" +
-                            "\n 10. Run Predefined Scenario" +
-                            "\n 11. Generate Dashboard" +
+                            "\n 10.Generate Dashboard" +
                             "\n 0. Return to previous menu" +
                             "\n Option: ");
                         userChoice = sc.nextInt();
@@ -1056,9 +1062,11 @@ public class SmartTravelDriver {
                             break;
 
                             case 8: // Load all data
+                                service.loadAllData("output/data/");
                             break;
 
                             case 9: // save all data
+                                service.saveAllData("output/data/");
                             break;
 
                             case 10: // Run predefined scenario
