@@ -1,4 +1,5 @@
 package visualization;
+
 /**
  * DashboardGenerator - Generates a professional HTML Dashboard for SmartTravel Pro (COMP249 A2)
  * 
@@ -133,7 +134,7 @@ public class DashboardGenerator {
         
         for (int i = 0; i < service.getClientCount(); i++) {
             Client client = service.getClient(i);
-            double spent = calculateClientTotalSpent(service, client);
+            double spent = client.getAmountSpent();
             out.println("                    <tr>");
             out.println("                        <td><strong>" + client.getClientId() + "</strong></td>");
             out.println("                        <td>" + client.getFirstName() + " " + client.getLastName() + "</td>");
@@ -216,60 +217,67 @@ public class DashboardGenerator {
      * @param out HTML PrintWriter
      */
     private static void writeStats(SmartTravelService service, PrintWriter out) {
-
-    int tripCount = service.getTripCount();
-    if (tripCount == 0) {
-        out.println("        <section class='stats-section'>");
-        out.println("            <h2>No Trip Data</h2>");
-        out.println("        </section>");
-        return;
-    }
-
-    // 1. Total Revenue & Avg Cost
-    double totalRevenue = 0.0;
-    for (int i = 0; i < tripCount; i++) {
+        
+    	int tripCount = service.getTripCount();
+        if (tripCount == 0) {
+            out.println("        <section class='stats-section'>");
+            out.println("            <h2>No Trip Data</h2>");
+            out.println("        </section>");
+            return;
+        }
+    	
+        // 1. Total Revenue & Avg Cost
+        double totalRevenue = 0.0, avgCost = 0.0;
+        for (int i = 0; i < tripCount; i++) {
         totalRevenue += service.calculateTripTotal(i);
-    }
-    double avgCost = totalRevenue / tripCount;
-
-    // 2. Average Duration (days)
-    double totalDays = 0.0;
-    for (int i = 0; i < tripCount; i++) {
+        }
+        avgCost = totalRevenue / tripCount;
+        
+		//ADD CODE
+        
+        // 2. Average Duration (days)
+        double totalDays = 0.0, avgDuration =0.0;
+        
+		for (int i = 0; i < tripCount; i++) {
         totalDays += service.getTrip(i).getDurationInDays();
+        }
+        avgDuration = totalDays / tripCount;
+
+        String mostVisited = findMostVisitedDestination(service);
+        int visitCount = countDestinationVisits(service, mostVisited);
+    	
+        
+        out.println("        <section class='stats-section'>");
+        out.println("            <h2>Quick Stats (" + tripCount + " Trips)</h2>");
+        out.println("            <div class='stat-grid'>");
+                
+        // Stat 1: Average Cost
+        out.println("                <div class='stat-item'>");
+        out.println("                    <span class='stat-label'>Avg Trip Cost</span>");
+        out.println("                    <span class='stat-value'>$" + String.format("%,.0f", avgCost) + "</span>");
+        out.println("                </div>");
+        
+        // Stat 2: Average Duration 
+        out.println("                <div class='stat-item'>");
+        out.println("                    <span class='stat-label'>Avg Duration</span>");
+        out.println("                    <span class='stat-value'>" + String.format("%.1f", avgDuration) + " days</span>");
+        out.println("                </div>");
+        
+        // Stat 3: Total Revenue
+        out.println("                <div class='stat-item'>");
+        out.println("                    <span class='stat-label'>Total Revenue</span>");
+        out.println("                    <span class='stat-value'>$" + String.format("%,.0f", totalRevenue) + "</span>");
+        out.println("                </div>");
+        
+        // Stat 4: Most Visited
+        out.println("                <div class='stat-item'>");
+        out.println("                    <span class='stat-label'>Most Visited</span>");
+        out.println("                    <span class='stat-value'>" + mostVisited + "<br><small>(" + visitCount + " trips)</small></span>");
+        out.println("                </div>");
+        
+        out.println("            </div>");
+        out.println("        </section>");
     }
-    double avgDuration = totalDays / tripCount;
-
-    // 3. Most visited destination
-    String mostVisited = findMostVisitedDestination(service);
-    int visitCount = countDestinationVisits(service, mostVisited);
-
-    out.println("        <section class='stats-section'>");
-    out.println("            <h2>Quick Stats (" + tripCount + " Trips)</h2>");
-    out.println("            <div class='stat-grid'>");
-
-    out.println("                <div class='stat-item'>");
-    out.println("                    <span class='stat-label'>Avg Trip Cost</span>");
-    out.println("                    <span class='stat-value'>$" + String.format("%,.0f", avgCost) + "</span>");
-    out.println("                </div>");
-
-    out.println("                <div class='stat-item'>");
-    out.println("                    <span class='stat-label'>Avg Duration</span>");
-    out.println("                    <span class='stat-value'>" + String.format("%.1f", avgDuration) + " days</span>");
-    out.println("                </div>");
-
-    out.println("                <div class='stat-item'>");
-    out.println("                    <span class='stat-label'>Total Revenue</span>");
-    out.println("                    <span class='stat-value'>$" + String.format("%,.0f", totalRevenue) + "</span>");
-    out.println("                </div>");
-
-    out.println("                <div class='stat-item'>");
-    out.println("                    <span class='stat-label'>Most Visited</span>");
-    out.println("                    <span class='stat-value'>" + mostVisited + "<br><small>(" + visitCount + " trips)</small></span>");
-    out.println("                </div>");
-
-    out.println("            </div>");
-    out.println("        </section>");
-}
     
     /**
      * Cross-platform browser launcher for dashboard.html.
@@ -299,9 +307,9 @@ public class DashboardGenerator {
     /**
      * Finds destination with most trips
      */
-   
     private static String findMostVisitedDestination(SmartTravelService service) {
-    if (service.getTripCount() == 0) {
+        
+		 if (service.getTripCount() == 0) {
         return "N/A";
     }
 
@@ -319,14 +327,14 @@ public class DashboardGenerator {
     }
 
     return mostVisited;
-  }
-    
+}
+
 
     /**
      * Counts trips to specific destination
      */
     private static int countDestinationVisits(SmartTravelService service, String destination) {
-    if (destination == null || destination.equals("N/A")) {
+       if (destination == null || destination.equals("N/A")) {
         return 0;
     }
 
@@ -336,24 +344,8 @@ public class DashboardGenerator {
             count++;
         }
     }
+
     return count;
-}
-    // Calculates total spent by a client across all their trips
-    // added temporarily 
-    // will need to add amountSpent attriute to Client to track the total amount each client has spent
-    private static double calculateClientTotalSpent(SmartTravelService service, Client client) {
-        double totalSpent = 0.0;
-
-        for (int i = 0; i < service.getTripCount(); i++) {
-            Trip trip = service.getTrip(i);
-
-            if (trip.getClient() != null &&
-                trip.getClient().getClientId().equalsIgnoreCase(client.getClientId())) {
-                totalSpent += service.calculateTripTotal(i);
-            }
-        }
-
-    return totalSpent;
 }
 
     

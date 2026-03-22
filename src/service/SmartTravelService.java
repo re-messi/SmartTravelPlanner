@@ -4,6 +4,7 @@ import client.Client;
 import travel.Accommodation;
 import travel.Transportation;
 import travel.Trip;
+import persistence.*;
 
 /* SmartTravelService manages all arrays used in the SmartTravel system.
  * It provides accessor methods for dashboard generation, chart generation,
@@ -170,4 +171,123 @@ public class SmartTravelService {
     public Accommodation[] getAccommodations() {
         return accommodations;
     }
+
+    /**
+     * Sets the client count.
+     *
+     * @param clientCount the new client count
+     */
+    public void setClientCount(int clientCount) {
+        this.clientCount = clientCount;
+    }
+
+    /**
+     * Sets the trip count.
+     *
+     * @param tripCount the new trip count
+     */
+    public void setTripCount(int tripCount) {
+        this.tripCount = tripCount;
+    }
+
+    /**
+     * Sets the transportation count.
+     *
+     * @param transportationCount the new transportation count
+     */
+    public void setTransportationCount(int transportationCount) {
+        this.transportationCount = transportationCount;
+    }
+
+    /**
+     * Sets the accommodation count.
+     *
+     * @param accommodationCount the new accommodation count
+     */
+    public void setAccommodationCount(int accommodationCount) {
+        this.accommodationCount = accommodationCount;
+    }
+
+
+
+
+    public Client findClientById(String id) throws Exception {
+    for (int i = 0; i < clientCount; i++) {
+        if (clients[i].getClientId().equals(id)) {
+            return clients[i];
+        }
+    }
+    throw new Exception("Client not found: " + id);
+    }
+
+
+    public Accommodation findAccommodationById(String id) throws Exception {
+    for (int i = 0; i < accommodationCount; i++) {
+        if (accommodations[i].getAccommodationID().equals(id)) {
+            return accommodations[i];
+        }
+    }
+    throw new Exception("Accommodation not found: " + id);
+    } 
+
+    public Transportation findTransportById(String id) throws Exception {
+    for (int i = 0; i < transportationCount; i++) {
+        if (transportations[i].getTransportId().equals(id)) {
+            return transportations[i];
+        }
+    }
+    throw new Exception("Transport not found: " + id);
+    }
+
+
+    public void loadAllData(String basePath) {
+    try {
+        clientCount = ClientFileManager.loadClients(clients, basePath + "clients.csv");
+        accommodationCount = AccommodationFileManager.loadAccommodations(accommodations, basePath + "accommodations.csv");
+        transportationCount = TransportationFileManager.loadTransportation(transportations, basePath + "transports.csv");
+        tripCount = TripFileManager.loadTrips(trips, basePath + "trips.csv");
+
+        
+        for (int i = 0; i < tripCount; i++) {
+            Trip t = trips[i];
+
+            try {
+                if (t.getTempClientId() != null && !t.getTempClientId().isEmpty()) {
+                    t.setClient(findClientById(t.getTempClientId()));
+                }
+
+                if (t.getTempAccommodationId() != null && !t.getTempAccommodationId().isEmpty()) {
+                    t.setAccommodation(findAccommodationById(t.getTempAccommodationId()));
+                }
+
+                if (t.getTempTransportId() != null && !t.getTempTransportId().isEmpty()) {
+                    t.setTransportation(findTransportById(t.getTempTransportId()));
+                }
+
+            } catch (Exception e) {
+                ErrorLogger.log("Error linking trip: " + t.getTripId());
+            }
+        }
+
+    } catch (Exception e) {
+        System.out.println("Error loading data: " + e.getMessage());
+    }
+}
+
+    public void saveAllData(String basePath) {
+        try {
+            ClientFileManager.saveClients(clients, clientCount, basePath + "clients.csv");
+            AccommodationFileManager.saveAccommodations(accommodations, accommodationCount, basePath + "accommodations.csv");
+            TransportationFileManager.saveTransportation(transportations, transportationCount, basePath + "transports.csv");
+            TripFileManager.saveTrips(trips, tripCount, basePath + "trips.csv");
+
+        } catch (Exception e) {
+            System.out.println("Error saving data: " + e.getMessage());
+        }
+    }
+
+
+
+
+
 }

@@ -25,6 +25,20 @@ public class Trip {
 	private Accommodation accommodation;
 	private static int nextTripNum = 2001;
 	
+	private String tempClientId;
+	private String tempAccommodationId;
+	private String tempTransportId;
+
+	public void setTempIds(String c, String a, String t) {
+		tempClientId = c;
+		tempAccommodationId = a;
+		tempTransportId = t;
+	}
+
+public String getTempClientId() { return tempClientId; }
+public String getTempAccommodationId() { return tempAccommodationId; }
+public String getTempTransportId() { return tempTransportId; }
+	
 	//Helper method to generate IDs
 	private static String generateTripId() {
 		return "T" + (nextTripNum++); 
@@ -42,6 +56,28 @@ public class Trip {
 		setAccommodation(accommodation);	
 				
 	}
+
+	// Parameterized constrcutor with allIDs for loading from file
+	public Trip(String tripId, String destination,
+				int duration, double basePrice) {
+
+		this.tripId = tripId;
+		this.destination = destination;
+		this.durationInDays = duration;
+		this.basePrice = basePrice;
+
+		this.client = null;
+		this.transportation = null;
+		this.accommodation = null;
+
+	
+    // Update nextTripNum
+  	  int numericPart = Integer.parseInt(tripId.substring(1));
+  	  if (numericPart >= nextTripNum) {
+        nextTripNum = numericPart + 1;
+    }
+}
+
 	
 	//Copy constructor (deep copy)
 	public Trip(Trip other) {

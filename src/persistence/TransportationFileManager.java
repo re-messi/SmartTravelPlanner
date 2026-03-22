@@ -64,12 +64,35 @@ public class TransportationFileManager {
                      portion[1],                   
                      portion[2],                   
                      portion[3],
-                     Double.parseDouble(portion[4]),
-                     Integer.parseInt(portion[5]) 
+                     portion[4],
+                     Double.parseDouble(portion[5]),
+                     Integer.parseInt(portion[6]) 
                 );
+               } else if (portion[0].equals("FLIGHT")){
+                t = new Flight(
+                     portion[1],                   
+                     portion[2],                   
+                     portion[3],
+                     portion[4],
+                     Double.parseDouble(portion[5]),
+                     Double.parseDouble(portion[6])
+                );
+               } else if (portion[0].equals("TRAIN")){
+                t = new Train(
+                     portion[1],                   
+                     portion[2],                   
+                     portion[3],
+                     portion[4],
+                     Double.parseDouble(portion[5]),
+                     portion[6]
+                );
+               } else {
+                throw new InvalidTransportDataException("Unknown transportation type: " + portion[0]);
                }
-    }
-     } catch (Exception e) {
+
+               transportations[count++] = t;
+    
+         } catch (Exception e) {
                 // Log invalid line and skip
                 ErrorLogger.log("Invalid transportation data in file: " + line);
             }
@@ -78,4 +101,5 @@ public class TransportationFileManager {
         scanner.close();
         return count;
     
+}
 }

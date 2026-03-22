@@ -18,7 +18,7 @@ public class Client {
 	private String lastName;
 	private String email;
 	private static int nextClientNum = 1001; 
-	 int clientCount;
+	private double amountSpent;
 	
 	//helper method to generate IDs
 	private static String generateClientID() {
@@ -34,13 +34,14 @@ public class Client {
 		setFirstName(firstName);
 		setLastName(lastName);
 		setEmail(email);
+		this.amountSpent = 0.0;
 
-	// make sure nextClientNum stays aupdated
-    int numericPart = Integer.parseInt(clientID.substring(1)); // remove 'C'
-    if (numericPart >= nextClientNum) {
-        nextClientNum = numericPart + 1;	
-	}
- }
+		// make sure nextClientNum stays aupdated
+    	int numericPart = Integer.parseInt(clientID.substring(1)); // remove 'C'
+    		if (numericPart >= nextClientNum) {
+        	nextClientNum = numericPart + 1;	
+		}
+ 	}
 	
 
 	//parameterized constructor
@@ -49,6 +50,7 @@ public class Client {
 		setFirstName(firstName);
 		setLastName(lastName);
 		setEmail(email);
+		this.amountSpent = 0.0;
 	}
 	
 	//copy constructor
@@ -57,6 +59,7 @@ public class Client {
     	this.firstName = other.firstName;
    	 	this.lastName = other.lastName;
     	this.email = other.email;
+		this.amountSpent = other.amountSpent;
 	}
 	
 	//Accessors
@@ -67,6 +70,8 @@ public class Client {
 	public String getLastName() {return lastName;}
 	
 	public String getEmail() {return email;}
+
+	public double getAmountSpent() { return amountSpent; }
 	
 	//Mutators
 	public void setFirstName(String firstName) throws InvalidClientDataException {
@@ -95,12 +100,19 @@ public class Client {
     this.email = email;
 	}
 
+	public void addAmountSpent(double amount) {
+		if (amount > 0)
+		this.amountSpent += amount;
+	}
+
 	//toString method
 	@Override
 	public String toString() {
 		return "ClientID: " + clientID + 
 				"\nName: " + firstName + " " + lastName + 
-				"\nEmail: " + email;
+				"\nEmail: " + email + 
+				"\nTotal Spent: $" + String.format("%.2f", amountSpent);
+				
 	}
 	
 	//equals

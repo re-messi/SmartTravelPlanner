@@ -60,6 +60,13 @@ public class SmartTravelDriver {
         Accommodation[] accommodations = new Accommodation[50];
         int accommodationCount = 0;
 
+        SmartTravelService service = new SmartTravelService(
+        clients, clientCount,
+        trips, tripCount,
+        transportations, transportationCount,
+        accommodations, accommodationCount
+    );
+
         // First option of choosing testing scenario, menu operations, or exit
         do {
             System.out.print("What would you like to do? Please enter the number of the option you desire" +
@@ -94,8 +101,7 @@ public class SmartTravelDriver {
                             "\n 7. List All Data Summary" +
                             "\n 8. Load All Data" +
                             "\n 9. Save All Data" +
-                            "\n 10. Run Predefined Scenario" +
-                            "\n 11. Generate Dashboard" +
+                            "\n 10.Generate Dashboard" +
                             "\n 0. Return to previous menu" +
                             "\n Option: ");
                         userChoice = sc.nextInt();
@@ -143,8 +149,9 @@ public class SmartTravelDriver {
                                                 }
 
                                                 Client newClient = new Client(firstName, lastName, email);
-                                                clients[clientCount] = newClient;
-                                                clientCount++;
+                                                clients[clientCount++] = newClient;
+
+                                                service.setClientCount(clientCount);
 
                                                 System.out.println("\n" + newClient + "\n");
                                                 System.out.println("New client added.");
@@ -265,6 +272,8 @@ public class SmartTravelDriver {
                                             // Clear last slot
                                             clients[clientCount - 1] = null;
                                             clientCount--;
+
+                                            service.setClientCount(clientCount);
 
                                             System.out.println("Client deleted successfully.");
 
@@ -416,8 +425,15 @@ public class SmartTravelDriver {
                                         }
 
                                             Trip newTrip = new Trip(destination, durationInDays, basePrice, selectedClient, selectedTransportation, selectedAccommodation);
+
+                                            double totalCost = newTrip.calculateTotalCost();
+                                            selectedClient.addAmountSpent(totalCost);
+
                                             trips[tripCount] = newTrip;
                                             tripCount++;
+
+                                            service.setTripCount(tripCount);
+
 
                                             System.out.println("\nTrip created successfully!");
                                             System.out.println(newTrip);
@@ -556,6 +572,9 @@ public class SmartTravelDriver {
                                             }
                                             trips[tripCount - 1] = null;
                                             tripCount--;
+
+                                            service.setTripCount(tripCount);
+
                                             System.out.println("Trip cancelled successfully.");
                                         }
                                         catch (EntityNotFoundException e) {
@@ -693,6 +712,9 @@ public class SmartTravelDriver {
                                             if (newTransport != null) {
                                                 transportations[transportationCount] = newTransport;
                                                 transportationCount++;
+
+                                                service.setTransportationCount(transportationCount);
+
                                                 System.out.println("Transportation added successfully.");
                                             }
                                         }
@@ -731,6 +753,9 @@ public class SmartTravelDriver {
                                             }
                                             transportations[transportationCount - 1] = null;
                                             transportationCount--;
+
+                                            service.setTransportationCount(transportationCount);
+
                                             System.out.println("Transportation removed successfully.");
                                         }
                                         catch (EntityNotFoundException e) {
@@ -835,6 +860,9 @@ public class SmartTravelDriver {
                                             if (newAccommodation != null) {
                                                 accommodations[accommodationCount] = newAccommodation;
                                                 accommodationCount++;
+
+                                                service.setAccommodationCount(accommodationCount);
+
                                                 System.out.println("Accommodation added successfully.");
                                                }
                                             }
@@ -872,6 +900,9 @@ public class SmartTravelDriver {
                                             }
                                             accommodations[accommodationCount - 1] = null;
                                             accommodationCount--;
+
+                                            service.setAccommodationCount(accommodationCount);
+
                                             System.out.println("Accommodation removed successfully.");
                                             }
                                             catch (EntityNotFoundException e) {
@@ -1053,29 +1084,31 @@ public class SmartTravelDriver {
                                 break;
 
                             case 7: //List all data summary
+                                 for (int i = 0; i < service.getTripCount(); i++) {
+                                 System.out.println(service.getTrip(i));
+                                 System.out.println("----------------------");
+                                }
                             break;
 
                             case 8: // Load all data
+                                service.loadAllData("output/data/");
                             break;
 
                             case 9: // save all data
+                                service.saveAllData("output/data/");
                             break;
-
-                            case 10: // Run predefined scenario
-                                runPredefinedScenario();
-                                break;
                             
-                            case 11: // generate dashboard
-                                try {
-                                SmartTravelService service = new SmartTravelService (clients, clientCount, trips, tripCount, transportations, transportationCount, accommodations, accommodationCount);
-                                DashboardGenerator.generateDashboard(service);
-                                }
-                                catch (IOException e) {
-                                System.out.println("Error generating dashboard: " + e.getMessage());
-                                }
-                                 break;
+                           case 10: // generate dashboard
+                            try {
 
+                            SmartTravelService dashboardService = new SmartTravelService(clients, clientCount, trips, tripCount, transportations, transportationCount, accommodations, accommodationCount);
 
+                            DashboardGenerator.generateDashboard(dashboardService);
+                            }
+                            catch (IOException e) {
+                            System.out.println("Error generating dashboard: " + e.getMessage());
+                            }
+                            break;
 
                             case 0: // Return to initial menu
                                 break mainMenu;
@@ -1154,6 +1187,10 @@ public class SmartTravelDriver {
         trip1 = new Trip("Paris", 5, 1000, c1, t1, a1);
         trip2 = new Trip("Berlin", 4, 800, c2, t3, a2);
         trip3 = new Trip("Rome", 6, 900, c3, t4, a3);
+
+        c1.addAmountSpent(trip1.calculateTotalCost());
+        c2.addAmountSpent(trip2.calculateTotalCost());
+        c3.addAmountSpent(trip3.calculateTotalCost());
 
         Trip[] trips = {trip1, trip2, trip3};
 
