@@ -40,48 +40,29 @@ public class SmartTravelService {
         this.accommodationCount = accommodationCount;
     }
 
-    
     //Returns the number of clients
-    public int getClientCount() {
-        return clientCount;
-    }
+    public int getClientCount() {return clientCount;}
 
     // Returns the number of trips
-    public int getTripCount() {
-        return tripCount;
-    }
-
+    public int getTripCount() {return tripCount;}
 
     // Returns the number of transportation objects
-     
-    public int getTransportationCount() {
-        return transportationCount;
-    }
+    public int getTransportationCount() {return transportationCount;}
 
-     //Returns the number of accommodations
-    
-    public int getAccommodationCount() {
-        return accommodationCount;
-    }
+    //Returns the number of accommodations
+    public int getAccommodationCount() {return accommodationCount;}
+
     // Returns the client at the given index
-    public Client getClient(int index) {
-        return clients[index];
-    }
+    public Client getClient(int index) {return clients[index];}
 
     // Returns the trip at the given index
-    public Trip getTrip(int index) {
-        return trips[index];
-    }
+    public Trip getTrip(int index) {return trips[index];}
 
     //Returns the transportation object at the given index
-    public Transportation getTransportation(int index) {
-        return transportations[index];
-    }
+    public Transportation getTransportation(int index) {return transportations[index];}
 
     //Returns the accommodation object at the given index
-    public Accommodation getAccommodation(int index) {
-        return accommodations[index];
-    }
+    public Accommodation getAccommodation(int index) {return accommodations[index];}
 
     //Calculates the total cost of the trip at a given index
     public double calculateTripTotal(int index) {
@@ -92,41 +73,26 @@ public class SmartTravelService {
     }
 
     //Returns the full client array
-    public Client[] getClients() {
-        return clients;
-    }
+    public Client[] getClients() {return clients;}
 
     //Returns the full trip array
-    public Trip[] getTrips() {
-        return trips;
-    }
+    public Trip[] getTrips() {return trips;}
 
     //Returns the full transportation array
-    public Transportation[] getTransportations() {
-        return transportations;
-    }
+    public Transportation[] getTransportations() {return transportations;}
 
     //Returns the full accommodation array
-    public Accommodation[] getAccommodations() {
-        return accommodations;
-    }
+    public Accommodation[] getAccommodations() {return accommodations;}
 
-    //Sets the client count
-    public void setClientCount(int clientCount) {
-        this.clientCount = clientCount;
-    }
+    
+    //Setters
 
-    //Sets the trip count
-    public void setTripCount(int tripCount) {
-        this.tripCount = tripCount;
-    }
+    public void setClientCount(int clientCount) {this.clientCount = clientCount;}
 
-    //Sets the transportation count
-    public void setTransportationCount(int transportationCount) {
-        this.transportationCount = transportationCount;
-    }
+    public void setTripCount(int tripCount) { this.tripCount = tripCount;}
 
-    //Sets the accommodation count
+    public void setTransportationCount(int transportationCount) {this.transportationCount = transportationCount;}
+
     public void setAccommodationCount(int accommodationCount) {
         this.accommodationCount = accommodationCount;
     }

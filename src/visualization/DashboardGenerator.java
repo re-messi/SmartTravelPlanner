@@ -310,15 +310,15 @@ public class DashboardGenerator {
     private static String findMostVisitedDestination(SmartTravelService service) {
         
 		 if (service.getTripCount() == 0) {
-        return "N/A";
+        return "N/A"; // checks if there are no trips 
     }
 
-    String mostVisited = service.getTrip(0).getDestination();
-    int maxCount = countDestinationVisits(service, mostVisited);
+        String mostVisited = service.getTrip(0).getDestination(); 
+        int maxCount = countDestinationVisits(service, mostVisited);
 
-    for (int i = 1; i < service.getTripCount(); i++) {
-        String currentDestination = service.getTrip(i).getDestination();
-        int currentCount = countDestinationVisits(service, currentDestination);
+        for (int i = 1; i < service.getTripCount(); i++) {
+            String currentDestination = service.getTrip(i).getDestination();
+            int currentCount = countDestinationVisits(service, currentDestination);
 
         if (currentCount > maxCount) {
             maxCount = currentCount;
@@ -334,19 +334,20 @@ public class DashboardGenerator {
      * Counts trips to specific destination
      */
     private static int countDestinationVisits(SmartTravelService service, String destination) {
-       if (destination == null || destination.equals("N/A")) {
-        return 0;
+      
+        if (destination == null || destination.equals("N/A")) {
+        return 0; // checks of null or invalid
     }
 
-    int count = 0;
-    for (int i = 0; i < service.getTripCount(); i++) {
-        if (service.getTrip(i).getDestination().equalsIgnoreCase(destination)) {
-            count++;
-        }
-    }
+        int count = 0;
+        for (int i = 0; i < service.getTripCount(); i++) {
+            if (service.getTrip(i).getDestination().equalsIgnoreCase(destination)) {
+                count++;
+            }
+        }   
 
-    return count;
-}
+        return count;
+    }
 
     
 }
