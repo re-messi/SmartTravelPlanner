@@ -40,51 +40,32 @@ public class SmartTravelService {
         this.accommodationCount = accommodationCount;
     }
 
-    //Returns the number of clients
+    //Getters
+
     public int getClientCount() {return clientCount;}
 
-    // Returns the number of trips
     public int getTripCount() {return tripCount;}
 
-    // Returns the number of transportation objects
     public int getTransportationCount() {return transportationCount;}
 
-    //Returns the number of accommodations
     public int getAccommodationCount() {return accommodationCount;}
 
-    // Returns the client at the given index
     public Client getClient(int index) {return clients[index];}
 
-    // Returns the trip at the given index
     public Trip getTrip(int index) {return trips[index];}
 
-    //Returns the transportation object at the given index
     public Transportation getTransportation(int index) {return transportations[index];}
 
-    //Returns the accommodation object at the given index
     public Accommodation getAccommodation(int index) {return accommodations[index];}
 
-    //Calculates the total cost of the trip at a given index
-    public double calculateTripTotal(int index) {
-        if (index < 0 || index >= tripCount || trips[index] == null) {
-            return 0;
-        }
-        return trips[index].calculateTotalCost();
-    }
-
-    //Returns the full client array
     public Client[] getClients() {return clients;}
 
-    //Returns the full trip array
     public Trip[] getTrips() {return trips;}
 
-    //Returns the full transportation array
     public Transportation[] getTransportations() {return transportations;}
 
-    //Returns the full accommodation array
     public Accommodation[] getAccommodations() {return accommodations;}
 
-    
     //Setters
 
     public void setClientCount(int clientCount) {this.clientCount = clientCount;}
@@ -98,6 +79,13 @@ public class SmartTravelService {
     }
 
 
+    //Calculates the total cost of the trip at a given index
+    public double calculateTripTotal(int index) {
+        if (index < 0 || index >= tripCount || trips[index] == null) {
+            return 0;
+        }
+        return trips[index].calculateTotalCost();
+    }
 
 
     public Client findClientById(String id) throws EntityNotFoundException {
@@ -129,7 +117,7 @@ public class SmartTravelService {
     }
 
 
-    public void loadAllData(String basePath) {
+    public void loadAllData(String basePath) { 
     
     //reset count before loading 
     clientCount = 0;
@@ -169,8 +157,8 @@ public class SmartTravelService {
         System.out.println("Error loading data: " + e.getMessage());
     }
 }
-
-    public void saveAllData(String basePath) {
+    
+    public void saveAllData(String basePath) { // writes all arrays back to the files
         try {
             ClientFileManager.saveClients(clients, clientCount, basePath + "clients.csv");
             AccommodationFileManager.saveAccommodations(accommodations, accommodationCount, basePath + "accommodations.csv");
