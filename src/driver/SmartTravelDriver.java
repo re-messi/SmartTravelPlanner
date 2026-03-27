@@ -70,11 +70,10 @@ public class SmartTravelDriver {
         // First option of choosing testing scenario, menu operations, or exit
         do {
             System.out.print("What would you like to do? Please enter the number of the option you desire" +
-                "\n 1. See a predefined testing scenario" +
-                "\n 2. Access the Menu Operations" +
+                "\n 1. Access the Menu Operations" +
                 "\n 0. Exit the program" +
                 "\n Option: ");
-            userChoice = sc.nextInt();
+                userChoice = sc.nextInt();
 
             switch (userChoice) { 
                 case 0: // Exit program
@@ -82,12 +81,8 @@ public class SmartTravelDriver {
                     sc.close();
                     return;
 
-                case 1: // testing (hardcode)
-                    runPredefinedScenario();
-                    valid = false; // Set to false to allow re-prompting 
-                    break;
 
-                case 2: // main menu (user input)
+                case 1: // main menu (user input)
                     valid = true; // Set to true to exit loop and access menu
                     mainMenu:
                     while (true) { // Main menu display and input of user's choice of management
@@ -101,7 +96,8 @@ public class SmartTravelDriver {
                             "\n 7. List All Data Summary" +
                             "\n 8. Load All Data" +
                             "\n 9. Save All Data" +
-                            "\n 10.Generate Dashboard" +
+                            "\n 10. Run Predefined Scenario" +
+                            "\n 11. Generate Dashboard" +
                             "\n 0. Return to previous menu" +
                             "\n Option: ");
                         userChoice = sc.nextInt();
@@ -1098,12 +1094,13 @@ public class SmartTravelDriver {
                                 service.saveAllData("output/data/");
                             break;
                             
-                           case 10: // generate dashboard
+                            case 10: // run predefined scenario
+                                runPredefinedScenario();
+                                break;
+
+                           case 11: // generate dashboard
                             try {
-
-                            SmartTravelService dashboardService = new SmartTravelService(clients, clientCount, trips, tripCount, transportations, transportationCount, accommodations, accommodationCount);
-
-                            DashboardGenerator.generateDashboard(dashboardService);
+                            DashboardGenerator.generateDashboard(service);
                             }
                             catch (IOException e) {
                             System.out.println("Error generating dashboard: " + e.getMessage());
@@ -1203,7 +1200,8 @@ public class SmartTravelDriver {
         // Demonstrate equals()
         System.out.println("\nTesting equals()");
         System.out.println("c1.equals(c2)? " + c1.equals(c2));
-        System.out.println("t1.equals(t2)? " + t1.equals(t2));
+        System.out.println("t1.equals(t1)? " + t1.equals(t1));// true case
+        System.out.println("t1.equals(t2)? " + t1.equals(t2)); //false case
         System.out.println("a3.equals(a4)? " + a3.equals(a4));
         System.out.println("trip1.equals(trip1)? " + trip1.equals(trip1));
 
@@ -1319,6 +1317,8 @@ public class SmartTravelDriver {
     System.out.println("\n    Predefined Scenario Completed    \n");
 
 }
+
+
 
     // Copy of transportation array (deep copy)
     public static Transportation[] copyTransportationArray(Transportation[] original) {

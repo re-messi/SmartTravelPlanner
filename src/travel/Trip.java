@@ -59,12 +59,12 @@ public String getTempTransportId() { return tempTransportId; }
 
 	// Parameterized constrcutor with allIDs for loading from file
 	public Trip(String tripId, String destination,
-				int duration, double basePrice) {
+				int duration, double basePrice) throws InvalidTripDataException {
 
 		this.tripId = tripId;
-		this.destination = destination;
-		this.durationInDays = duration;
-		this.basePrice = basePrice;
+		setDestination(destination);
+		setDurationInDays(duration);
+		setBasePrice(basePrice);
 
 		this.client = null;
 		this.transportation = null;

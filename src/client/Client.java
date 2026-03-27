@@ -36,7 +36,7 @@ public class Client {
 		setEmail(email);
 		this.amountSpent = 0.0;
 
-		// make sure nextClientNum stays aupdated
+		// make sure nextClientNum stays updated
     	int numericPart = Integer.parseInt(clientID.substring(1)); // remove 'C'
     		if (numericPart >= nextClientNum) {
         	nextClientNum = numericPart + 1;	
