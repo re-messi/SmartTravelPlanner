@@ -1,97 +1,86 @@
 package service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import client.Client;
 import exceptions.EntityNotFoundException;
 import travel.Accommodation;
 import travel.Transportation;
 import travel.Trip;
 import persistence.*;
-
-/* SmartTravelService manages all arrays used in the SmartTravel system.
- * It provides accessor methods for dashboard generation, chart generation,
- * and future file I/O operations.
- */
+//-----------------------------------------------------
+// Assignment 2 - COMP 249
+// Written by: Rebecca Messier (40338041) and Taminda Ait Ouazzou (40344517)
+//
+// SmartTravelService manages all arrays used in the SmartTravel system.
+// It provides accessor methods for dashboard generation, chart generation,
+// and future file I/O operations.
+//-----------------------------------------------------
+ 
 
 public class SmartTravelService {
 
-    private Client[] clients;
-    private int clientCount;
-
-    private Trip[] trips;
-    private int tripCount;
-
-    private Transportation[] transportations;
-    private int transportationCount;
-
-    private Accommodation[] accommodations;
-    private int accommodationCount;
+    private List<Client> clients = new ArrayList<>();
+    private List<Trip> trips = new ArrayList<>();
+    private List<Transportation> transportations = new ArrayList<>();
+    private List<Accommodation> accommodations = new ArrayList<>();
 
     
     // Constructs a SmartTravelService with references to the main arrays 
     public SmartTravelService(Client[] clients, int clientCount, Trip[] trips, int tripCount, Transportation[] transportations, int transportationCount, Accommodation[] accommodations, int accommodationCount) {
         
-        this.clients = clients;
-        this.clientCount = clientCount;
-        this.trips = trips;
-        this.tripCount = tripCount;
-        this.transportations = transportations;
-        this.transportationCount = transportationCount;
-        this.accommodations = accommodations;
-        this.accommodationCount = accommodationCount;
+        for (int i = 0; i < clientCount; i++) {this.clients.add(clients[i]);}
+
+        for (int i = 0; i < tripCount; i++) {this.trips.add(trips[i]);}
+
+        for (int i = 0; i < transportationCount; i++) {this.transportations.add(transportations[i]);}
+
+        for (int i = 0; i < accommodationCount; i++) {this.accommodations.add(accommodations[i]);}
     }
 
     //Getters
 
-    public int getClientCount() {return clientCount;}
+    public int getClientCount() {return clients.size();}
 
-    public int getTripCount() {return tripCount;}
+    public int getTripCount() {return trips.size();}
 
-    public int getTransportationCount() {return transportationCount;}
+    public int getTransportationCount() {return transportations.size();}
 
-    public int getAccommodationCount() {return accommodationCount;}
+    public int getAccommodationCount() {return accommodations.size();}
 
-    public Client getClient(int index) {return clients[index];}
+    public Client getClient(int index) {return clients.get(index);}
 
-    public Trip getTrip(int index) {return trips[index];}
+    public Trip getTrip(int index) {return trips.get(index);}
 
-    public Transportation getTransportation(int index) {return transportations[index];}
+    public Transportation getTransportation(int index) {return transportations.get(index);}
 
-    public Accommodation getAccommodation(int index) {return accommodations[index];}
+    public Accommodation getAccommodation(int index) {return accommodations.get(index);}
 
-    public Client[] getClients() {return clients;}
+    public List<Client> getClients() {return clients;}
 
-    public Trip[] getTrips() {return trips;}
+    public List<Trip> getTrips() {return trips;}
 
-    public Transportation[] getTransportations() {return transportations;}
+    public List<Transportation> getTransportations() {return transportations;}
 
-    public Accommodation[] getAccommodations() {return accommodations;}
+    public List<Accommodation> getAccommodations() {return accommodations;}
 
-    //Setters
-
-    public void setClientCount(int clientCount) {this.clientCount = clientCount;}
-
-    public void setTripCount(int tripCount) { this.tripCount = tripCount;}
-
-    public void setTransportationCount(int transportationCount) {this.transportationCount = transportationCount;}
-
-    public void setAccommodationCount(int accommodationCount) {
-        this.accommodationCount = accommodationCount;
-    }
+   //List.size() is used instead of setters
 
 
     //Calculates the total cost of the trip at a given index
     public double calculateTripTotal(int index) {
-        if (index < 0 || index >= tripCount || trips[index] == null) {
+        if (index < 0 || index >= trips.size() || trips.get(index) == null) {
             return 0;
         }
-        return trips[index].calculateTotalCost();
+        return trips.get(index).calculateTotalCost(); // returns total cost
     }
 
 
     public Client findClientById(String id) throws EntityNotFoundException {
-    for (int i = 0; i < clientCount; i++) {
-        if (clients[i].getClientId().equals(id)) {
-            return clients[i];
+    for (Client c : clients) {
+        if (c.getClientId().equals(id)) {
+            return c;
         }
     }
     throw new EntityNotFoundException("Client not found: " + id);
@@ -99,42 +88,51 @@ public class SmartTravelService {
 
 
     public Accommodation findAccommodationById(String id) throws EntityNotFoundException {
-    for (int i = 0; i < accommodationCount; i++) {
-        if (accommodations[i].getAccommodationID().equals(id)) {
-            return accommodations[i];
+    for (Accommodation a : accommodations) {
+        if (a.getAccommodationID().equals(id)) {
+            return a;
         }
     }
     throw new EntityNotFoundException("Accommodation not found: " + id);
     } 
 
     public Transportation findTransportById(String id) throws EntityNotFoundException {
-    for (int i = 0; i < transportationCount; i++) {
-        if (transportations[i].getTransportId().equals(id)) {
-            return transportations[i];
+    for (Transportation t : transportations) {
+        if (t.getTransportId().equals(id)) {
+            return t;
         }
     }
     throw new EntityNotFoundException("Transport not found: " + id);
     }
 
-
+    // load all data from csv files & reconstructs object relationships
     public void loadAllData(String basePath) { 
     
-    //reset count before loading 
-    clientCount = 0;
-    tripCount = 0;
-    transportationCount = 0;
-    accommodationCount = 0;
+
     
         try {
-        clientCount = ClientFileManager.loadClients(clients, basePath + "clients.csv");
-        accommodationCount = AccommodationFileManager.loadAccommodations(accommodations, basePath + "accommodations.csv");
-        transportationCount = TransportationFileManager.loadTransportation(transportations, basePath + "transports.csv");
-        tripCount = TripFileManager.loadTrips(trips, basePath + "trips.csv");
-
+            Client[] tempClients = new Client[1000]; //temporary arrays will need to be changed
+            Accommodation[] tempAccom = new Accommodation[1000];
+            Transportation[] tempTransport = new Transportation[1000];
+            Trip[] tempTrips = new Trip[1000];
         
-        for (int i = 0; i < tripCount; i++) {
-            Trip t = trips[i];
+        int clientCount = ClientFileManager.loadClients(tempClients, basePath + "clients.csv");
+        int accommodationCount = AccommodationFileManager.loadAccommodations(tempAccom, basePath + "accommodations.csv");
+        int transportationCount = TransportationFileManager.loadTransportation(tempTransport, basePath + "transports.csv");
+        int tripCount = TripFileManager.loadTrips(tempTrips, basePath + "trips.csv");
 
+        clients.clear();
+        trips.clear();
+        transportations.clear();
+        accommodations.clear();
+
+        for (int i = 0; i < clientCount; i++) clients.add(tempClients[i]);
+        for (int i = 0; i < accommodationCount; i++) accommodations.add(tempAccom[i]);
+        for (int i = 0; i < transportationCount; i++) transportations.add(tempTransport[i]);
+        for (int i = 0; i < tripCount; i++) trips.add(tempTrips[i]);
+
+
+        for (Trip t : trips) {
             try {
                 if (t.getTempClientId() != null && !t.getTempClientId().isEmpty()) {
                     t.setClient(findClientById(t.getTempClientId()));
@@ -158,12 +156,12 @@ public class SmartTravelService {
     }
 }
     
-    public void saveAllData(String basePath) { // writes all arrays back to the files
+    public void saveAllData(String basePath) { // writes all arrays back to the files 
         try {
-            ClientFileManager.saveClients(clients, clientCount, basePath + "clients.csv");
-            AccommodationFileManager.saveAccommodations(accommodations, accommodationCount, basePath + "accommodations.csv");
-            TransportationFileManager.saveTransportation(transportations, transportationCount, basePath + "transports.csv");
-            TripFileManager.saveTrips(trips, tripCount, basePath + "trips.csv");
+            ClientFileManager.saveClients(clients.toArray(new Client[0]), clients.size(), basePath + "clients.csv");
+            AccommodationFileManager.saveAccommodations(accommodations.toArray(new Accommodation[0]), accommodations.size(), basePath + "accommodations.csv");
+            TransportationFileManager.saveTransportation(transportations.toArray(new Transportation[0]), transportations.size(), basePath + "transports.csv");
+            TripFileManager.saveTrips(trips.toArray(new Trip[0]), trips.size(), basePath + "trips.csv");
 
         } catch (Exception e) {
             System.out.println("Error saving data: " + e.getMessage());
@@ -171,7 +169,7 @@ public class SmartTravelService {
     }
 
 
-
+    
 
 
 }
