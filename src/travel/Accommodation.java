@@ -10,8 +10,9 @@
 package travel;
 
 import exceptions.InvalidAccommodationDataException;
+import interfaces.*;
 
-public abstract class Accommodation {
+public abstract class Accommodation implements Identifiable, CsvPersistable, Comparable<Accommodation> {
 
 	
 
@@ -104,6 +105,19 @@ public abstract class Accommodation {
 
 	// Returns a deep copy of the object using copy constructors
 	public abstract Accommodation copy();
+
+	@Override
+	public String getId() {
+    	return getAccommodationID();
+	}
+
+	@Override
+	public int compareTo(Accommodation other) {
+    	return Double.compare(other.getPricePerNight(), this.getPricePerNight());
+	}
+
+	@Override
+	public abstract String toCsvRow();
 
 	// Printing description of object
 	@Override

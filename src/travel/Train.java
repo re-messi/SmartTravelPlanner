@@ -28,9 +28,10 @@ public class Train extends Transportation {
 	}
 
 	// parameterized constructor with transportId for loeading from file
-	public Train(String transportId, String companyName, String departureCity, String arrivalCity,double price, String trainType){
+	public Train(String transportId, String companyName, String departureCity, String arrivalCity,double price, String trainType, String seatClass){
 		super(transportId, companyName, departureCity, arrivalCity, price);
 		this.trainType = trainType;
+		this.seatClass = seatClass;
 	}
 
 	// Copy constructor
@@ -67,6 +68,32 @@ public class Train extends Transportation {
 	@Override
 	public Transportation copy() {
     return new Train(this);
+}
+
+	@Override
+	public String toCsvRow() {
+    	return getTransportId() + ";" +
+           	getCompanyName() + ";" +
+           	getDepartureCity() + ";" +
+           	getArrivalCity() + ";" +
+           	getPrice() + ";" +
+           	trainType + ";" +
+           	seatClass + ";" +
+           	"TRAIN";
+	}
+
+	public static Train fromCsvRow(String line) {
+    String[] parts = line.split(";");
+
+    return new Train(
+        parts[0],
+        parts[1],
+        parts[2],
+        parts[3],
+        Double.parseDouble(parts[4]),
+        parts[5],
+		parts[6]
+    );
 }
 	
 	@Override

@@ -65,6 +65,31 @@ public class Flight extends Transportation {
 }
 
 	@Override
+	public String toCsvRow() {
+    	return getTransportId() + ";" +
+           getCompanyName() + ";" +
+           getDepartureCity() + ";" +
+           getArrivalCity() + ";" +
+           getPrice() + ";" +
+           airlineName + ";" +
+           luggageAllowanceKg + ";" +
+           "FLIGHT";
+	}
+
+	public static Flight fromCsvRow(String line) throws InvalidTransportDataException {
+    String[] parts = line.split(";");
+
+    return new Flight(
+        parts[0],
+        parts[1],
+        parts[2],
+        parts[3],
+        Double.parseDouble(parts[4]),
+        Double.parseDouble(parts[6])
+    );
+}
+
+	@Override
 	// Returns a string representation of the Flight
 	public String toString() {
 		return "Flight: " + 

@@ -124,7 +124,7 @@ public class SmartTravelService {
         clients.clear();
         trips.clear();
         transportations.clear();
-        accommodations.clear();
+        accommodations.clear();    
 
         for (int i = 0; i < clientCount; i++) clients.add(tempClients[i]);
         for (int i = 0; i < accommodationCount; i++) accommodations.add(tempAccom[i]);

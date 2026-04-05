@@ -63,6 +63,32 @@ public class Bus extends Transportation {
     return new Bus(this);
 }
 
+
+	@Override
+	public String toCsvRow() {
+    	return getTransportId() + ";" +
+           getCompanyName() + ";" +
+           getDepartureCity() + ";" +
+           getArrivalCity() + ";" +
+           getPrice() + ";" +
+           numberofStops + ";" +
+           "BUS";
+	}
+
+
+	public static Bus fromCsvRow(String line) throws InvalidTransportDataException {
+    String[] parts = line.split(";");
+
+    return new Bus(
+        parts[0], // id
+        parts[1], // company
+        parts[2], // departure
+        parts[3], // arrival
+        Double.parseDouble(parts[4]),
+        Integer.parseInt(parts[5])
+    );
+}
+
 	@Override
 	// Returns a string representation of the Bus
 	public String toString() {

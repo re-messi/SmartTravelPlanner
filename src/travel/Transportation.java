@@ -10,8 +10,9 @@
 //-----------------------------------------------------
 package travel;
 
+import interfaces.*;
 
-public abstract class Transportation {
+public abstract class Transportation implements Identifiable, CsvPersistable, Comparable<Transportation>{
 
 	// Attributes
 	private String transportId;
@@ -95,6 +96,19 @@ public abstract class Transportation {
 	public abstract Transportation copy();
 		
 	
+	@Override
+	public String getId() {
+    	return getTransportId();
+	}
+
+	@Override
+	public abstract String toCsvRow();
+
+	@Override
+	public int compareTo(Transportation other) {
+    	return Double.compare(other.getPrice(), this.getPrice());
+	}
+
 	@Override
 	// Returns a string representation of the Transportation
 	public String toString() {

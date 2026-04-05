@@ -9,8 +9,9 @@
 package client;
 
 import exceptions.InvalidClientDataException;
+import interfaces.*;
 
-public class Client {
+public class Client implements Identifiable, CsvPersistable, Comparable<Client> {
 
 	//Attributes
 	private String clientID;
@@ -104,6 +105,27 @@ public class Client {
 		if (amount > 0)
 		this.amountSpent += amount;
 	}
+
+	@Override
+	public String getId() {
+    	return getClientId();
+	}
+
+	@Override
+	public String toCsvRow() {
+    	return clientID + ";" + firstName + ";" + lastName + ";" + email;
+	}
+
+	@Override
+	public int compareTo(Client other) {
+    	return Double.compare(other.getAmountSpent(), this.getAmountSpent());
+	}
+
+	public static Client fromCsvRow(String line) throws InvalidClientDataException {
+    	String[] parts = line.split(";");
+    	return new Client(parts[0], parts[1], parts[2], parts[3]);
+	}
+
 
 	//toString method
 	@Override

@@ -12,8 +12,9 @@ package travel;
 
 import client.Client;
 import exceptions.InvalidTripDataException;
+import interfaces.*;
 
-public class Trip {
+public class Trip implements Identifiable, Billable, CsvPersistable, Comparable<Trip> {
 
 	//Attributes
 	private String tripId;
@@ -104,6 +105,7 @@ public String getTempTransportId() { return tempTransportId; }
 
 	public int getDurationInDays() { return durationInDays; }
 	
+	@Override
 	public double getBasePrice() { return basePrice; }
 	
 	public Client getClient() { return client; }
@@ -152,6 +154,42 @@ public String getTempTransportId() { return tempTransportId; }
 		totalCost += (accommodation == null) ? 0 : accommodation.calculateCost(durationInDays);
 		return totalCost;
 	}
+
+
+	@Override
+	public String getId() {
+    	return getTripId();
+	}
+
+	@Override
+	public double getTotalCost() {
+    	return calculateTotalCost();
+	}
+
+	
+
+	@Override
+	public String toCsvRow() {
+    	return tripId + ";" + destination + ";" + durationInDays + ";" + basePrice;
+	}
+
+	@Override
+	public int compareTo(Trip other) {
+    	return Double.compare(other.getTotalCost(), this.getTotalCost());
+	}
+
+	public static Trip fromCsvRow(String line) throws InvalidTripDataException {
+    String[] parts = line.split(";");
+
+    return new Trip(
+        parts[0], // id
+        parts[1], // destination
+        Integer.parseInt(parts[2]),
+        Double.parseDouble(parts[3])
+    );
+}
+
+
 	@Override
 	 // Returns a string representation of the Trip 
 	public String toString() {
@@ -162,7 +200,7 @@ public String getTempTransportId() { return tempTransportId; }
 		           "\nClient: " + (client == null ? "None" : client.getFirstName() + " " + client.getLastName()) +
 		           "\nTransportation: " + (transportation == null ? "None" : transportation.toString()) +
 		           "\nAccommodation: " + (accommodation == null ? "None" : accommodation.toString()) +
-		           "\nTotal Cost: $" + calculateTotalCost();
+		           "\nTotal Cost: $" + getTotalCost();
 	}
 	@Override
 	// Checks equality between two Trips
