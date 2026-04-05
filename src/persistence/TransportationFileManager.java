@@ -44,6 +44,7 @@ public class TransportationFileManager {
                     tr.getArrivalCity() + ";" + 
                     tr.getPrice()+ ";" + 
                     tr.getTrainType();
+                    tr.getSeatClass();
         }
          writer.println(line);
         }
@@ -84,7 +85,8 @@ public class TransportationFileManager {
                      portion[3],
                      portion[4],
                      Double.parseDouble(portion[5]),
-                     portion[6]
+                     portion[6],
+                     portion[7]
                 );
                } else {
                 throw new InvalidTransportDataException("Unknown transportation type: " + portion[0]);

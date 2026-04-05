@@ -48,9 +48,11 @@ public class DashboardGenerator {
         new File("output/charts").mkdirs();
         
         // 1. Generate charts FIRST (your existing code)
-        TripChartGenerator.generateCostBarChart(service.getTrips(), service.getTripCount());
-        TripChartGenerator.generateDestinationPieChart(service.getTrips(), service.getTripCount());
-        TripChartGenerator.generateDurationLineChart(service.getTrips(), service.getTripCount());
+        Trip[] tripArray = service.getTrips().toArray(new Trip[0]);
+
+        TripChartGenerator.generateCostBarChart(tripArray, service.getTripCount());
+        TripChartGenerator.generateDestinationPieChart(tripArray, service.getTripCount());
+        TripChartGenerator.generateDurationLineChart(tripArray, service.getTripCount());
         
         // 2. Generate HTML dashboard
         generateHTMLDashboard(service);

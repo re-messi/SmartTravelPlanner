@@ -973,6 +973,7 @@ public class SmartTravelDriver {
         c3 = new Client("Bobby", "Brown", "bobby@example.com");
 
         Client[] clients = {c1, c2, c3};
+        
 
         System.out.println("\nClients");
         for (int i = 0; i < clients.length; i++) {
@@ -1092,10 +1093,10 @@ public class SmartTravelDriver {
 
     try {
         Client[] clients = {c1, c2, c3};
-        for (int i = 0; i < clients.length; i++) {
-            if (clients[i] != null &&
-                clients[i].getEmail().equalsIgnoreCase("alice@example.com")) {
-                throw new DuplicateEmailException("Email already exists.");
+        Client[] scenarioClients = {c1, c2, c3};
+    for (int i = 0; i < scenarioClients.length; i++) {
+        if (scenarioClients[i] != null && scenarioClients[i].getEmail().equalsIgnoreCase("alice@example.com")) {
+            throw new DuplicateEmailException("Email already exists.");
             }
         }
     }
@@ -1127,11 +1128,12 @@ public class SmartTravelDriver {
     try {
         String searchId = "C9999";
         boolean found = false;
-        Client[] clients = {c1, c2, c3};
 
-        for (int i = 0; i < clients.length; i++) {
-            if (clients[i] != null &&
-                clients[i].getClientId().equalsIgnoreCase(searchId)) {
+        Client[] searchClients = {c1, c2, c3};
+        
+        for (int i = 0; i < searchClients.length; i++) {
+            if (searchClients[i] != null &&
+                searchClients[i].getClientId().equalsIgnoreCase(searchId)) {
                 found = true;
                 break;
             }
