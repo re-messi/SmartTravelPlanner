@@ -26,17 +26,55 @@ public class SmartTravelService {
     private List<Transportation> transportations = new ArrayList<>();
     private List<Accommodation> accommodations = new ArrayList<>();
 
+    Repository<Client> clientRepo = new Repository<>();
+    Repository<Trip> tripRepo = new Repository<>();
+    Repository<Accommodation> accommodationRepo = new Repository<>();
+    Repository<Transportation> transportationRepo = new Repository<>();
+
     
     // Constructs a SmartTravelService with references to the main arrays 
     public SmartTravelService(Client[] clients, int clientCount, Trip[] trips, int tripCount, Transportation[] transportations, int transportationCount, Accommodation[] accommodations, int accommodationCount) {
         
-        for (int i = 0; i < clientCount; i++) {this.clients.add(clients[i]);}
+        for (int i = 0; i < clientCount; i++) {
+            this.clients.add(clients[i]);
+            this.clientRepo.add(clients[i]);
+        }
 
-        for (int i = 0; i < tripCount; i++) {this.trips.add(trips[i]);}
+        for (int i = 0; i < tripCount; i++) {
+            this.trips.add(trips[i]);
+            this.tripRepo.add(trips[i]);
+        }
 
-        for (int i = 0; i < transportationCount; i++) {this.transportations.add(transportations[i]);}
+        for (int i = 0; i < transportationCount; i++) {
+            this.transportations.add(transportations[i]);
+            this.transportationRepo.add(transportations[i]);
+        }
 
-        for (int i = 0; i < accommodationCount; i++) {this.accommodations.add(accommodations[i]);}
+        for (int i = 0; i < accommodationCount; i++) {
+            this.accommodations.add(accommodations[i]);
+            this.accommodationRepo.add(accommodations[i]);
+        }
+    }
+
+    //add methods
+    public void addClient(Client c) {
+        clients.add(c);
+        clientRepo.add(c);
+    }
+
+    public void addTrip(Trip t) {
+        trips.add(t);
+        tripRepo.add(t);
+    }
+
+    public void addTransportation(Transportation t) {
+        transportations.add(t);
+        transportationRepo.add(t);
+    }
+
+    public void addAccommodation(Accommodation a) {
+        accommodations.add(a);
+        accommodationRepo.add(a);
     }
 
     //Getters
@@ -126,11 +164,23 @@ public class SmartTravelService {
         transportations.clear();
         accommodations.clear();    
 
-        for (int i = 0; i < clientCount; i++) clients.add(tempClients[i]);
-        for (int i = 0; i < accommodationCount; i++) accommodations.add(tempAccom[i]);
-        for (int i = 0; i < transportationCount; i++) transportations.add(tempTransport[i]);
-        for (int i = 0; i < tripCount; i++) trips.add(tempTrips[i]);
+        for (int i = 0; i < clientCount; i++) { 
+            clients.add(tempClients[i]); 
+            clientRepo.add(tempClients[i]);
+        }    
 
+        for (int i = 0; i < accommodationCount; i++) {
+            accommodations.add(tempAccom[i]);
+            accommodationRepo.add(tempAccom[i]);
+        }    
+        for (int i = 0; i < transportationCount; i++) { 
+            transportations.add(tempTransport[i]);
+            transportationRepo.add(tempTransport[i]);
+        }    
+        for (int i = 0; i < tripCount; i++) {
+            trips.add(tempTrips[i]);
+            tripRepo.add(tempTrips[i]);
+        }
 
         for (Trip t : trips) {
             try {

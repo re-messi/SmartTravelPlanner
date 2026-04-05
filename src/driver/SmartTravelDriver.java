@@ -145,9 +145,10 @@ public class SmartTravelDriver {
                                                 }
 
                                                 Client newClient = new Client(firstName, lastName, email);
-                                                clients[clientCount++] = newClient;
-
-                                                service.setClientCount(clientCount);
+                                                
+                                                
+                                                service.addClient(newClient);
+                                                clientCount++;
 
                                                 System.out.println("\n" + newClient + "\n");
                                                 System.out.println("New client added.");
@@ -269,7 +270,7 @@ public class SmartTravelDriver {
                                             clients[clientCount - 1] = null;
                                             clientCount--;
 
-                                            service.setClientCount(clientCount);
+                                            
 
                                             System.out.println("Client deleted successfully.");
 
@@ -425,10 +426,9 @@ public class SmartTravelDriver {
                                             double totalCost = newTrip.calculateTotalCost();
                                             selectedClient.addAmountSpent(totalCost);
 
-                                            trips[tripCount] = newTrip;
+                                            
+                                            service.addTrip(newTrip);
                                             tripCount++;
-
-                                            service.setTripCount(tripCount);
 
 
                                             System.out.println("\nTrip created successfully!");
@@ -569,7 +569,7 @@ public class SmartTravelDriver {
                                             trips[tripCount - 1] = null;
                                             tripCount--;
 
-                                            service.setTripCount(tripCount);
+
 
                                             System.out.println("Trip cancelled successfully.");
                                         }
@@ -706,10 +706,9 @@ public class SmartTravelDriver {
                                             }
 
                                             if (newTransport != null) {
-                                                transportations[transportationCount] = newTransport;
+                            
+                                                service.addTransportation(newTransport);
                                                 transportationCount++;
-
-                                                service.setTransportationCount(transportationCount);
 
                                                 System.out.println("Transportation added successfully.");
                                             }
@@ -750,7 +749,7 @@ public class SmartTravelDriver {
                                             transportations[transportationCount - 1] = null;
                                             transportationCount--;
 
-                                            service.setTransportationCount(transportationCount);
+                                           
 
                                             System.out.println("Transportation removed successfully.");
                                         }
@@ -854,10 +853,10 @@ public class SmartTravelDriver {
                                             }
 
                                             if (newAccommodation != null) {
-                                                accommodations[accommodationCount] = newAccommodation;
-                                                accommodationCount++;
+                                                
 
-                                                service.setAccommodationCount(accommodationCount);
+                                                service.addAccommodation(newAccommodation);
+                                                accommodationCount++;
 
                                                 System.out.println("Accommodation added successfully.");
                                                }
@@ -897,7 +896,7 @@ public class SmartTravelDriver {
                                             accommodations[accommodationCount - 1] = null;
                                             accommodationCount--;
 
-                                            service.setAccommodationCount(accommodationCount);
+                                     
 
                                             System.out.println("Accommodation removed successfully.");
                                             }
