@@ -32,6 +32,10 @@ public class SmartTravelService {
     Repository<Transportation> transportationRepo = new Repository<>();
 
     
+    public SmartTravelService() {
+
+    }
+
     // Constructs a SmartTravelService with references to the main arrays 
     public SmartTravelService(Client[] clients, int clientCount, Trip[] trips, int tripCount, Transportation[] transportations, int transportationCount, Accommodation[] accommodations, int accommodationCount) {
         
@@ -77,6 +81,39 @@ public class SmartTravelService {
         accommodationRepo.add(a);
     }
 
+    public void removeClient(String id) throws EntityNotFoundException {
+    Client toRemove = findClientById(id);
+    clients.remove(toRemove);
+    }
+
+    public void removeTrip(String id) throws EntityNotFoundException {
+        Trip toRemove = null;
+        for (Trip t : trips) {
+            if (t.getTripId().equals(id)) { toRemove = t; break; }
+        }
+        if (toRemove == null) throw new EntityNotFoundException("Trip not found: " + id);
+        trips.remove(toRemove);
+    }
+
+    public void removeTransportation(String id) throws EntityNotFoundException {
+    Transportation toRemove = null;
+    for (Transportation t : transportations) {
+        if (t.getTransportId().equals(id)) { toRemove = t; break; }
+    }
+    if (toRemove == null) throw new EntityNotFoundException("Transport not found: " + id);
+    transportations.remove(toRemove);
+    }
+
+    public void removeAccommodation(String id) throws EntityNotFoundException {
+        Accommodation toRemove = null;
+        for (Accommodation a : accommodations) {
+            if (a.getAccommodationID().equals(id)) { toRemove = a; break; }
+        }
+        if (toRemove == null) throw new EntityNotFoundException("Accommodation not found: " + id);
+        accommodations.remove(toRemove);
+    }
+
+
     //Getters
 
     public int getClientCount() {return clients.size();}
@@ -102,6 +139,14 @@ public class SmartTravelService {
     public List<Transportation> getTransportations() {return transportations;}
 
     public List<Accommodation> getAccommodations() {return accommodations;}
+
+    public Repository<Client> getClientRepo() {return clientRepo;}
+
+    public Repository<Trip> getTripRepo() {return tripRepo;}
+
+    public Repository<Transportation> getTransportationRepo() {return transportationRepo;}
+
+    public Repository<Accommodation> getAccommodationRepo() {return accommodationRepo;}
 
    //List.size() is used instead of setters
 

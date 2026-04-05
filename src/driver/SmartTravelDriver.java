@@ -19,6 +19,7 @@ package driver;
 
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.List;
 import client.Client;
 import travel.Accommodation;
 import travel.Bus;
@@ -48,24 +49,8 @@ public class SmartTravelDriver {
         int userChoice;
         boolean valid = false;
 
-        Client[] clients = new Client[100];
-        int clientCount = 0;
-
-        Trip[] trips = new Trip[200];
-        int tripCount = 0;
-
-        Transportation[] transportations = new Transportation[50];
-        int transportationCount = 0;
-
-        Accommodation[] accommodations = new Accommodation[50];
-        int accommodationCount = 0;
-
-        SmartTravelService service = new SmartTravelService(
-        clients, clientCount,
-        trips, tripCount,
-        transportations, transportationCount,
-        accommodations, accommodationCount
-    );
+        
+        SmartTravelService service = new SmartTravelService();
 
         // First option of choosing testing scenario, menu operations, or exit
         do {
@@ -122,10 +107,6 @@ public class SmartTravelDriver {
                                             break clientMenu;
 
                                         case 1: // Add client
-                                            if (clientCount >= clients.length) {
-                                                System.out.println("Client list is full.");
-                                                break;
-                                            }
 
                                              try {
                                                 System.out.print("Enter the first name: ");
@@ -138,9 +119,9 @@ public class SmartTravelDriver {
                                                 String email = sc.nextLine();
                                                
                                                 //check duplicate email
-                                                for (int i = 0; i < clientCount; i++) {
-                                                    if (clients[i].getEmail().equalsIgnoreCase(email)) {
-                                                        throw new DuplicateEmailException("Email already exists");
+                                                for (int i = 0; i < service.getClientCount(); i++) {
+                                                    if (service.getClient(i).getEmail().equalsIgnoreCase(email)) {
+                                                    throw new DuplicateEmailException("Email already exists");
                                                     }
                                                 }
 
@@ -148,7 +129,7 @@ public class SmartTravelDriver {
                                                 
                                                 
                                                 service.addClient(newClient);
-                                                clientCount++;
+                                                
 
                                                 System.out.println("\n" + newClient + "\n");
                                                 System.out.println("New client added.");
@@ -160,28 +141,19 @@ public class SmartTravelDriver {
                                             break;
 
                                         case 2: // Edit client
-                                            if (clientCount == 0) {
+                                            if (service.getClientCount() == 0) {
                                                 System.out.println("No clients to edit.");
                                                 break;
                                             }
 
                                             System.out.print("Enter the Client ID to edit (ex: C1001): ");
                                             String idToEdit = sc.nextLine();
-
-                                            Client clientToEdit = null;
+                                            
 
 
                                             try {
-                                            for (int i = 0; i < clientCount; i++) {
-                                                if (clients[i].getClientId().equalsIgnoreCase(idToEdit)) { 
-                                                    clientToEdit = clients[i];
-                                                    break;
-                                                }
-                                            }
 
-                                            if (clientToEdit == null) {
-                                                throw new EntityNotFoundException("Client not found.");
-                                            }
+                                            Client clientToEdit = service.getClientRepo().findById(idToEdit);
 
                                             System.out.println("Editing client:");
                                             System.out.println(clientToEdit);
@@ -211,11 +183,12 @@ public class SmartTravelDriver {
                                                     System.out.print("Enter new email: ");
                                                     String newEmail = sc.nextLine();
 
-                                                    for (int i = 0; i < clientCount; i++) {
-                                                        if (clients[i] != clientToEdit && clients[i].getEmail().equalsIgnoreCase(newEmail)) {
+                                                    for (int i = 0; i < service.getClientCount(); i++) {
+                                                        if (service.getClient(i) != clientToEdit && 
+                                                        service.getClient(i).getEmail().equalsIgnoreCase(newEmail)) {
                                                         throw new DuplicateEmailException("Email already exists.");
+                                                        }
                                                     }
-                                                }
 
                                                     clientToEdit.setEmail(newEmail);
                                                     break;
@@ -236,61 +209,27 @@ public class SmartTravelDriver {
                                             break;
 
                                         case 3: // Delete client
-                                            if (clientCount == 0) {
+                                            if (service.getClientCount() == 0) {
                                                 System.out.println("No clients to delete.");
                                                 break;
                                             }
-
                                             System.out.print("Enter the Client ID to delete (ex: C1001): ");
                                             String idToDelete = sc.nextLine();
-
-                                            int indexToDelete = -1;
-
-
                                             try {
-                                            // Find client index
-                                            for (int i = 0; i < clientCount; i++) {
-                                                if (clients[i].getClientId().equalsIgnoreCase(idToDelete)) {
-                                                    indexToDelete = i;
-                                                    break;
-                                                }
-                                            }
-
-                                            if (indexToDelete == -1) {
-                                                throw new EntityNotFoundException("Client not found.");
-                                                
-                                            }
-
-                                            // Shift left
-                                            for (int i = indexToDelete; i < clientCount - 1; i++) {
-                                                clients[i] = clients[i + 1];
-                                            }
-
-                                            // Clear last slot
-                                            clients[clientCount - 1] = null;
-                                            clientCount--;
-
-                                            
-
-                                            System.out.println("Client deleted successfully.");
-
-                                            }
-                                            catch (EntityNotFoundException e) {
+                                                service.removeClient(idToDelete);
+                                                System.out.println("Client deleted successfully.");
+                                            } catch (EntityNotFoundException e) {
                                                 System.out.println("Error deleting client: " + e.getMessage());
-                                            }   
-
-                                            break;
+                                            }
 
                                         case 4: // List all clients
-                                            if (clientCount == 0) {
+                                            if (service.getClientCount() == 0) {
                                                 System.out.println("No clients to display.");
                                                 break;
                                             }
-
                                             System.out.println("\n----- Client List -----");
-
-                                            for (int i = 0; i < clientCount; i++) {
-                                                System.out.println(clients[i]);
+                                            for (int i = 0; i < service.getClientCount(); i++) {
+                                                System.out.println(service.getClient(i));
                                                 System.out.println("----------------------");
                                             }
                                             break;
@@ -320,12 +259,8 @@ public class SmartTravelDriver {
                                             break tripMenu;
 
                                         case 1: // Create trip
-                                            if (tripCount >= trips.length) {
-                                                System.out.println("Trip list is full. Cannot add more trips.");
-                                                break;
-                                            }
 
-                                         if (clientCount == 0) {
+                                         if (service.getClientCount() == 0) {
                                          System.out.println("No clients available. Add a client first.");
                                           break;
                                         }
@@ -343,18 +278,18 @@ public class SmartTravelDriver {
 
                                             // Select Client
                                             System.out.println("Available clients:");
-                                            for (int i = 0; i < clientCount; i++) {
-                                         System.out.println(clients[i].getClientId() + ": " +
-                                         clients[i].getFirstName() + " " + clients[i].getLastName());
+                                            for (int i = 0; i < service.getClientCount(); i++) {
+                                                System.out.println(service.getClient(i).getClientId() + ": " +
+                                                    service.getClient(i).getFirstName() + " " + service.getClient(i).getLastName());
                                             }
 
                                             System.out.print("Enter Client ID for this trip: ");
                                             String clientID = sc.nextLine();
 
                                             Client selectedClient = null;
-                                            for (int i = 0; i < clientCount; i++) {
-                                                if (clients[i].getClientId().equalsIgnoreCase(clientID)) {
-                                                    selectedClient = clients[i];
+                                            for (int i = 0; i < service.getClientCount(); i++) {
+                                                if (service.getClient(i).getClientId().equalsIgnoreCase(clientID)) {
+                                                    selectedClient = service.getClient(i);
                                                     break;
                                                 }
                                             }
@@ -366,14 +301,14 @@ public class SmartTravelDriver {
 
                                        // Transportation is optional
                                        Transportation selectedTransportation = null;
-                                       if (transportationCount > 0) {
+                                       if (service.getTransportationCount() > 0) {
                                        System.out.print("Would you like to add transportation? (yes/no): ");
                                        String addTransport = sc.nextLine();
 
                                          if (addTransport.equalsIgnoreCase("yes")) {
                                             System.out.println("Available transportation options:");
-                                            for (int i = 0; i < transportationCount; i++) {
-                                          System.out.println((i + 1) + ". " + transportations[i]);
+                                            for (int i = 0; i < service.getTransportationCount(); i++) {
+                                                System.out.println((i + 1) + ". " + service.getTransportation(i));
                                                 System.out.println("----------------------");
                                             }
 
@@ -381,38 +316,39 @@ public class SmartTravelDriver {
                                             int transportChoice = sc.nextInt();
                                             sc.nextLine();
 
-                                            if (transportChoice < 1 || transportChoice > transportationCount) {
+                                            if (transportChoice < 1 || transportChoice > service.getTransportationCount()) {
                                             System.out.println("Invalid transportation selection.");
                                                 break;
                                             }
 
-                                        selectedTransportation = transportations[transportChoice - 1];
+                                        selectedTransportation = service.getTransportation(transportChoice - 1);
                                         }
                                     }
 
                                         // Accommodation is optional
                                          Accommodation selectedAccommodation = null;
-                                        if (accommodationCount > 0) {
+                                        if (service.getAccommodationCount() > 0) {
                                         System.out.print("Would you like to add accommodation? (yes/no): ");
                                         String addAccommodation = sc.nextLine();
 
                                     if (addAccommodation.equalsIgnoreCase("yes")) {
                                             System.out.println("Available accommodations:");
-                                            for (int i = 0; i < accommodationCount; i++) {
-                                        System.out.println((i + 1) + ". " + accommodations[i]);
+                                            for (int i = 0; i < service.getAccommodationCount(); i++) {
+                                                System.out.println((i + 1) + ". " + service.getAccommodation(i));
                                                 System.out.println("----------------------");
                                             }
+
 
                                             System.out.print("Select accommodation number: ");
                                             int accommodationChoice = sc.nextInt();
                                             sc.nextLine();
 
-                                            if (accommodationChoice < 1 || accommodationChoice > accommodationCount) {
+                                            if (accommodationChoice < 1 || accommodationChoice > service.getAccommodationCount()) {
                                         System.out.println("Invalid accommodation selection.");
                                                 break;
                                             }
 
-                                        selectedAccommodation = accommodations[accommodationChoice - 1];
+                                        selectedAccommodation = service.getAccommodation(accommodationChoice - 1);
                                         }
                                     }
 
@@ -428,7 +364,7 @@ public class SmartTravelDriver {
 
                                             
                                             service.addTrip(newTrip);
-                                            tripCount++;
+                                           
 
 
                                             System.out.println("\nTrip created successfully!");
@@ -441,7 +377,7 @@ public class SmartTravelDriver {
                                             break;
 
                                         case 2: // Edit trip information
-                                            if (tripCount == 0) {
+                                            if (service.getTripCount() == 0) {
                                                 System.out.println("No trips available to edit.");
                                                 break;
                                             }
@@ -452,9 +388,9 @@ public class SmartTravelDriver {
                                             Trip tripToEdit = null;
 
                                             try {
-                                            for (int i = 0; i < tripCount; i++) {
-                                                if (trips[i].getTripId().equalsIgnoreCase(tripIdEdit)) {
-                                                    tripToEdit = trips[i];
+                                            for (int i = 0; i < service.getTripCount(); i++) {
+                                                if (service.getTrip(i).getTripId().equalsIgnoreCase(tripIdEdit)) {
+                                                    tripToEdit = service.getTrip(i);
                                                     break;
                                                 }
                                             }
@@ -496,29 +432,33 @@ public class SmartTravelDriver {
 
                                                 case 4:
                                                     System.out.println("Select new transportation:");
-                                                    for (int i = 0; i < transportationCount; i++) {
-                                                        System.out.println(i + 1 + ". " + transportations[i].toString());
+
+                                                    for (int i = 0; i < service.getTransportationCount(); i++) {
+                                                        System.out.println(i + 1 + ". " + service.getTransportation(i).toString());
                                                     }
+
                                                     System.out.print("Choice: ");
                                                     int newTransport = sc.nextInt();
                                                     sc.nextLine();
-                                                    if (newTransport >= 1 && newTransport <= transportationCount) {
-                                                        tripToEdit.setTransportation(transportations[newTransport - 1]);
-                                                    } else {
+                                                    if (newTransport >= 1 && newTransport <= service.getTransportationCount()) {
+                                                        tripToEdit.setTransportation(service.getTransportation(newTransport - 1));
+                                                    } 
+                                                       else {
                                                         System.out.println("Invalid selection. Transportation not changed.");
                                                     }
                                                     break;
 
                                                 case 5:
                                                     System.out.println("Select new accommodation:");
-                                                    for (int i = 0; i < accommodationCount; i++) {
-                                                        System.out.println(i + 1 + ". " + accommodations[i].toString());
+                                                    for (int i = 0; i < service.getAccommodationCount(); i++) {
+                                                        System.out.println(i + 1 + ". " + service.getAccommodation(i).toString());
                                                     }
+
                                                     System.out.print("Choice: ");
                                                     int newAccom = sc.nextInt();
                                                     sc.nextLine();
-                                                    if (newAccom >= 1 && newAccom <= accommodationCount) {
-                                                        tripToEdit.setAccommodation(accommodations[newAccom - 1]);
+                                                    if (newAccom >= 1 && newAccom <= service.getAccommodationCount()) {
+                                                        tripToEdit.setAccommodation(service.getAccommodation(newAccom - 1));
                                                     } else {
                                                         System.out.println("Invalid selection. Accommodation not changed.");
                                                     }
@@ -540,79 +480,49 @@ public class SmartTravelDriver {
                                             break;
 
                                         case 3: // Cancel a trip
-                                            if (tripCount == 0) {
+                                            if (service.getTripCount() == 0) {
                                                 System.out.println("No trips available to cancel.");
                                                 break;
                                             }
-
                                             System.out.print("Enter Trip ID to cancel: ");
                                             String tripIdCancel = sc.nextLine();
-
-                                            int indexToDelete = -1;
-
                                             try {
-                                            for (int i = 0; i < tripCount; i++) {
-                                                if (trips[i].getTripId().equalsIgnoreCase(tripIdCancel)) {
-                                                    indexToDelete = i;
-                                                    break;
-                                                }
+                                                service.removeTrip(tripIdCancel);
+                                                System.out.println("Trip cancelled successfully.");
+                                            } catch (EntityNotFoundException e) {
+                                                System.out.println("Error cancelling trip: " + e.getMessage());
                                             }
-
-                                            if (indexToDelete == -1) {
-                                                throw new EntityNotFoundException("Trip not found.");
-                                            }
-
-                                            // Shift elements left
-                                            for (int i = indexToDelete; i < tripCount - 1; i++) {
-                                                trips[i] = trips[i + 1];
-                                            }
-                                            trips[tripCount - 1] = null;
-                                            tripCount--;
-
-
-
-                                            System.out.println("Trip cancelled successfully.");
-                                        }
-                                        catch (EntityNotFoundException e) {
-                                            System.out.println("Error cancelling trip: " + e.getMessage());
-                                        }
                                             break;
 
                                         case 4: // List all trips
-                                            if (tripCount == 0) {
+                                            if (service.getTripCount() == 0) {
                                                 System.out.println("No trips to display.");
                                             } else {
-                                                for (int i = 0; i < tripCount; i++) {
-                                                    System.out.println(trips[i]);
+                                                for (int i = 0; i < service.getTripCount(); i++) {
+                                                    System.out.println(service.getTrip(i));
                                                     System.out.println("--------------------------");
                                                 }
                                             }
                                             break;
 
                                         case 5: // List all trips for a specific client
-                                            if (tripCount == 0) {
+                                            if (service.getTripCount() == 0) {
                                                 System.out.println("No trips to display.");
                                                 break;
                                             }
-
                                             System.out.print("Enter Client ID to see their trips: ");
                                             String clientTripsID = sc.nextLine();
-
                                             boolean found = false;
-
-                                            for (int i = 0; i < tripCount; i++) {
-                                                if (trips[i].getClient().getClientId().equalsIgnoreCase(clientTripsID)) {
-                                                    System.out.println(trips[i]);
+                                            for (int i = 0; i < service.getTripCount(); i++) {
+                                                if (service.getTrip(i).getClient().getClientId().equalsIgnoreCase(clientTripsID)) {
+                                                    System.out.println(service.getTrip(i));
                                                     System.out.println("--------------------------");
                                                     found = true;
                                                 }
                                             }
                                             try {
-                                            if (!found) {
-                                                throw new EntityNotFoundException("No trips found for this client.");
-                                            }
-                                        }
-                                            catch (EntityNotFoundException e) {
+                                                if (!found) throw new EntityNotFoundException("No trips found for this client.");
+                                            } catch (EntityNotFoundException e) {
                                                 System.out.println(e.getMessage());
                                             }
 
@@ -641,10 +551,6 @@ public class SmartTravelDriver {
                                             break transportMenu;
 
                                         case 1: // Add transportation
-                                            if (transportationCount >= transportations.length) {
-                                                System.out.println("Transportation list is full.");
-                                                break;
-                                            }
 
                                             System.out.print("Select type of transportation (1-Train, 2-Flight, 3-Bus): ");
                                             int typeChoice = sc.nextInt();
@@ -708,7 +614,7 @@ public class SmartTravelDriver {
                                             if (newTransport != null) {
                             
                                                 service.addTransportation(newTransport);
-                                                transportationCount++;
+                                                
 
                                                 System.out.println("Transportation added successfully.");
                                             }
@@ -721,67 +627,40 @@ public class SmartTravelDriver {
                                             break;
 
                                         case 2: // Remove transportation
-                                            if (transportationCount == 0) {
+                                            if (service.getTransportationCount() == 0) {
                                                 System.out.println("No transportation options to remove.");
                                                 break;
                                             }
-
                                             System.out.print("Enter the Transport ID to remove: ");
                                             String transIdRemove = sc.nextLine();
-                                            int indexToRemove = -1;
-
                                             try {
-                                            for (int i = 0; i < transportationCount; i++) {
-                                                if (transportations[i].getTransportId().equalsIgnoreCase(transIdRemove)) {
-                                                    indexToRemove = i;
-                                                    break;
-                                                }
+                                                service.removeTransportation(transIdRemove);
+                                                System.out.println("Transportation removed successfully.");
+                                            } catch (EntityNotFoundException e) {
+                                                System.out.println("Error removing transportation: " + e.getMessage());
                                             }
-
-                                            if (indexToRemove == -1) {
-                                                throw new EntityNotFoundException("Transport not found.");
-                                            }
-
-                                            // Shift array left
-                                            for (int i = indexToRemove; i < transportationCount - 1; i++) {
-                                                transportations[i] = transportations[i + 1];
-                                            }
-                                            transportations[transportationCount - 1] = null;
-                                            transportationCount--;
-
-                                           
-
-                                            System.out.println("Transportation removed successfully.");
-                                        }
-                                        catch (EntityNotFoundException e) {
-                                            System.out.println("Error removing transportation: " + e.getMessage());
-                                        }
 
                                             break;
 
                                         case 3: // List by type  
-                                            if (transportationCount == 0) {
+                                            if (service.getTransportationCount() == 0) {
                                                 System.out.println("No transportation options available.");
                                                 break;
                                             }
-
                                             System.out.print("Enter type to list (Train / Flight / Bus): ");
                                             String typeFilter = sc.nextLine();
-
                                             boolean found = false;
-                                            for (int i = 0; i < transportationCount; i++) {
-                                                if ((typeFilter.equalsIgnoreCase("Train") && transportations[i] instanceof Train) ||
-                                                    (typeFilter.equalsIgnoreCase("Flight") && transportations[i] instanceof Flight) ||
-                                                    (typeFilter.equalsIgnoreCase("Bus") && transportations[i] instanceof Bus)) {
-                                                    System.out.println(transportations[i]);
+                                            for (int i = 0; i < service.getTransportationCount(); i++) {
+                                                Transportation t = service.getTransportation(i);
+                                                if ((typeFilter.equalsIgnoreCase("Train") && t instanceof Train) ||
+                                                    (typeFilter.equalsIgnoreCase("Flight") && t instanceof Flight) ||
+                                                    (typeFilter.equalsIgnoreCase("Bus") && t instanceof Bus)) {
+                                                    System.out.println(t);
                                                     System.out.println("-------------------");
                                                     found = true;
                                                 }
                                             }
-
-                                            if (!found) {
-                                                System.out.println("No transportation options of this type found.");
-                                            }
+                                            if (!found) System.out.println("No transportation options of this type found.");
                                             break;
 
                                         default:
@@ -807,10 +686,6 @@ public class SmartTravelDriver {
                                             break accomMenu;
 
                                         case 1: // Add accommodation
-                                            if (accommodationCount >= accommodations.length) {
-                                                System.out.println("Accommodation list is full.");
-                                                break;
-                                            }
 
                                             System.out.print("Select type of accommodation (1-Hotel, 2-Hostel): ");
                                             int typeChoice = sc.nextInt();
@@ -856,7 +731,7 @@ public class SmartTravelDriver {
                                                 
 
                                                 service.addAccommodation(newAccommodation);
-                                                accommodationCount++;
+
 
                                                 System.out.println("Accommodation added successfully.");
                                                }
@@ -868,65 +743,38 @@ public class SmartTravelDriver {
                                             break;
 
                                         case 2: // Remove accommodation
-                                            if (accommodationCount == 0) {
+                                            if (service.getAccommodationCount() == 0) {
                                                 System.out.println("No accommodations to remove.");
                                                 break;
                                             }
-
                                             System.out.print("Enter the Accommodation ID to remove: ");
                                             String accIdRemove = sc.nextLine();
-                                            int indexToRemove = -1;
-
                                             try {
-                                            for (int i = 0; i < accommodationCount; i++) {
-                                                if (accommodations[i].getAccommodationID().equalsIgnoreCase(accIdRemove)) {
-                                                    indexToRemove = i;
-                                                    break;
-                                                }
-                                            }
-
-                                            if (indexToRemove == -1) {
-                                                throw new EntityNotFoundException("Accommodation not found.");
-                                            }
-
-                                            // Shift array left
-                                            for (int i = indexToRemove; i < accommodationCount - 1; i++) {
-                                                accommodations[i] = accommodations[i + 1];
-                                            }
-                                            accommodations[accommodationCount - 1] = null;
-                                            accommodationCount--;
-
-                                     
-
-                                            System.out.println("Accommodation removed successfully.");
-                                            }
-                                            catch (EntityNotFoundException e) {
+                                                service.removeAccommodation(accIdRemove);
+                                                System.out.println("Accommodation removed successfully.");
+                                            } catch (EntityNotFoundException e) {
                                                 System.out.println("Error removing accommodation: " + e.getMessage());
                                             }
                                             break;
 
                                         case 3: // List by type
-                                            if (accommodationCount == 0) {
+                                            if (service.getAccommodationCount() == 0) {
                                                 System.out.println("No accommodations available.");
                                                 break;
                                             }
-
                                             System.out.print("Enter type to list (Hotel / Hostel): ");
                                             String typeFilter = sc.nextLine();
-
                                             boolean found = false;
-                                            for (int i = 0; i < accommodationCount; i++) {
-                                                if ((typeFilter.equalsIgnoreCase("Hotel") && accommodations[i] instanceof Hotel) ||
-                                                    (typeFilter.equalsIgnoreCase("Hostel") && accommodations[i] instanceof Hostel)) {
-                                                    System.out.println(accommodations[i]);
+                                            for (int i = 0; i < service.getAccommodationCount(); i++) {
+                                                Accommodation a = service.getAccommodation(i);
+                                                if ((typeFilter.equalsIgnoreCase("Hotel") && a instanceof Hotel) ||
+                                                    (typeFilter.equalsIgnoreCase("Hostel") && a instanceof Hostel)) {
+                                                    System.out.println(a);
                                                     System.out.println("-------------------");
                                                     found = true;
                                                 }
                                             }
-
-                                            if (!found) {
-                                                System.out.println("No accommodations of this type found.");
-                                            }
+                                            if (!found) System.out.println("No accommodations of this type found.");
                                             break;
 
                                         default:
@@ -953,15 +801,12 @@ public class SmartTravelDriver {
                                             break addMenu;
 
                                         case 1: // Most expensive
-                                            if (tripCount == 0) {
+                                            if (service.getTripCount() == 0) {
                                                 System.out.println("No trips available.");
                                             } else {
-                                                Trip expensiveTrip = trips[0];
-                                                for (int i = 1; i < tripCount; i++) {
-                                                    if (trips[i].calculateTotalCost() > expensiveTrip.calculateTotalCost()) {
-                                                        expensiveTrip = trips[i];
-                                                    }
-                                                }
+                                                List<Trip> sortedTrips = service.getTripRepo().getSorted();
+                                                Trip expensiveTrip = sortedTrips.get(0);
+
                                                 System.out.println("Most expensive trip:");
                                                 System.out.println(expensiveTrip);
                                             }
@@ -971,19 +816,11 @@ public class SmartTravelDriver {
                                             System.out.print("Enter Trip ID to calculate total cost: ");
                                             String tripId = sc.nextLine();
 
-                                            Trip tripFound = null;
+                                            
 
                                             try {
-                                            for (int i = 0; i < tripCount; i++) {
-                                                if (trips[i].getTripId().equalsIgnoreCase(tripId)) {
-                                                    tripFound = trips[i];
-                                                    break;
-                                                }
-                                            }
 
-                                            if (tripFound == null) {
-                                                throw new EntityNotFoundException("Trip not found.");
-                                            }
+                                            Trip tripFound = service.getTripRepo().findById(tripId);
 
                                            
                                                 System.out.println("Total cost of the trip: $" + tripFound.calculateTotalCost());
@@ -997,23 +834,18 @@ public class SmartTravelDriver {
 
                                         case 3: // Deep copy transport
                                             // Check if there are any transportation objects to copy
-                                            if (transportationCount == 0) {
+                                            if (service.getTransportationCount() == 0) {
                                                 System.out.println("No transportation to copy.");
                                                 break;
                                             }
-
-                                            // Call the deep copy method to create a new independent array
-                                            Transportation[] transportCopy = copyTransportationArray(transportations);
-
-                                            // Modify the copied object to demonstrate that the copy
-                                            // is independent from the original array
+                                            Transportation[] transportCopy = copyTransportationArray(
+                                                service.getTransportations().toArray(new Transportation[0])
+                                            );
                                             transportCopy[0].setCompanyName("ModifiedCompany");
 
-                                            // Display original object to show it was NOT changed
                                             System.out.println("Original transportation[0]:");
-                                            System.out.println(transportations[0]);
+                                            System.out.println(service.getTransportation(0));
 
-                                            // Display modified copy to show it changed
                                             System.out.println("\nCopied transportation[0] (modified):");
                                             System.out.println(transportCopy[0]);
 
@@ -1021,22 +853,18 @@ public class SmartTravelDriver {
 
                                         case 4: // Deep copy accommodation
                                             // Check if there are any accommodation objects to copy
-                                            if (accommodationCount == 0) {
+                                            if (service.getAccommodationCount() == 0) {
                                                 System.out.println("No accommodations to copy.");
                                                 break;
                                             }
-
-                                            // Call the deep copy method to create a new independent array
-                                            Accommodation[] accommodationCopy = copyAccommodationArray(accommodations);
-
-                                            // Modify the copied object to demonstrate deep copy behavior
+                                            Accommodation[] accommodationCopy = copyAccommodationArray(
+                                                service.getAccommodations().toArray(new Accommodation[0])
+                                            );
                                             accommodationCopy[0].setName("ModifiedAccommodation");
 
-                                            // Display original object to show it was NOT changed
                                             System.out.println("Original accommodation[0]:");
-                                            System.out.println(accommodations[0]);
+                                            System.out.println(service.getAccommodation(0));
 
-                                            // Display modified copy to show the change
                                             System.out.println("\nCopied accommodation[0] (modified):");
                                             System.out.println(accommodationCopy[0]);
 
@@ -1060,16 +888,19 @@ public class SmartTravelDriver {
                                         case 0:
                                             break vizMenu;
 
-                                        case 1: // Bar chart
-                                            TripChartGenerator.generateCostBarChart(trips, tripCount);
+                                        case 1:
+                                            TripChartGenerator.generateCostBarChart(
+                                                service.getTrips().toArray(new Trip[0]), service.getTripCount());
                                             break;
 
-                                        case 2: // Pie chart
-                                            TripChartGenerator.generateDestinationPieChart(trips, tripCount);
+                                        case 2:
+                                            TripChartGenerator.generateDestinationPieChart(
+                                                service.getTrips().toArray(new Trip[0]), service.getTripCount());
                                             break;
 
-                                        case 3: // Line chart
-                                            TripChartGenerator.generateDurationLineChart(trips, tripCount);
+                                        case 3:
+                                            TripChartGenerator.generateDurationLineChart(
+                                                service.getTrips().toArray(new Trip[0]), service.getTripCount());
                                             break;
 
                                         default:
