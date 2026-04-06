@@ -263,7 +263,52 @@ public class SmartTravelService {
         }
     }
 
+public void loadAllDataGeneric(String basePath) {
+    try {
+        List<Client>        loadedClients   = GenericFileManager.load(basePath + "clients.csv",        Client.class);
+        List<Accommodation> loadedAccoms    = GenericFileManager.load(basePath + "accommodations.csv", Accommodation.class);
+        List<Transportation> loadedTransports = GenericFileManager.load(basePath + "transports.csv",  Transportation.class);
+        List<Trip>          loadedTrips     = GenericFileManager.load(basePath + "trips.csv",          Trip.class);
 
+        clients.clear();         clientRepo       = new Repository<>();
+        accommodations.clear();  accommodationRepo = new Repository<>();
+        transportations.clear(); transportationRepo= new Repository<>();
+        trips.clear();           tripRepo          = new Repository<>();
+
+        for (Client c        : loadedClients)    { clients.add(c);         clientRepo.add(c); }
+        for (Accommodation a : loadedAccoms)     { accommodations.add(a);  accommodationRepo.add(a); }
+        for (Transportation t: loadedTransports) { transportations.add(t); transportationRepo.add(t); }
+        for (Trip t          : loadedTrips)      { trips.add(t);           tripRepo.add(t); }
+
+        // Re-link trip relationships (same as before)
+        for (Trip t : trips) {
+            try {
+                if (t.getTempClientId() != null && !t.getTempClientId().isEmpty())
+                    t.setClient(findClientById(t.getTempClientId()));
+                if (t.getTempAccommodationId() != null && !t.getTempAccommodationId().isEmpty())
+                    t.setAccommodation(findAccommodationById(t.getTempAccommodationId()));
+                if (t.getTempTransportId() != null && !t.getTempTransportId().isEmpty())
+                    t.setTransportation(findTransportById(t.getTempTransportId()));
+            } catch (Exception e) {
+                ErrorLogger.log("Error linking trip: " + t.getTripId());
+            }
+        }
+
+    } catch (Exception e) {
+        System.out.println("Error loading data: " + e.getMessage());
+    }
+}
+
+public void saveAllDataGeneric(String basePath) {
+    try {
+        GenericFileManager.save(clients,         basePath + "clients.csv");
+        GenericFileManager.save(accommodations,  basePath + "accommodations.csv");
+        GenericFileManager.save(transportations, basePath + "transports.csv");
+        GenericFileManager.save(trips,           basePath + "trips.csv");
+    } catch (Exception e) {
+        System.out.println("Error saving data: " + e.getMessage());
+    }
+}
     
 
 

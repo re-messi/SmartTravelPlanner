@@ -15,7 +15,7 @@
 // arrays as required by the assignment.
 //-----------------------------------------------------
 
-package driver;  
+package driver;   
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -38,6 +38,8 @@ import exceptions.InvalidAccommodationDataException;
 import exceptions.InvalidClientDataException;
 import exceptions.InvalidTransportDataException;
 import exceptions.InvalidTripDataException;
+import service.RecentList;
+import interfaces.Predicate;
 import service.SmartTravelService;
 
 
@@ -49,7 +51,7 @@ public class SmartTravelDriver {
         int userChoice;
         boolean valid = false;
 
-        
+        RecentList<Trip> recentTrips = new RecentList<>();
         SmartTravelService service = new SmartTravelService();
 
         // First option of choosing testing scenario, menu operations, or exit
@@ -78,7 +80,7 @@ public class SmartTravelDriver {
                             "\n 4. Accommodation Management" +
                             "\n 5. Additional Operations" +
                             "\n 6. Generate Visualization" + 
-                            "\n 7. List All Data Summary" +
+                            "\n 7. Advanced Analytics" +
                             "\n 8. Load All Data" +
                             "\n 9. Save All Data" +
                             "\n 10. Run Predefined Scenario" +
@@ -364,7 +366,7 @@ public class SmartTravelDriver {
 
                                             
                                             service.addTrip(newTrip);
-                                           
+                                            recentTrips.addRecent(newTrip);
 
 
                                             System.out.println("\nTrip created successfully!");
@@ -373,6 +375,7 @@ public class SmartTravelDriver {
                                         catch (EntityNotFoundException |InvalidTripDataException e) {
                                         System.out.println("Error creating trip: " + e.getMessage());
                                         }
+                                        
 
                                             break;
 
@@ -401,6 +404,7 @@ public class SmartTravelDriver {
 
                                             System.out.println("Editing Trip:");
                                             System.out.println(tripToEdit);
+                                            recentTrips.addRecent(tripToEdit);
 
                                             System.out.print("\nWhat would you like to edit?" +
                                                 "\n 1. Destination" +
@@ -500,6 +504,7 @@ public class SmartTravelDriver {
                                             } else {
                                                 for (int i = 0; i < service.getTripCount(); i++) {
                                                     System.out.println(service.getTrip(i));
+                                                    recentTrips.addRecent(service.getTrip(i));
                                                     System.out.println("--------------------------");
                                                 }
                                             }
@@ -909,11 +914,126 @@ public class SmartTravelDriver {
                                 }
                                 break;
 
-                            case 7: //List all data summary
-                                 for (int i = 0; i < service.getTripCount(); i++) {
-                                 System.out.println(service.getTrip(i));
-                                 System.out.println("----------------------");
-                                }
+                            case 7: //Advanced Analytics
+                            
+                                 analyticMenu: 
+                                 while (true){
+                                    System.out.print("\nWhat option would you like to run?" + 
+                                        "\n1. Trips by destination" + 
+                                        "\n2. Trips by Cost Range" + 
+                                        "\n3. Top Clients by Spending" + 
+                                        "\n4. Recent Trips" + 
+                                        "\n5. Smart Sort Collections" + 
+                                        "\n0 Back to main menu" + 
+                                        "\nOperation: ");
+                                     userChoice = sc.nextInt();
+                                     sc.nextLine();
+
+                                     switch (userChoice){
+                                        case 0: 
+                                            break analyticMenu;
+                                        
+                                        case 1: // Trips by Destination
+                                            System.out.print("Enter destination to search: ");
+                                            String destination = sc.nextLine();
+
+                                            Predicate<Trip> byDestination = trip -> trip.getDestination().equalsIgnoreCase(destination);
+                                            List<Trip> tripsByDestination = service.getTripRepo().filter(byDestination);
+
+                                            if (tripsByDestination.isEmpty()) {
+                                                System.out.println("No trips found for destination: " + destination);
+                                            } else {
+                                                System.out.println("\n    Trips to " + destination + "   ");
+                                                for (Trip t : tripsByDestination) {
+                                                    System.out.println(t);
+                                                }
+                                            }
+                                            break;
+
+                                        case 2: // Trips by Cost Range
+                                            System.out.print("Enter minimum cost: ");
+                                            double minCost = sc.nextDouble();
+                                            System.out.print("Enter maximum cost: ");
+                                            double maxCost = sc.nextDouble();
+                                            sc.nextLine();
+
+                                            Predicate<Trip> byCostRange = trip -> trip.getTotalCost() >= minCost && trip.getTotalCost() <= maxCost;
+                                            List<Trip> tripsByCost = service.getTripRepo().filter(byCostRange);
+
+                                            if (tripsByCost.isEmpty()) {
+                                                System.out.println("No trips found in cost range: $" + minCost + " - $" + maxCost);
+                                            } else {
+                                                System.out.println("\n    Trips between $" + minCost + " and $" + maxCost + "    ");
+                                                for (Trip t : tripsByCost) {
+                                                    System.out.println(t);
+                                                }
+                                            }
+                                            break;
+
+                                        case 3: // Top Clients by Spending
+                                            List<Client> sortedClients = service.getClientRepo().getSorted();
+
+                                            RecentList<Client> topClients = new RecentList<>();
+                                            for (int i = 0; i < Math.min(5, sortedClients.size()); i++) {
+                                                topClients.addRecent(sortedClients.get(i));
+                                            }
+
+                                            System.out.println("\n    Top Clients by Spending    ");
+                                            if (topClients.isEmpty()) {
+                                                System.out.println("No clients found.");
+                                            } else {
+                                                topClients.printRecent(5);
+                                            }
+                                            break;
+
+                                        case 4: // Recent Trips
+                                            System.out.println("\n     Recently Viewed Trips    ");
+                                            if (recentTrips.isEmpty()) {
+                                                System.out.println("No recent trips to display.");
+                                            } else {
+                                                recentTrips.printRecent(10);
+                                            }
+                                            break;
+
+                                        case 5: // Smart Sort Collections
+                                            System.out.println("\n    Clients by Total Spending (Highest First)    ");
+                                            List<Client> allClientsSorted = service.getClientRepo().getSorted();
+                                            if (allClientsSorted.isEmpty()) {
+                                                System.out.println("No clients found.");
+                                            } else {
+                                                for (Client c : allClientsSorted) { System.out.println(c); }
+                                            }
+
+                                            System.out.println("\n    Trips by Total Cost (Highest First)    ");
+                                            List<Trip> allTripsSorted = service.getTripRepo().getSorted();
+                                            if (allTripsSorted.isEmpty()) {
+                                                System.out.println("No trips found.");
+                                            } else {
+                                                for (Trip t : allTripsSorted) { System.out.println(t); }
+                                            }
+
+                                            System.out.println("\n    Accommodations by Price Per Night (Highest First)    ");
+                                            List<Accommodation> allAccomSorted = service.getAccommodationRepo().getSorted();
+                                            if (allAccomSorted.isEmpty()) {
+                                                System.out.println("No accommodations found.");
+                                            } else {
+                                                for (Accommodation a : allAccomSorted) { System.out.println(a); }
+                                            }
+
+                                            System.out.println("\n    Transportations by Base Price (Highest First)    ");
+                                            List<Transportation> allTransportSorted = service.getTransportationRepo().getSorted();
+                                            if (allTransportSorted.isEmpty()) {
+                                                System.out.println("No transportations found.");
+                                            } else {
+                                                for (Transportation t : allTransportSorted) { System.out.println(t); }
+                                            }
+                                            break;
+
+                                        default: 
+                                        System.out.println("You entered a number that is not an available option. Please try again.\n");
+                                     }
+                                 }
+                                
                             break;
 
                             case 8: // Load all data
