@@ -1,7 +1,7 @@
 package service;
 
 import java.util.*;
-import interfaces.Predicate;
+import java.util.function.Predicate;
 import exceptions.EntityNotFoundException;
 import interfaces.*;
 

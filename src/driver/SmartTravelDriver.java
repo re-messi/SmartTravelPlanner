@@ -1,5 +1,5 @@
 //-----------------------------------------------------
-// Assignment 2 - COMP 249
+// Assignment 3 - COMP 249
 // Written by: Rebecca Messier (40338041) and Taminda Ait Ouazzou (40344517)
 //
 // This program implements the SmartTravel management
@@ -7,12 +7,18 @@
 // allows the user to manage clients, trips,
 // transportation options, and accommodations.
 // Users can add, edit, remove, and display these
-// entities using arrays of objects. The program also includes a 
-// predefined testing scenario to demonstrate the functionality 
-// of the system, including object creation, equals()
-// testing, polymorphic cost calculations, and
-// deep copying of transportation and accommodation
-// arrays as required by the assignment.
+// entities using dynamic ArrayLists instead of fixed
+// arrays. The program includes a predefined testing
+// scenario to demonstrate the functionality of the
+// system, including object creation, polymorphic cost
+// calculations, and interface implementations.
+// A3 additions include: a Generic File Manager that
+// replaces the 4 specific A2 file managers, a generic
+// Repository for filtering and sorting, a RecentList
+// backed by LinkedList for tracking recently viewed
+// trips, and an Advanced Analytics menu (Menu 7) with
+// Predicate-based filtering and business natural order
+// sorting across all entity types.
 //-----------------------------------------------------
 
 package driver;   
@@ -39,7 +45,7 @@ import exceptions.InvalidClientDataException;
 import exceptions.InvalidTransportDataException;
 import exceptions.InvalidTripDataException;
 import service.RecentList;
-import interfaces.Predicate;
+import java.util.function.Predicate;
 import service.SmartTravelService;
 
 

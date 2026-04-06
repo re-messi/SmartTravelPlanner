@@ -16,6 +16,23 @@ import travel.Trip;
 import persistence.*;
 import exceptions.*;
 
+//-----------------------------------------------------
+// Assignment 3 - COMP 249
+// Written by: Rebecca Messier (40338041) and Taminda Ait Ouazzou (40344517)
+//
+// GenericFileManager is a generic utility class that handles
+// CSV file reading and writing for any type that implements
+// CsvPersistable.
+// It replaces the four separate A2 file managers:
+//   - ClientFileManager
+//   - TripFileManager
+//   - AccommodationFileManager
+//   - TransportationFileManager
+// save() converts each object to a CSV row via toCsvRow()
+// load() reads each line and reconstructs the correct object
+// type via fromCsvRow()
+//-----------------------------------------------------
+
 public class GenericFileManager<T extends CsvPersistable> {
 
     
@@ -23,7 +40,7 @@ public class GenericFileManager<T extends CsvPersistable> {
         try {
             PrintWriter writer = new PrintWriter(new FileWriter(filepath));
 
-            for (T item : items) {
+            for (T item : items) { // Enhenced for-loop (for-each loop)
                 writer.println(item.toCsvRow()); // every class guarantees this via CsvPersistable
             }
 

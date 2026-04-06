@@ -10,12 +10,15 @@ import travel.Transportation;
 import travel.Trip;
 import persistence.*;
 //-----------------------------------------------------
-// Assignment 2 - COMP 249
+// Assignment 3 - COMP 249
 // Written by: Rebecca Messier (40338041) and Taminda Ait Ouazzou (40344517)
 //
-// SmartTravelService manages all arrays used in the SmartTravel system.
+// SmartTravelService manages all collections used in the SmartTravel system.
 // It provides accessor methods for dashboard generation, chart generation,
-// and future file I/O operations.
+// and file I/O operations via GenericFileManager.
+//
+// Collections have been upgraded from fixed-size arrays (A2) to dynamic
+// ArrayLists (A3) for flexible data management.
 //-----------------------------------------------------
  
 
@@ -188,82 +191,10 @@ public class SmartTravelService {
     throw new EntityNotFoundException("Transport not found: " + id);
     }
 
-    // load all data from csv files & reconstructs object relationships
-    public void loadAllData(String basePath) { 
-    
+ 
 
-    
-        try {
-            Client[] tempClients = new Client[1000]; //temporary arrays will need to be changed
-            Accommodation[] tempAccom = new Accommodation[1000];
-            Transportation[] tempTransport = new Transportation[1000];
-            Trip[] tempTrips = new Trip[1000];
-        
-        int clientCount = ClientFileManager.loadClients(tempClients, basePath + "clients.csv");
-        int accommodationCount = AccommodationFileManager.loadAccommodations(tempAccom, basePath + "accommodations.csv");
-        int transportationCount = TransportationFileManager.loadTransportation(tempTransport, basePath + "transports.csv");
-        int tripCount = TripFileManager.loadTrips(tempTrips, basePath + "trips.csv");
 
-        clients.clear();
-        trips.clear();
-        transportations.clear();
-        accommodations.clear();    
-
-        for (int i = 0; i < clientCount; i++) { 
-            clients.add(tempClients[i]); 
-            clientRepo.add(tempClients[i]);
-        }    
-
-        for (int i = 0; i < accommodationCount; i++) {
-            accommodations.add(tempAccom[i]);
-            accommodationRepo.add(tempAccom[i]);
-        }    
-        for (int i = 0; i < transportationCount; i++) { 
-            transportations.add(tempTransport[i]);
-            transportationRepo.add(tempTransport[i]);
-        }    
-        for (int i = 0; i < tripCount; i++) {
-            trips.add(tempTrips[i]);
-            tripRepo.add(tempTrips[i]);
-        }
-
-        for (Trip t : trips) {
-            try {
-                if (t.getTempClientId() != null && !t.getTempClientId().isEmpty()) {
-                    t.setClient(findClientById(t.getTempClientId()));
-                }
-
-                if (t.getTempAccommodationId() != null && !t.getTempAccommodationId().isEmpty()) {
-                    t.setAccommodation(findAccommodationById(t.getTempAccommodationId()));
-                }
-
-                if (t.getTempTransportId() != null && !t.getTempTransportId().isEmpty()) {
-                    t.setTransportation(findTransportById(t.getTempTransportId()));
-                }
-
-            } catch (Exception e) {
-                ErrorLogger.log("Error linking trip: " + t.getTripId());
-            }
-        }
-
-    } catch (Exception e) {
-        System.out.println("Error loading data: " + e.getMessage());
-    }
-}
-    
-    public void saveAllData(String basePath) { // writes all arrays back to the files 
-        try {
-            ClientFileManager.saveClients(clients.toArray(new Client[0]), clients.size(), basePath + "clients.csv");
-            AccommodationFileManager.saveAccommodations(accommodations.toArray(new Accommodation[0]), accommodations.size(), basePath + "accommodations.csv");
-            TransportationFileManager.saveTransportation(transportations.toArray(new Transportation[0]), transportations.size(), basePath + "transports.csv");
-            TripFileManager.saveTrips(trips.toArray(new Trip[0]), trips.size(), basePath + "trips.csv");
-
-        } catch (Exception e) {
-            System.out.println("Error saving data: " + e.getMessage());
-        }
-    }
-
-public void loadAllDataGeneric(String basePath) {
+public void loadAllData(String basePath) {
     try {
         List<Client>        loadedClients   = GenericFileManager.load(basePath + "clients.csv",        Client.class);
         List<Accommodation> loadedAccoms    = GenericFileManager.load(basePath + "accommodations.csv", Accommodation.class);
@@ -299,7 +230,7 @@ public void loadAllDataGeneric(String basePath) {
     }
 }
 
-public void saveAllDataGeneric(String basePath) {
+public void saveAllData(String basePath) {
     try {
         GenericFileManager.save(clients,         basePath + "clients.csv");
         GenericFileManager.save(accommodations,  basePath + "accommodations.csv");

@@ -10,7 +10,7 @@ public class ErrorLogger {
 PrintWriter write =null; 
 
 try { 
-    write = new PrintWriter(new FileWriter("errors.txt", true));
+    write = new PrintWriter(new FileWriter("output/logs/errors.txt", true));
     write.println(message);
      write.close();
 } catch (IOException e) {
