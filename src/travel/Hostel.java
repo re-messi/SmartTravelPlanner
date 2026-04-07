@@ -70,23 +70,22 @@ public class Hostel extends Accommodation {
 
 	@Override
 	public String toCsvRow() {
-    	return getAccommodationID() + ";" +
+    	return "HOSTEL;" + getAccommodationID() + ";" +
            	getName() + ";" +
            	getLocation() + ";" +
            	getPricePerNight() + ";" +
-           	sharedBedsPerRoom + ";" +
-           	"HOSTEL";
+           	sharedBedsPerRoom;
 	}
 
 	public static Hostel fromCsvRow(String line) throws InvalidAccommodationDataException {
     	String[] parts = line.split(";");
 
     	return new Hostel(
-        	parts[0],
         	parts[1],
         	parts[2],
-        	Double.parseDouble(parts[3]),
-        	Integer.parseInt(parts[4])
+        	parts[3],
+        	Double.parseDouble(parts[4]),
+        	Integer.parseInt(parts[5])
     	);
 	}
 

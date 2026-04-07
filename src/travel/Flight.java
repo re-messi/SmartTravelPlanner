@@ -26,7 +26,7 @@ public class Flight extends Transportation {
 	}
 
 	// parameterized constructor with transportationID for loeading from file
-	public Flight (String transportId, String companyName, String departureCity, String arrivalCity, double price, double luggageAllowanceKg) throws InvalidTransportDataException{
+	public Flight (String transportId, String companyName, String departureCity, String arrivalCity, double price, String airlineName, double luggageAllowanceKg) throws InvalidTransportDataException{
 		super(transportId,companyName, departureCity, arrivalCity, price);
 		setLuggageAllowanceKg(luggageAllowanceKg);
 	}
@@ -66,26 +66,26 @@ public class Flight extends Transportation {
 
 	@Override
 	public String toCsvRow() {
-    	return getTransportId() + ";" +
+    	return "FLIGHT;" + getTransportId() + ";" +
            getCompanyName() + ";" +
            getDepartureCity() + ";" +
            getArrivalCity() + ";" +
            getPrice() + ";" +
            airlineName + ";" +
-           luggageAllowanceKg + ";" +
-           "FLIGHT";
+           luggageAllowanceKg;
 	}
 
 	public static Flight fromCsvRow(String line) throws InvalidTransportDataException {
     String[] parts = line.split(";");
 
     return new Flight(
-        parts[0],
         parts[1],
         parts[2],
         parts[3],
-        Double.parseDouble(parts[4]),
-        Double.parseDouble(parts[6])
+        parts[4],
+        Double.parseDouble(parts[5]),
+		parts[6],
+        Double.parseDouble(parts[7])
     );
 }
 
@@ -94,7 +94,7 @@ public class Flight extends Transportation {
 	public String toString() {
 		return "Flight: " + 
 			"\n" + super.toString() + 
-			"\nAirline Name: " + airlineName +
+			"\nAirline Name: " + getAirlineName() +
 			"\nLuggage Allowance (kg): " + luggageAllowanceKg;
 	}
 

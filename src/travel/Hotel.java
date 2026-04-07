@@ -57,23 +57,22 @@ public class Hotel extends Accommodation {
 
 	@Override
 	public String toCsvRow() {
-    	return getAccommodationID() + ";" +
+    	return "HOTEL;" + getAccommodationID() + ";" +
            	getName() + ";" +
            	getLocation() + ";" +
            	getPricePerNight() + ";" +
-           	starRating + ";" +
-           	"HOTEL";
+           	starRating;
 	}
 
 	public static Hotel fromCsvRow(String line) throws InvalidAccommodationDataException {
     String[] parts = line.split(";");
 
     return new Hotel(
-        parts[0], // id
-        parts[1], // name
-        parts[2], // location
-        Double.parseDouble(parts[3]),
-        Integer.parseInt(parts[4])
+        parts[1], // id
+        parts[2], // name
+        parts[3], // location
+        Double.parseDouble(parts[4]),
+        Integer.parseInt(parts[5])
     );
 }
 

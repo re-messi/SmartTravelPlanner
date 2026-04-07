@@ -14,4 +14,58 @@ Count:  9
  7: Invalid Trip Exception: Record number 12 in trips file. Entity not found: ID = Client not found: C9999
  8: Invalid Trip Exception: Record number 13 in trips file. Trip Error: Invalid tripId: X6008
  9: Invalid Trip Exception: Record number 14 in trips file. Entity not found: ID = Accommodation not found: A4104
-================================================================================================================================
+================================================================================================================================GenericFileManager load error on line: HOTEL;A4001;Hilton Rome;Rome;280.0;4 | For input string: "Rome"
+GenericFileManager load error on line: HOSTEL;A4002;Rome Backpackers;Rome;55.0;6 | For input string: "Rome"
+GenericFileManager load error on line: HOTEL;A4003;Grand Rio;Rio;320.0;5 | For input string: "Rio"
+GenericFileManager load error on line: HOSTEL;A4005;Tokyo Youth;Tokyo;60.0;8 | For input string: "Tokyo"
+GenericFileManager load error on line: HOTEL;A4006;MGM Grand;Las Vegas;290.0;4 | For input string: "Las Vegas"
+GenericFileManager load error on line: HOTEL;A4007;W New York;NYC;450.0;5 | For input string: "NYC"
+GenericFileManager load error on line: HOSTEL;A4008;Barcelona Budget;Barcelona;48.0;6 | For input string: "Barcelona"
+GenericFileManager load error on line: HOSTEL;A4009;Paris Budget;Paris;52.0;8 | For input string: "Paris"
+GenericFileManager load error on line: HOTEL;A4010;Tokyo Hilton;Tokyo;380.0;4 | For input string: "Tokyo"
+GenericFileManager load error on line: FLIGHT;TR3001;Alitalia;JFK;FCO;850.0;23.0 | For input string: "FCO"
+GenericFileManager load error on line: TRAIN;TR3002;Shinkansen;Tokyo;Kyoto;250.0;HighSpeed;First | For input string: "Kyoto"
+GenericFileManager load error on line: BUS;TR3003;Greyhound;NYC;Boston;75.0;3 | For input string: "Boston"
+GenericFileManager load error on line: FLIGHT;TR3004;LATAM;JFK;GIG;950.0;32.0 | For input string: "GIG"
+GenericFileManager load error on line: TRAIN;TR3005;Renfe;Madrid;Barcelona;120.0;AVE;Second | For input string: "Barcelona"
+GenericFileManager load error on line: BUS;TR3006;Blablacar;Rome;Milan;45.0;1 | For input string: "Milan"
+GenericFileManager load error on line: FLIGHT;TR3007;ANA;JFK;NRT;1200.0;32.0 | For input string: "NRT"
+GenericFileManager load error on line: TRAIN;TR3008;Amtrak;NYC;DC;89.0;Acela;Business | For input string: "DC"
+GenericFileManager load error on line: FLIGHT;TR3009;AirFrance;YUL;CDG;750.0;25.0 | For input string: "CDG"
+GenericFileManager load error on line: BUS;TR3010;VIA;Toronto;Montreal;60.0;2 | For input string: "Montreal"
+GenericFileManager load error on line: T2001;C1001;A4001;TR3001;Paris;5;150.0 | For input string: "A4001"
+GenericFileManager load error on line: T2002;C1005;;TR3002;Paris;3;100.0 | For input string: ""
+GenericFileManager load error on line: T2003;C1002;A4002;TR3003;Venice;7;200.0 | For input string: "A4002"
+GenericFileManager load error on line: T2004;C1009;A4003;;Paris;4;175.0 | For input string: "A4003"
+GenericFileManager load error on line: T2005;C1006;;TR3004;Rome;6;125.0 | For input string: ""
+GenericFileManager load error on line: T2006;C1003;;;Tokyo;8;225.0 | For input string: ""
+GenericFileManager load error on line: T2007;C1001;A4005;;Paris;10;300.0 | For input string: "A4005"
+GenericFileManager load error on line: T2009;C1007;A4006;TR3007;Rome;7;275.0 | For input string: "A4006"
+GenericFileManager load error on line: T2007;C1006;A4005;;Rome;5;180.0 | For input string: "A4005"
+GenericFileManager load error on line: T2008;;;;NYC;8;300.0 | For input string: ""
+GenericFileManager load error on line: X6008;C1007;A4007;;LA;10;400.0 | For input string: "A4007"
+GenericFileManager load error on line: T2011;C1003;;;Tokyo;8;225.0 | For input string: ""
+GenericFileManager load error on line: A4001;GrandHotel;Paris;200.0;5;HOTEL | Unknown accommodation type: A4001
+GenericFileManager load error on line: TR3001;AirlineX;NYC;Paris;0.0;AirlineX;20.0;FLIGHT | Unknown transport type: TR3001
+GenericFileManager load error on line: HOTEL;A4001;GrandHotel;Paris;200.0;5; | For input string: "Paris"
+GenericFileManager load error on line: HOSTELA4002;Backpackers;Berlin;50.0;4; | Unknown accommodation type: HOSTELA4002
+GenericFileManager load error on line: FLIGHT;TR3001;AirlineX;NYC;Paris;0.0;AirlineX;20.0; | For input string: "Paris"
+GenericFileManager load error on line: TRAIN;TR3002;TrainCo;Paris;Berlin;0.0;HighSpeed;First; | For input string: "Berlin"
+GenericFileManager load error on line: TRAIN;TR3014;TrainCo;Berlin;Paris;0.0;HighSpeed;First; | For input string: "Paris"
+GenericFileManager load error on line: FLIGHT;TR3015;AirlineX;NYC;Paris;0.0;AirlineX;20.0; | For input string: "Paris"
+Invalid transportation data in file: TRAIN;TR3001;loll;Berlin;Paris;0.0;HighSpeedFirst
+GenericFileManager load error on line: HOTEL;A4001;GrandHotel;Paris;200.0;5; | For input string: "Paris"
+GenericFileManager load error on line: HOSTEL;A4002;Backpackers;Paris;50.0;4; | For input string: "Paris"
+GenericFileManager load error on line: TRAIN;TR3001;TrainCo;Berlin;Paris;0.0;HighSpeed;First; | For input string: "Paris"
+GenericFileManager load error on line: FLIGHT;TR3002;AirlineX;NYC;Paris;0.0;AirCanada;20.0; | For input string: "Paris"
+GenericFileManager load error on line: HOTEL;A4001;GrandHotel;Paris;200.0;5; | For input string: "Paris"
+GenericFileManager load error on line: TRAIN;TR3001;TrainCo;Berlin;Paris;0.0;HighSpeed;First; | For input string: "Paris"
+GenericFileManager load error on line: T2001;Paris;6;800.0 | Index 4 out of bounds for length 4
+GenericFileManager load error on line: HOTEL;A4001;GrandHotel;Paris;200.0;5; | For input string: "Paris"
+GenericFileManager load error on line: TRAIN;TR3001;TrainCo;Berlin;Paris;0.0;HighSpeed;First; | For input string: "Paris"
+GenericFileManager load error on line: T2001;Paris;6;800.0 | Index 4 out of bounds for length 4
+GenericFileManager load error on line: HOTEL;A4001;GrandHotel;Paris;200.0;5; | For input string: "Paris"
+GenericFileManager load error on line: TRAIN;TR3001;TrainCo;Berlin;Paris;0.0;HighSpeed;First; | For input string: "Paris"
+GenericFileManager load error on line: T2001;Paris;5;800.0 | Index 4 out of bounds for length 4
+Error linking trip: T2001
+Error linking trip: T2002

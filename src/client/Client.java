@@ -8,8 +8,11 @@
 //-----------------------------------------------------
 package client;
 
+import java.util.List;
+
 import exceptions.InvalidClientDataException;
 import interfaces.*;
+import travel.Trip;
 
 public class Client implements Identifiable, CsvPersistable, Comparable<Client> {
 
@@ -113,7 +116,7 @@ public class Client implements Identifiable, CsvPersistable, Comparable<Client> 
 
 	@Override
 	public String toCsvRow() {
-    	return clientID + ";" + firstName + ";" + lastName + ";" + email;
+    	return clientID + ";" + firstName + ";" + lastName + ";" + email + ";" + amountSpent; 
 	}
 
 	@Override
@@ -122,8 +125,12 @@ public class Client implements Identifiable, CsvPersistable, Comparable<Client> 
 	}
 
 	public static Client fromCsvRow(String line) throws InvalidClientDataException {
-    	String[] parts = line.split(";");
-    	return new Client(parts[0], parts[1], parts[2], parts[3]);
+			String[] parts = line.split(";");
+		Client c = new Client(parts[0], parts[1], parts[2], parts[3]);
+		if (parts.length > 4) {
+			c.addAmountSpent(Double.parseDouble(parts[4]));
+		}
+		return c;
 	}
 
 

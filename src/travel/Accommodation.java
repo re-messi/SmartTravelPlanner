@@ -119,6 +119,30 @@ public abstract class Accommodation implements Identifiable, CsvPersistable, Com
 	@Override
 	public abstract String toCsvRow();
 
+	public static Accommodation fromCsvRow(String line) throws Exception {
+    String[] p = line.split(";");
+
+    String type = p[0];
+
+    if (type.equals("HOTEL")) {
+        return new Hotel(
+            p[1], p[2], p[3],
+            Double.parseDouble(p[4]),
+            Integer.parseInt(p[5])
+        );
+    }
+
+    else if (type.equals("HOSTEL")) {
+        return new Hostel(
+            p[1], p[2], p[3],
+            Double.parseDouble(p[4]),
+            Integer.parseInt(p[5])
+        );
+    }
+
+    throw new Exception("Unknown accommodation type");
+}
+
 	// Printing description of object
 	@Override
 	public String toString(){

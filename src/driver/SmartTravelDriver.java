@@ -930,7 +930,7 @@ public class SmartTravelDriver {
                                         "\n3. Top Clients by Spending" + 
                                         "\n4. Recent Trips" + 
                                         "\n5. Smart Sort Collections" + 
-                                        "\n0 Back to main menu" + 
+                                        "\n0. Back to main menu" + 
                                         "\nOperation: ");
                                      userChoice = sc.nextInt();
                                      sc.nextLine();
@@ -1218,7 +1218,7 @@ public class SmartTravelDriver {
     }
 
     try {
-        Client[] clients = {c1, c2, c3};
+        
         Client[] scenarioClients = {c1, c2, c3};
     for (int i = 0; i < scenarioClients.length; i++) {
         if (scenarioClients[i] != null && scenarioClients[i].getEmail().equalsIgnoreCase("alice@example.com")) {

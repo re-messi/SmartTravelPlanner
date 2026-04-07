@@ -33,9 +33,10 @@ public class TransportationFileManager {
             line = "FLIGHT;" + f.getTransportId() + ";" +
                     f.getCompanyName() + ";" + 
                     f.getDepartureCity() + ";" + 
-                    f.getArrivalCity() + ";" + 
+                    f.getArrivalCity() + ";"  +
                     f.getPrice() + ";" + 
                     f.getLuggageAllowanceKg();
+
         } else if (t instanceof Train){
             Train tr = (Train) t;
             line = "TRAIN;" + tr.getTransportId() + ";" +
@@ -43,7 +44,7 @@ public class TransportationFileManager {
                     tr.getDepartureCity() + ";" + 
                     tr.getArrivalCity() + ";" + 
                     tr.getPrice()+ ";" + 
-                    tr.getTrainType();
+                    tr.getTrainType() + ";" +
                     tr.getSeatClass();
         }
          writer.println(line);
@@ -76,7 +77,8 @@ public class TransportationFileManager {
                      portion[3],
                      portion[4],
                      Double.parseDouble(portion[5]),
-                     Double.parseDouble(portion[6])
+                     portion[6],
+                     Double.parseDouble(portion[7])
                 );
                } else if (portion[0].equals("TRAIN")){
                 t = new Train(

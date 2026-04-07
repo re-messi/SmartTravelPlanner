@@ -72,27 +72,26 @@ public class Train extends Transportation {
 
 	@Override
 	public String toCsvRow() {
-    	return getTransportId() + ";" +
+    	return 	"TRAIN;" + getTransportId() + ";" +
            	getCompanyName() + ";" +
            	getDepartureCity() + ";" +
            	getArrivalCity() + ";" +
            	getPrice() + ";" +
            	trainType + ";" +
-           	seatClass + ";" +
-           	"TRAIN";
+           	seatClass;
 	}
 
 	public static Train fromCsvRow(String line) {
     String[] parts = line.split(";");
 
     return new Train(
-        parts[0],
         parts[1],
         parts[2],
         parts[3],
-        Double.parseDouble(parts[4]),
-        parts[5],
-		parts[6]
+        parts[4],
+        Double.parseDouble(parts[5]),
+        parts[6],
+		parts[7]
     );
 }
 	

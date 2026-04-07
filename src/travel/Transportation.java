@@ -60,6 +60,7 @@ public abstract class Transportation implements Identifiable, CsvPersistable, Co
 		this.companyName = companyName;
 		this.departureCity = departureCity;
 		this.arrivalCity = arrivalCity;
+		this.price = 0.0;
 	}
 	
 	// Copy Constructor
@@ -106,8 +107,43 @@ public abstract class Transportation implements Identifiable, CsvPersistable, Co
 
 	@Override
 	public int compareTo(Transportation other) {
-    	return Double.compare(other.getPrice(), this.getPrice());
+    	return Double.compare(other.calculateCost(1), this.calculateCost(1));
 	}
+
+
+	public static Transportation fromCsvRow(String line) throws Exception {
+    String[] p = line.split(";");
+
+    String type = p[0];
+
+    if (type.equals("BUS")) {
+        return new Bus(
+            p[1], p[2], p[3], p[4],
+            Double.parseDouble(p[5]),
+            Integer.parseInt(p[6])
+        );
+    }
+
+    else if (type.equals("FLIGHT")) {
+        return new Flight(
+            p[1], p[2], p[3], p[4],
+            Double.parseDouble(p[5]),
+			p[6],
+            Double.parseDouble(p[7])
+        );
+    }
+
+    else if (type.equals("TRAIN")) {
+        return new Train(
+            p[1], p[2], p[3], p[4],
+            Double.parseDouble(p[5]),
+            p[6],
+            p[7]
+        );
+    }
+
+    throw new Exception("Unknown transport type");
+}
 
 	@Override
 	// Returns a string representation of the Transportation

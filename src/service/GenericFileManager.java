@@ -5,10 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import client.Client;
-import travel.Accommodation;
 import travel.Hostel;
 import travel.Hotel;
-import travel.Transportation;
 import travel.Bus;
 import travel.Flight;
 import travel.Train;
@@ -52,7 +50,7 @@ public class GenericFileManager<T extends CsvPersistable> {
     }
 
     
-
+    @SuppressWarnings("unchecked")
     public static <T extends CsvPersistable> List<T> load(String filepath, Class<T> clazz) {
         List<T> result = new ArrayList<>();
 
@@ -115,14 +113,14 @@ public class GenericFileManager<T extends CsvPersistable> {
                     }
 
                 } catch (Exception e) {
-                    ErrorLogger.log("GenericFileManager load error on line: " + line + " | " + e.getMessage());
+                    System.out.println("GenericFileManager load error on line: " + line + " | " + e.getMessage());
                 }
             }
 
             scanner.close();
 
         } catch (IOException e) {
-            ErrorLogger.log("GenericFileManager file error: " + e.getMessage());
+            System.out.println("GenericFileManager file error: " + e.getMessage());
         }
 
         return result;

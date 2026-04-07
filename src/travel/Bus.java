@@ -66,13 +66,12 @@ public class Bus extends Transportation {
 
 	@Override
 	public String toCsvRow() {
-    	return getTransportId() + ";" +
+    	return "BUS" + getTransportId() + ";" +
            getCompanyName() + ";" +
            getDepartureCity() + ";" +
            getArrivalCity() + ";" +
            getPrice() + ";" +
-           numberofStops + ";" +
-           "BUS";
+           numberofStops;
 	}
 
 
@@ -80,12 +79,12 @@ public class Bus extends Transportation {
     String[] parts = line.split(";");
 
     return new Bus(
-        parts[0], // id
-        parts[1], // company
-        parts[2], // departure
-        parts[3], // arrival
-        Double.parseDouble(parts[4]),
-        Integer.parseInt(parts[5])
+        parts[1], // id
+        parts[2], // company
+        parts[3], // departure
+        parts[4], // arrival
+        Double.parseDouble(parts[5]),
+        Integer.parseInt(parts[6])
     );
 }
 

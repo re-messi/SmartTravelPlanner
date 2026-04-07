@@ -166,27 +166,38 @@ public String getTempTransportId() { return tempTransportId; }
     	return calculateTotalCost();
 	}
 
-	
-
 	@Override
 	public String toCsvRow() {
-    	return tripId + ";" + destination + ";" + durationInDays + ";" + basePrice;
-	}
+    	return tripId + ";" +
+           (client != null ? client.getClientId() : "") + ";" +
+           (accommodation != null ? accommodation.getAccommodationID() : "") + ";" +
+           (transportation != null ? transportation.getTransportId() : "") + ";" +
+           destination + ";" +
+           durationInDays + ";" +
+           basePrice;
+}
 
 	@Override
 	public int compareTo(Trip other) {
-    	return Double.compare(other.getTotalCost(), this.getTotalCost());
+    	return Double.compare(other.calculateTotalCost(), this.calculateTotalCost());
 	}
 
 	public static Trip fromCsvRow(String line) throws InvalidTripDataException {
-    String[] parts = line.split(";");
+    String[] p = line.split(";");
 
-    return new Trip(
-        parts[0], // id
-        parts[1], // destination
-        Integer.parseInt(parts[2]),
-        Double.parseDouble(parts[3])
-    );
+    String tripId = p[0];
+    String clientId = p[1];
+    String accommodationId = p[2];
+    String transportId = p[3];
+    String destination = p[4];
+    int duration = Integer.parseInt(p[5]);
+    double basePrice = Double.parseDouble(p[6]);
+
+    Trip t = new Trip(tripId, destination, duration, basePrice);
+
+    t.setTempIds(clientId, accommodationId, transportId); 
+
+    return t;
 }
 
 

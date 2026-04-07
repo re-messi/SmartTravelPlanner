@@ -1,5 +1,6 @@
 package service;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,6 +88,8 @@ public class SmartTravelService {
     public void removeClient(String id) throws EntityNotFoundException {
     Client toRemove = findClientById(id);
     clients.remove(toRemove);
+    clientRepo = new Repository<>();
+    for (Client c : clients) clientRepo.add(c);
     }
 
     public void removeTrip(String id) throws EntityNotFoundException {
@@ -96,6 +99,8 @@ public class SmartTravelService {
         }
         if (toRemove == null) throw new EntityNotFoundException("Trip not found: " + id);
         trips.remove(toRemove);
+        tripRepo = new Repository<>();
+        for (Trip t : trips) tripRepo.add(t);
     }
 
     public void removeTransportation(String id) throws EntityNotFoundException {
@@ -105,6 +110,8 @@ public class SmartTravelService {
     }
     if (toRemove == null) throw new EntityNotFoundException("Transport not found: " + id);
     transportations.remove(toRemove);
+    transportationRepo = new Repository<>();
+    for (Transportation t : transportations) transportationRepo.add(t);
     }
 
     public void removeAccommodation(String id) throws EntityNotFoundException {
@@ -114,6 +121,8 @@ public class SmartTravelService {
         }
         if (toRemove == null) throw new EntityNotFoundException("Accommodation not found: " + id);
         accommodations.remove(toRemove);
+        accommodationRepo = new Repository<>();
+        for (Accommodation a : accommodations) accommodationRepo.add(a);
     }
 
 
@@ -196,51 +205,94 @@ public class SmartTravelService {
 
 public void loadAllData(String basePath) {
     try {
-        List<Client>        loadedClients   = GenericFileManager.load(basePath + "clients.csv",        Client.class);
-        List<Accommodation> loadedAccoms    = GenericFileManager.load(basePath + "accommodations.csv", Accommodation.class);
-        List<Transportation> loadedTransports = GenericFileManager.load(basePath + "transports.csv",  Transportation.class);
-        List<Trip>          loadedTrips     = GenericFileManager.load(basePath + "trips.csv",          Trip.class);
+        // load using GenericFileManager
+        List<Client> loadedClients = GenericFileManager.load(basePath + "clients.csv", Client.class);
+        List<Accommodation> loadedAccommodations = GenericFileManager.load(basePath + "accommodations.csv", Accommodation.class);
+        List<Transportation> loadedTransportations = GenericFileManager.load(basePath + "transportations.csv", Transportation.class);
+        List<Trip> loadedTrips = GenericFileManager.load(basePath + "trips.csv", Trip.class);
 
-        clients.clear();         clientRepo       = new Repository<>();
-        accommodations.clear();  accommodationRepo = new Repository<>();
-        transportations.clear(); transportationRepo= new Repository<>();
-        trips.clear();           tripRepo          = new Repository<>();
+        // clear current data
+        clients.clear();
+        accommodations.clear();
+        transportations.clear();
+        trips.clear();
 
-        for (Client c        : loadedClients)    { clients.add(c);         clientRepo.add(c); }
-        for (Accommodation a : loadedAccoms)     { accommodations.add(a);  accommodationRepo.add(a); }
-        for (Transportation t: loadedTransports) { transportations.add(t); transportationRepo.add(t); }
-        for (Trip t          : loadedTrips)      { trips.add(t);           tripRepo.add(t); }
+        // reset repositories
+        clientRepo = new Repository<>();
+        accommodationRepo = new Repository<>();
+        transportationRepo = new Repository<>();
+        tripRepo = new Repository<>();
 
-        // Re-link trip relationships (same as before)
+        // add everything back
+        for (Client c : loadedClients) {
+            clients.add(c);
+            clientRepo.add(c);
+        }
+
+
+        for (Accommodation a : loadedAccommodations) {
+            accommodations.add(a);
+            accommodationRepo.add(a);
+        }
+
+        for (Transportation t : loadedTransportations) {
+            transportations.add(t);
+            transportationRepo.add(t);
+        }
+
+        for (Trip t : loadedTrips) {
+            trips.add(t);
+            tripRepo.add(t);
+        }
+
+
+        // re-link objects
         for (Trip t : trips) {
             try {
-                if (t.getTempClientId() != null && !t.getTempClientId().isEmpty())
+                if (t.getTempClientId() != null && !t.getTempClientId().isEmpty()) {
                     t.setClient(findClientById(t.getTempClientId()));
-                if (t.getTempAccommodationId() != null && !t.getTempAccommodationId().isEmpty())
+                }
+
+                if (t.getTempAccommodationId() != null && !t.getTempAccommodationId().isEmpty()) {
                     t.setAccommodation(findAccommodationById(t.getTempAccommodationId()));
-                if (t.getTempTransportId() != null && !t.getTempTransportId().isEmpty())
+                }
+
+                if (t.getTempTransportId() != null && !t.getTempTransportId().isEmpty()) {
                     t.setTransportation(findTransportById(t.getTempTransportId()));
+                }
+
+                
             } catch (Exception e) {
                 ErrorLogger.log("Error linking trip: " + t.getTripId());
             }
         }
+        
+
+        System.out.println("Data loaded successfully.");
+        System.out.println("Clients loaded: " + clients.size());
+        System.out.println("Accommodations loaded: " + accommodations.size());
+        System.out.println("Transportations loaded: " + transportations.size());
+        System.out.println("Trips loaded: " + trips.size());
 
     } catch (Exception e) {
         System.out.println("Error loading data: " + e.getMessage());
     }
 }
 
+
+
 public void saveAllData(String basePath) {
     try {
-        GenericFileManager.save(clients,         basePath + "clients.csv");
-        GenericFileManager.save(accommodations,  basePath + "accommodations.csv");
-        GenericFileManager.save(transportations, basePath + "transports.csv");
-        GenericFileManager.save(trips,           basePath + "trips.csv");
+        GenericFileManager.save(clients, basePath + "clients.csv");
+        GenericFileManager.save(accommodations, basePath + "accommodations.csv");
+        GenericFileManager.save(transportations, basePath + "transportations.csv");
+        GenericFileManager.save(trips, basePath + "trips.csv");
+
+        System.out.println("Data saved successfully.");
     } catch (Exception e) {
         System.out.println("Error saving data: " + e.getMessage());
     }
 }
-    
 
 
 }

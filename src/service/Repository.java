@@ -1,5 +1,15 @@
 package service;
 
+//-----------------------------------------------------
+// Assignment 3 - COMP 249
+// Written by: Rebecca Messier (40338041) and Taminda Ait Ouazzou (40344517)
+//
+// Repository is a generic class used to manage collections of objects.
+// It provides reusable operations such as adding items, finding an item
+// by its ID, filtering items based on a condition, and sorting them
+// using their natural order.
+//-----------------------------------------------------
+
 import java.util.*;
 import java.util.function.Predicate;
 import exceptions.EntityNotFoundException;
