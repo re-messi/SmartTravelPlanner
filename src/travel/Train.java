@@ -85,13 +85,7 @@ public class Train extends Transportation {
     String[] parts = line.split(";");
 
     return new Train(
-        parts[1],
-        parts[2],
-        parts[3],
-        parts[4],
-        Double.parseDouble(parts[5]),
-        parts[6],
-		parts[7]
+        parts[1],parts[2],parts[3],parts[4],Double.parseDouble(parts[5]),parts[6],parts[7]
     );
 }
 	

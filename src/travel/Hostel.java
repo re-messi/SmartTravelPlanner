@@ -81,9 +81,7 @@ public class Hostel extends Accommodation {
     	String[] parts = line.split(";");
 
     	return new Hostel(
-        	parts[1],
-        	parts[2],
-        	parts[3],
+        	parts[1],parts[2],parts[3],
         	Double.parseDouble(parts[4]),
         	Integer.parseInt(parts[5])
     	);

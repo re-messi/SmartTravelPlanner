@@ -79,12 +79,8 @@ public class Flight extends Transportation {
     String[] parts = line.split(";");
 
     return new Flight(
-        parts[1],
-        parts[2],
-        parts[3],
-        parts[4],
-        Double.parseDouble(parts[5]),
-		parts[6],
+        parts[1],parts[2],parts[3],parts[4],
+        Double.parseDouble(parts[5]),parts[6],
         Double.parseDouble(parts[7])
     );
 }

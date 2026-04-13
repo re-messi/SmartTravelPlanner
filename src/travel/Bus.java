@@ -79,10 +79,7 @@ public class Bus extends Transportation {
     String[] parts = line.split(";");
 
     return new Bus(
-        parts[1], // id
-        parts[2], // company
-        parts[3], // departure
-        parts[4], // arrival
+        parts[1], parts[2], parts[3], parts[4], 
         Double.parseDouble(parts[5]),
         Integer.parseInt(parts[6])
     );

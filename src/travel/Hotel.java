@@ -68,9 +68,7 @@ public class Hotel extends Accommodation {
     String[] parts = line.split(";");
 
     return new Hotel(
-        parts[1], // id
-        parts[2], // name
-        parts[3], // location
+        parts[1], parts[2], parts[3], 
         Double.parseDouble(parts[4]),
         Integer.parseInt(parts[5])
     );

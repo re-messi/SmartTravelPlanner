@@ -8,7 +8,6 @@
 //-----------------------------------------------------
 package client;
 
-import java.util.List;
 
 import exceptions.InvalidClientDataException;
 import interfaces.*;
