@@ -11,7 +11,7 @@ package client;
 
 import exceptions.InvalidClientDataException;
 import interfaces.*;
-import travel.Trip;
+
 
 public class Client implements Identifiable, CsvPersistable, Comparable<Client> {
 
