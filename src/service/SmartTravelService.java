@@ -66,7 +66,7 @@ public class SmartTravelService {
 
     //add methods
     public void addClient(Client c) {
-        clients.add(c);
+        clients.add(c); //add also to list , since still used for basic storage
         clientRepo.add(c);
     }
 

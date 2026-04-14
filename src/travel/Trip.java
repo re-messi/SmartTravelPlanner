@@ -172,9 +172,7 @@ public String getTempTransportId() { return tempTransportId; }
            (client != null ? client.getClientId() : "") + ";" +
            (accommodation != null ? accommodation.getAccommodationID() : "") + ";" +
            (transportation != null ? transportation.getTransportId() : "") + ";" +
-           destination + ";" +
-           durationInDays + ";" +
-           basePrice;
+           destination + ";" + durationInDays + ";" + basePrice;
 }
 
 	@Override

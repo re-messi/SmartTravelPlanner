@@ -13,4 +13,4 @@ Why LinkedList vs ArrayList for this use case:
 
 A2 Compatibility: 
 
-  The changes for A3 are additive only; A GenericFileManager that acts as one general manager for all types and two new load and save methods that use the GenericFileManager. None of the methods or the menu cases (1 to 6 and 8 to 11) where modified and all the file managers from A2 are still present as fallback. 
+  Yes, the changes for A3 are additive only; A GenericFileManager that acts as one general manager for all types and two new load and save methods that use the GenericFileManager. None of the methods or the menu cases (1 to 6 and 8 to 11) where modified and all the file managers from A2 are still present as fallback. 
